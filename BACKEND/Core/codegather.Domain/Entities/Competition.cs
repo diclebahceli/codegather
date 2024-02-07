@@ -7,6 +7,7 @@ public class Competition: EntityBase
     public DateTime EndTime {get; set;} 
     public ICollection<Question> Questions {get; set;} 
 
+    public Competition(){ }
     public Competition(string title, string description, DateTime startTime, DateTime endTime){
         Title = title;
         Description = description;
