@@ -1,0 +1,95 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "codegather.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/codegather.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/codegather.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "codegather.Domain/1.0.0": {
+      "type": "project",
+      "path": "../codegather.Domain/codegather.Domain.csproj",
+      "msbuildProject": "../codegather.Domain/codegather.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "codegather.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/sy/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Application/codegather.Application.csproj",
+      "projectName": "codegather.Application",
+      "projectPath": "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Application/codegather.Application.csproj",
+      "packagesPath": "/home/sy/.nuget/packages/",
+      "outputPath": "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Application/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/sy/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Domain/codegather.Domain.csproj": {
+              "projectPath": "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Domain/codegather.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.15, 7.0.15]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.115/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

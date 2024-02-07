@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9TxHuUJgjg/OoYmFIrq3hiCXzTeVYEL/x2T+dOgmzU2kSPrNQydrC9pSTCC/ScSEl9+TBRwf+L4RGyaX6fO5Rw==",
+  "success": true,
+  "projectFilePath": "/home/sy/work/dotnet/codegather/BACKEND/Core/codegather.Domain/codegather.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/sy/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.15/microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
