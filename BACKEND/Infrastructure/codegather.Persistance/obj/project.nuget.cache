@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "F5meBzYbyE51RzFKE2ziywr5xx0KpvzhmQLFJReCAaqBIlG7kFdi8QwoQRMw5qud1r9RMRtm5beK3jeBzfeN+g==",
+  "success": true,
+  "projectFilePath": "/home/sy/work/dotnet/codegather/BACKEND/Infrastructure/codegather.Persistance/codegather.Persistance.csproj",
+  "expectedPackageFiles": [
+    "/home/sy/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.15/microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
