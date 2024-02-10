@@ -11,6 +11,10 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
         builder.Property(q => q.Description).IsRequired();
         //TODO: Add more configurations
 
+        builder.HasMany(q => q.Submissions)
+            .WithOne(s => s.Question)
+            .HasForeignKey(s => s.QuestionId);
+
         Faker faker = new();
 
         Question question1 = new Question
