@@ -13,5 +13,6 @@ public static class Registration
             options.UseSqlite(configuration.GetConnectionString("LiteConnection"));
         });
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+        services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
     }
 }
