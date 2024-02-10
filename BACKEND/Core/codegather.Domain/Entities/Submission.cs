@@ -8,11 +8,12 @@ public class Submission: EntityBase
     public DateTime SubmissionTime {get; set;} = DateTime.Now;
     public string Code {get; set;}
     public Metrics Metrics {get; set;}
+    public int MetricsId {get; set;}
 
     public Submission(){ }
-    public Submission(Question question, User user, string code, Metrics metrics){
+    public Submission(Question question, int userId, string code, Metrics metrics){
         Question = question;
-        User = user;
+        UserId = userId;
         Code = code;
         Metrics = metrics;
     }
