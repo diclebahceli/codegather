@@ -1,3 +1,4 @@
+using codegather.Persistance;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -10,6 +11,7 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false)
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
+builder.Services.AddPersistance(builder.Configuration);
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
