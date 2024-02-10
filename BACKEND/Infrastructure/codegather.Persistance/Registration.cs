@@ -1,3 +1,4 @@
+using codegather.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +12,6 @@ public static class Registration
         {
             options.UseSqlite(configuration.GetConnectionString("LiteConnection"));
         });
-        // services.AddScoped<IUnitOfWork, UnitOfWork>();
-        // services.AddScoped<ICompetitionRepository, CompetitionRepository>();
-        // services.AddScoped<IQuestionRepository, QuestionRepository>();
-        // services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+        services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
     }
 }
