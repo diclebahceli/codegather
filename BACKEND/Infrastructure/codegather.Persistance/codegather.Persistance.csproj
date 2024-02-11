@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\codegather.Domain\codegather.Domain.csproj" />
     <ProjectReference Include="..\..\Core\codegather.Application\codegather.Application.csproj" />
   </ItemGroup>
 

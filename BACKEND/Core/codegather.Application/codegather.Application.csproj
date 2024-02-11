@@ -5,7 +5,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features/Competitions/Commands/" />
   </ItemGroup>
 
   <PropertyGroup>
