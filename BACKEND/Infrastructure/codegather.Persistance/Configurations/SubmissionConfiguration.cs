@@ -15,11 +15,6 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
             .WithOne()
             .HasForeignKey<Submission>(s => s.MetricsId);
 
-
-        builder.HasOne(s => s.User)
-            .WithMany(u => u.Submissions)
-            .HasForeignKey(s => s.UserId);
-
         Faker faker = new();
 
         Submission submission1 = new Submission

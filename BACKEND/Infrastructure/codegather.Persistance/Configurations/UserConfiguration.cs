@@ -8,6 +8,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.HasMany(u => u.Submissions)
+            .WithOne(s => s.User)
+            .HasForeignKey(s => s.UserId);
 
         User user1 = new User
         {
