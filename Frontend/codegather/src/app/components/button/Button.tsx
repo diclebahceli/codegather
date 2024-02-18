@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Button = ({children}) => {
+
+type ButtonProps = {
+  children: JSX.Element
+}
+
+const Button = ({children}: ButtonProps) => {
   return (
     <button>
       {children}

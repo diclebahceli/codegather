@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
-class InputField extends Component {
+interface InputFieldProps {
+  type: string;
+  name: string;
+  label: string;
+}
+
+class InputField extends Component<InputFieldProps> {
   render() {
     const { type, name, label, ...rest } = this.props;
 
