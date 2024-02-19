@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 interface InputFieldProps {
   type: string;
@@ -11,9 +11,16 @@ class InputField extends Component<InputFieldProps> {
     const { type, name, label, ...rest } = this.props;
 
     return (
-      <div>
+      <div className="form-floating">
+        <input
+          type={type}
+          id={name}
+          name={name}
+          placeholder={label}
+          {...rest}
+          className="form-control"
+        />
         <label htmlFor={name}>{label}</label>
-        <input type={type} id={name} name={name} {...rest} />
       </div>
     );
   }

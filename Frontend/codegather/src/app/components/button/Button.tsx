@@ -1,13 +1,12 @@
-import React from 'react';
-
+import React from "react";
 
 type ButtonProps = {
-  children: JSX.Element
-}
+  children: JSX.Element;
+};
 
-const Button = ({children}: ButtonProps) => {
+const Button = ({ children }: ButtonProps) => {
   return (
-    <button>
+    <button type="button" className="btn btn-outline-primary">
       {children}
     </button>
   );
