@@ -1,7 +1,7 @@
-import styles from './Header.module.css';
+import styles from "./Header.module.css";
 
 const Header = () => {
-    return <header className={styles.header}>Code Gather</header>;
+  return <header className={styles.header}>Code Gather</header>;
 };
 
 export default Header;

@@ -14,41 +14,41 @@ const login = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <div className="d-flex align-items-center  vh-100">
-        <div
-          className="container text-center vh-100 "
-          style={{ margin: "30% 0 0 0" }}
-        >
-          <div className="d-flex flex-row align-items-center ">
-            <div className="col">
-              <h1 className="display-1 fw-bold ">Welcome </h1>
-              <h1 className="display-1 fw-bold m-2 p-2 text-end ">Back </h1>
-            </div>
-            <div className="col">
-              <div className={styles.card}>
-                <Card>
-                  <h2>Login</h2>
-                  <div className={styles.input}>
-                    <InputField type="text" name="username" label="Username" />
-                  </div>
-                  <div className={styles.input}>
-                    <InputField
-                      type="password"
-                      name="floatingPassword"
-                      label="Password"
-                    />
-                  </div>
+    <div className="flex-col">
+      <div className="row-5">
+        <Header />
+      </div>
 
-                  <div className="m-3">
-                    <Button>
-                      <span>Login</span>
-                    </Button>
-                  </div>
-                </Card>
+      <div className="d-flex justify-content-center align-items-center text-center vh-100 bg-black row-10">
+        <div className="d-flex flex-row align-items-center justify-content-center h-75">
+          <div className="col me-5">
+            <h1 className="display-1 fw-bold text-light">Welcome </h1>
+            <h1 className="display-1 fw-bold m-2 p-2 text-end text-light">
+              Back{" "}
+            </h1>
+          </div>
+          <div className="col h-75">
+            <Card>
+              <div className="pt-5">
+                <h2 className="fw-bold fs-2 mb-3">Login</h2>
+                <div className={styles.input}>
+                  <InputField type="text" name="username" label="Username" />
+                </div>
+                <div className={styles.input}>
+                  <InputField
+                    type="password"
+                    name="floatingPassword"
+                    label="Password"
+                  />
+                </div>
+
+                <div className="m-3">
+                  <Button>
+                    <span>Login</span>
+                  </Button>
+                </div>
               </div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
