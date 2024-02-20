@@ -6,7 +6,7 @@ type ButtonProps = {
 
 const Button = ({ children }: ButtonProps) => {
   return (
-    <button type="button" className="btn btn-outline-primary">
+    <button type="button" className="btn btn-outline-primary m-3 p-2">
       {children}
     </button>
   );

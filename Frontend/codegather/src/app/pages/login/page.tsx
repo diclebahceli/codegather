@@ -16,25 +16,38 @@ const login = () => {
   return (
     <div>
       <Header />
-      <div className="d-flex align-items-center justify-content-center vh-100">
-        <div className="container text-center main-content">
-          <div className="d-flex flex-row align-items-center h-100">
+      <div className="d-flex align-items-center  vh-100">
+        <div
+          className="container text-center vh-100 "
+          style={{ margin: "30% 0 0 0" }}
+        >
+          <div className="d-flex flex-row align-items-center ">
             <div className="col">
-              <h1>Welcome Back</h1>
+              <h1 className="display-1 fw-bold ">Welcome </h1>
+              <h1 className="display-1 fw-bold m-2 p-2 text-end ">Back </h1>
             </div>
             <div className="col">
-              <Card>
-                <h2>Login</h2>
-                <InputField type="text" name="username" label="Username" />
-                <InputField
-                  type="password"
-                  name="floatingPassword"
-                  label="Password"
-                />
-                <Button>
-                  <span>Login</span>
-                </Button>
-              </Card>
+              <div className={styles.card}>
+                <Card>
+                  <h2>Login</h2>
+                  <div className={styles.input}>
+                    <InputField type="text" name="username" label="Username" />
+                  </div>
+                  <div className={styles.input}>
+                    <InputField
+                      type="password"
+                      name="floatingPassword"
+                      label="Password"
+                    />
+                  </div>
+
+                  <div className="m-3">
+                    <Button>
+                      <span>Login</span>
+                    </Button>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
