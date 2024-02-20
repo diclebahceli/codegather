@@ -32,7 +32,7 @@ const login = () => {
               <div className="pt-5">
                 <h2 className="fw-bold fs-2 mb-3">Login</h2>
                 <div className={styles.input}>
-                  <InputField type="text" name="username" label="Username" />
+                  <InputField type="text" name="email" label="email" />
                 </div>
                 <div className={styles.input}>
                   <InputField
