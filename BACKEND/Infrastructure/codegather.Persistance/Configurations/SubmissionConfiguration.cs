@@ -8,9 +8,6 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
 {
     public void Configure(EntityTypeBuilder<Submission> builder)
     {
-        builder.Property(s => s.Code).IsRequired();
-        //TODO: Add more configurations
-
         builder.HasOne(s => s.Metrics)
             .WithOne()
             .HasForeignKey<Submission>(s => s.MetricsId);
@@ -24,7 +21,9 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
             UserId = 1,
             Code = faker.Lorem.Paragraph(),
             MetricsId = 1,
-            SubmissionTime = DateTime.Now
+            SubmissionTime = DateTime.Now,
+            IsCorrect = true
+            
         };
 
         Submission submission2 = new Submission
@@ -34,6 +33,7 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
             UserId = 2,
             MetricsId = 2,
             Code = faker.Lorem.Paragraph(),
+            IsCorrect = true,
             SubmissionTime = DateTime.Now
         };
 
@@ -44,6 +44,7 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
             UserId = 1,
             MetricsId = 3,
             Code = faker.Lorem.Paragraph(),
+            IsCorrect = true,
             SubmissionTime = DateTime.Now
         };
 
@@ -54,6 +55,7 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
             UserId = 2,
             MetricsId = 4,
             Code = faker.Lorem.Paragraph(),
+            IsCorrect = false,
             SubmissionTime = DateTime.Now
         };
 

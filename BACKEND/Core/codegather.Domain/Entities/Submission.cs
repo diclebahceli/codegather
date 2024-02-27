@@ -7,11 +7,12 @@ public class Submission: EntityBase
     public int UserId {get; set;}
     public DateTime SubmissionTime {get; set;} = DateTime.Now;
     public string Code {get; set;}
+    public bool IsCorrect {get; set;}
     public Metrics Metrics {get; set;}
     public int MetricsId {get; set;}
 
     public Submission(){ }
-    public Submission(Question question, int userId, string code, Metrics metrics){
+    public Submission(Question question, int userId, string code, Metrics metrics, bool isCorrect = false){
         Question = question;
         UserId = userId;
         Code = code;

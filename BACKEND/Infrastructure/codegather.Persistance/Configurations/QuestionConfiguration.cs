@@ -8,9 +8,6 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 {
     public void Configure(EntityTypeBuilder<Question> builder)
     {
-        builder.Property(q => q.Description).IsRequired();
-        //TODO: Add more configurations
-
         builder.HasMany(q => q.Submissions)
             .WithOne(s => s.Question)
             .HasForeignKey(s => s.QuestionId);

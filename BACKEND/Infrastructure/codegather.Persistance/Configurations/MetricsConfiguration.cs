@@ -8,9 +8,6 @@ public class MetricsConfiguration : IEntityTypeConfiguration<Metrics>
 {
     public void Configure(EntityTypeBuilder<Metrics> builder)
     {
-        builder.Property(m => m.CompileTime).IsRequired();
-        builder.Property(m => m.MemoryUsage).IsRequired();
-
         Faker faker = new();
 
         Metrics metrics1 = new Metrics

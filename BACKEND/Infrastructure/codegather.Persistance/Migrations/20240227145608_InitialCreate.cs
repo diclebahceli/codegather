@@ -94,6 +94,7 @@ namespace codegather.Persistance.Migrations
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     SubmissionTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Code = table.Column<string>(type: "TEXT", nullable: false),
+                    IsCorrect = table.Column<bool>(type: "INTEGER", nullable: false),
                     MetricsId = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -126,8 +127,8 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CreatedTime", "Description", "EndTime", "IsDeleted", "StartTime", "Title" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 11, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(4408), "Eos velit reiciendis. Incidunt facilis assumenda velit. Reiciendis beatae necessitatibus illum qui qui perspiciatis nisi et debitis. Est qui dignissimos ipsam qui perspiciatis. Corrupti ex qui qui doloremque impedit voluptatum omnis iste. Ipsa eos est et numquam quaerat fugit quasi.", new DateTime(2024, 2, 18, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(4834), false, new DateTime(2024, 2, 11, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(4830), "Nulla nihil." },
-                    { 2, new DateTime(2024, 2, 11, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(4842), "Neque quisquam enim fugiat labore omnis. Autem doloribus magni aut nihil. Aut vitae quasi consequatur laudantium vel sint alias laborum. Praesentium qui itaque et earum et perferendis iusto. Officiis commodi rem. Omnis aspernatur dolorum sit.", new DateTime(2024, 2, 18, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(5011), false, new DateTime(2024, 2, 11, 14, 44, 57, 392, DateTimeKind.Local).AddTicks(5010), "Deleniti illo." }
+                    { 1, new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8385), "Consequatur aliquid sunt temporibus tenetur omnis voluptatem quasi natus. Dolorum eius inventore rerum soluta rerum provident beatae commodi. Accusantium est ut eos rerum doloremque libero modi aut. Et dolore possimus excepturi et quia. Hic illo voluptatem id exercitationem.", new DateTime(2024, 3, 5, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8796), false, new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8792), "Vero repellendus." },
+                    { 2, new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8804), "Eligendi qui illo optio nulla quis. Aliquam soluta odit aspernatur autem et. Aut aut possimus est labore quidem quas porro id cupiditate. Facilis quidem error laboriosam error eius voluptate. Necessitatibus veniam asperiores ut.", new DateTime(2024, 3, 5, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8999), false, new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8997), "Alias fuga." }
                 });
 
             migrationBuilder.InsertData(
@@ -135,10 +136,10 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CompileTime", "CreatedTime", "IsDeleted", "MemoryUsage" },
                 values: new object[,]
                 {
-                    { 1, 0.5f, new DateTime(2024, 2, 11, 14, 44, 57, 395, DateTimeKind.Local).AddTicks(160), false, 0.5f },
-                    { 2, 0.5f, new DateTime(2024, 2, 11, 14, 44, 57, 395, DateTimeKind.Local).AddTicks(189), false, 0.5f },
-                    { 3, 0.5f, new DateTime(2024, 2, 11, 14, 44, 57, 395, DateTimeKind.Local).AddTicks(192), false, 0.5f },
-                    { 4, 0.5f, new DateTime(2024, 2, 11, 14, 44, 57, 395, DateTimeKind.Local).AddTicks(194), false, 0.5f }
+                    { 1, 0.5f, new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5478), false, 0.5f },
+                    { 2, 0.5f, new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5519), false, 0.5f },
+                    { 3, 0.5f, new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5522), false, 0.5f },
+                    { 4, 0.5f, new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5524), false, 0.5f }
                 });
 
             migrationBuilder.InsertData(
@@ -146,8 +147,8 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CreatedTime", "IsDeleted" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 11, 14, 44, 57, 401, DateTimeKind.Local).AddTicks(3189), false },
-                    { 2, new DateTime(2024, 2, 11, 14, 44, 57, 401, DateTimeKind.Local).AddTicks(3207), false }
+                    { 1, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(8333), false },
+                    { 2, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(8352), false }
                 });
 
             migrationBuilder.InsertData(
@@ -155,21 +156,21 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CompetitionId", "CreatedTime", "Description", "IsDeleted", "TestCases" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 2, 11, 14, 44, 57, 397, DateTimeKind.Local).AddTicks(5743), "Ut esse aut perferendis deserunt nulla commodi. Maiores omnis adipisci placeat quia dolorem et excepturi vel. Sapiente error hic cumque quod vero voluptatem nesciunt. Odit culpa itaque fugit rerum dolor.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 2, 1, new DateTime(2024, 2, 11, 14, 44, 57, 397, DateTimeKind.Local).AddTicks(6028), "Culpa ipsum eum. Culpa aut iusto. Dolore itaque et explicabo.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 3, 2, new DateTime(2024, 2, 11, 14, 44, 57, 397, DateTimeKind.Local).AddTicks(6127), "Quisquam consectetur at aut consectetur est aspernatur deleniti id dicta. Officia nesciunt unde mollitia qui perferendis. Excepturi quam sit et.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 4, 2, new DateTime(2024, 2, 11, 14, 44, 57, 397, DateTimeKind.Local).AddTicks(6215), "Magnam architecto quae dolore reprehenderit. Repellat quam possimus. Ab vitae autem et ea molestias accusamus consequatur velit ducimus.", false, "Test case 1, Test case 2, Test case 3" }
+                    { 1, 1, new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1428), "Earum harum molestias voluptates est ad non. Harum qui totam laudantium sit quas eum molestiae rerum. Porro delectus vitae. Quia vitae esse qui rerum. Quia enim id numquam quo dicta reiciendis. Dolorem consequatur illum accusantium et aliquid perspiciatis.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 2, 1, new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1837), "Rerum qui modi cum atque aut. Numquam quod magnam enim neque saepe. Consequuntur voluptatem commodi maiores animi reiciendis. Fugiat aut ipsum architecto qui fugiat et.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 3, 2, new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1950), "Cupiditate temporibus assumenda minima officia eveniet eum quis. Itaque iure unde rerum est doloremque. Repellendus omnis consectetur magnam eum ratione molestiae est. Corrupti ut voluptas.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 4, 2, new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(2100), "Suscipit consequatur necessitatibus. Illum enim inventore at voluptatem distinctio. Sit sint odit.", false, "Test case 1, Test case 2, Test case 3" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Submissions",
-                columns: new[] { "Id", "Code", "CreatedTime", "IsDeleted", "MetricsId", "QuestionId", "SubmissionTime", "UserId" },
+                columns: new[] { "Id", "Code", "CreatedTime", "IsCorrect", "IsDeleted", "MetricsId", "QuestionId", "SubmissionTime", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Quis facilis quia esse nihil distinctio maiores voluptates. Voluptates voluptas non. Sunt a odio eligendi aut omnis quia distinctio omnis ut. Asperiores atque eum quis repudiandae doloribus commodi omnis dolorem velit. Voluptas molestias est. Sint ullam maxime sed id et facilis quasi esse.", new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8163), false, 1, 1, new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8435), 1 },
-                    { 2, "Quia soluta quam iste voluptatem quos. Adipisci qui doloribus sed possimus nulla perferendis quidem. Neque distinctio mollitia nihil omnis et voluptatem.", new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8439), false, 2, 1, new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8608), 2 },
-                    { 3, "Ea nam ullam qui rerum. Rerum reiciendis ut esse similique necessitatibus quo officia cumque quia. Est qui ipsa quae. Quia placeat voluptatem veniam saepe et sint officia nemo. Totam laborum ratione optio. Architecto temporibus tenetur dolores corrupti magni.", new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8611), false, 3, 2, new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8878), 1 },
-                    { 4, "Quidem et animi vitae quia aliquam. Sapiente illum ratione et nihil eius cumque ad sint quia. Consequatur exercitationem laborum adipisci consequatur laboriosam neque rerum optio id. Numquam cum eos ut quia quae consequatur repudiandae. Quae voluptate accusamus qui est minima voluptatum.", new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(8881), false, 4, 2, new DateTime(2024, 2, 11, 14, 44, 57, 400, DateTimeKind.Local).AddTicks(9035), 2 }
+                    { 1, "Consequatur tenetur eum est veniam corporis labore pariatur voluptatum ut. Quod quo assumenda cumque. Qui laboriosam vero eligendi in. Soluta unde aut recusandae.", new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1490), true, false, 1, 1, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1759), 1 },
+                    { 2, "Molestiae ut deleniti quibusdam. Unde labore ut culpa quisquam eveniet quibusdam quia delectus. Cum ad voluptas voluptates sit perferendis. Quam possimus repellendus. Accusamus est in ipsum. Aperiam quis quia distinctio in facilis dolores quis error ea.", new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1763), true, false, 2, 1, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1913), 2 },
+                    { 3, "Voluptatem voluptatum quae delectus veniam illo optio. Eligendi accusantium ab magnam quisquam mollitia sequi quas. Aut perspiciatis eum nihil doloremque. Blanditiis vero rerum. Voluptate perspiciatis veritatis est aut.", new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1916), true, false, 3, 2, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2141), 1 },
+                    { 4, "Non nihil ex voluptas quam odio porro fugit. Corporis rerum sed rerum fugit est laudantium aperiam impedit exercitationem. Ut non quo minus architecto rerum aspernatur nulla facilis. Consectetur perspiciatis eos. Ab sit et voluptatibus itaque vitae cumque possimus iste.", new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2145), false, false, 4, 2, new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2335), 2 }
                 });
 
             migrationBuilder.CreateIndex(

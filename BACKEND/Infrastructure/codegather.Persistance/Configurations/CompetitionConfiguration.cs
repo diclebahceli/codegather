@@ -8,9 +8,6 @@ public class CompetitionConfiguration : IEntityTypeConfiguration<Competition>
 {
     public void Configure(EntityTypeBuilder<Competition> builder)
     {
-        builder.Property(c => c.Title).IsRequired();
-        //TODO: Add more configurations
-
         builder.HasMany(c => c.Questions)
         .WithOne(q => q.Competition)
         .HasForeignKey(q => q.CompetitionId);
