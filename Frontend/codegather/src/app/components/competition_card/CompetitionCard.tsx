@@ -8,7 +8,7 @@ const CompetitionCard = ({ competition }: { competition: Competition }) => {
                 <div className="card-body d-flex flex-column">
                     <div className="card-title fw-bold fs-4"> {competition.name}</div>
                     <div className="card-text mb-3 fs-5 text-wrap"> {competition.description}</div>
-                    <a href="#" className="btn btn-theme-color mt-2 ms-auto">Join</a>
+                    <a href="#" className="btn btn-theme-color mt-2 ms-auto">Details</a>
 
                 </div>
             </Card>
