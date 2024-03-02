@@ -1,0 +1,20 @@
+// _variables.scss
+
+// styles/variables.scss
+$darker: #222831;
+$dark: #393E46;
+$color1: #00ADB5;
+$light: #EEEEEE;
+
+// ...other Bootstrap color variables you want to change
+
+// Update or add colors to the Bootstrap theme
+$theme-colors: (
+    "theme-dark": $dark,
+    "theme-darker": $darker,
+    "theme-color": $color1,
+    "theme-light": $light,
+    // ...
+);
+// Import Bootstrap's Sass after your custom variables
+@import "../node_modules/bootstrap/scss/bootstrap"; // Adjust the path if needed
