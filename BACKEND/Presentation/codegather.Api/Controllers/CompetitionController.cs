@@ -36,5 +36,12 @@ public class CompetitionController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete]
+    public async Task<IActionResult> DeleteCompetition(UpdateCompetitionCommandRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
 
 }
