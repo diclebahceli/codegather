@@ -12,6 +12,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne(s => s.User)
             .HasForeignKey(s => s.UserId);
 
+
+
         User user1 = new User
         {
             Id = 1,

@@ -6,7 +6,7 @@ namespace codegather.Api;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class CompetitionController: ControllerBase
+public class CompetitionController : ControllerBase
 {
     private IMediator mediator;
 
@@ -21,5 +21,20 @@ public class CompetitionController: ControllerBase
         var response = await mediator.Send(new GetAllCompetitionsQueryRequest());
         return Ok(response);
     }
-    
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCompetition(CreateCompetitionCommandRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCompetition(UpdateCompetitionCommandRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
+
 }
