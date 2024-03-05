@@ -91,3 +91,8 @@ const competitions: Competition[] = [
 export const getAllCompetitions = (): Competition[] => {
     return competitions;
 };
+
+export const getCompetitionById = (id: number): Competition | undefined => {
+    return competitions.find(comp => comp.id === id);
+
+}
