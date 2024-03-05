@@ -4,8 +4,6 @@ import React from "react";
 import InputField from "../../components/input_field/InputField";
 import Button from "../../components/button/Button";
 import Card from "../../components/card/Card";
-import Header from "@/app/components/header/Header";
-import styles from "./page.module.css";
 
 const login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,7 +14,6 @@ const login = () => {
   return (
     <div className="flex-col">
       <div className="row-5">
-        <Header />
       </div>
 
       <div className="d-flex justify-content-center align-items-center text-center vh-100 bg-black row-10">
@@ -28,13 +25,13 @@ const login = () => {
             </h1>
           </div>
           <div className="col h-75">
-            <Card>
+            <Card >
               <div className="pt-5">
                 <h2 className="fw-bold fs-2 mb-3">Login</h2>
-                <div className={styles.input}>
+                <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
                   <InputField type="text" name="email" label="email" />
                 </div>
-                <div className={styles.input}>
+                <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
                   <InputField
                     type="password"
                     name="floatingPassword"
@@ -49,6 +46,7 @@ const login = () => {
                 </div>
               </div>
             </Card>
+
           </div>
         </div>
       </div>
