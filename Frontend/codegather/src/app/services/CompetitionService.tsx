@@ -93,8 +93,8 @@ export async function GetAllCompetitions (): Promise<Competition[]> {
 };
 
 export async function GetCompetitionById (id: number): Promise<Competition>  {
-    console.log(typeof(id));
-    console.log(typeof(competitions[0].id));
+    // console.log(typeof(id));
+    // console.log(typeof(competitions[0].id));
     const competition = await competitions.find(comp => comp.id == id);
     if(competition) {
         return competition;
