@@ -1,11 +1,8 @@
-"use client"
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
-import { Competition } from "@/app/models/Competition";
-import { getAllCompetitions } from "@/app/services/CompetitionService";
-import { useState } from "react";
+import { GetAllCompetitions } from "@/app/services/CompetitionService";
 
-const ongoingCompetitions = () => {
-    const [competitions, setCompetitions] = useState<Competition[]>(getAllCompetitions);
+export default async function OngoingCompetitions() {
+    const competitions =  await GetAllCompetitions();
     return (
         <div className="h-100 bg-background" style={{backgroundAttachment: 'fixed'}}>
             <h1 className="fs-1 pt-5 container">ONGOING COMPETITIONS</h1>
@@ -22,4 +19,3 @@ const ongoingCompetitions = () => {
         </div>
     );
 }
-export default ongoingCompetitions;

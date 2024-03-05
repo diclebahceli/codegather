@@ -1,11 +1,10 @@
-"use client";
 // pages/LoginPage.js
 import React from "react";
 import InputField from "../../components/input_field/InputField";
 import Button from "../../components/button/Button";
 import Card from "../../components/card/Card";
 
-const login = () => {
+export default function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     //event.preventDefault();
     // Form submission logic...
@@ -53,5 +52,3 @@ const login = () => {
     </div>
   );
 };
-
-export default login;

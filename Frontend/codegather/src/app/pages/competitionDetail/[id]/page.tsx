@@ -1,13 +1,11 @@
-import { Competition } from "@/app/models/Competition";
+import { GetCompetitionById } from "@/app/services/CompetitionService";
 
-const competitionDetail = (comp: Competition) => {
-    return (
-
-        <div className="h-100 bg-theme-background" style={{ backgroundAttachment: 'fixed' }}>
-            <h1 className="fs-1 pt-5 container">{comp.name}</h1>
-            <h1>SELAMUN ALY</h1>
-        </div>
-    );
-}
-
-export default competitionDetail;
+export default async function CompetitionDetail ({ params }: { params: { id: number } }) {
+    var competition = await GetCompetitionById(params.id);
+  return (
+    <div className="h-100 bg-theme-background" style={{ backgroundAttachment: 'fixed' }}>
+      <h1 className="fs-1 pt-5 container">{competition?.name}</h1>
+      <h1>SELAMUN ALY</h1>
+    </div>
+  );
+};
