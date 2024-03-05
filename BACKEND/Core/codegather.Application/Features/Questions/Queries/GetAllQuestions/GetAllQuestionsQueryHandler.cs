@@ -1,23 +1,26 @@
-using codegather.Application.Interfaces.AutoMapper;
+﻿using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
-public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitionsQueryRequest, IList<GetAllCompetitionsQueryResponse>>
+
+public class GetAllQuestionsQueryHandler
 {
+
     private IUnitOfWork unityOfWork;
     private readonly IMapper mapper;
-    public GetAllCompetitionsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetAllQuestionsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         unityOfWork = unitOfWork;
         this.mapper = mapper;
     }
 
 
-    public async Task<IList<GetAllCompetitionsQueryResponse>> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<IList<GetAllQuestionsQueryResponse>> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
     {
-        var Competitions = await unityOfWork.GetReadRepository<Competition>().GetAllAsync();
+        var Questions = await unityOfWork.GetReadRepository<Question>().GetAllAsync(include: q => q.Include(q => q.Competition));
+        mapper.Config<CompetitionDto, Competition>();
         // List<GetAllCompetitionsQueryResponse> responses = Competitions.Select(p => new GetAllCompetitionsQueryResponse
         // {
         //     Title = p.Title,
@@ -26,7 +29,7 @@ public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitions
         //     StartTime = p.StartTime
         // }).ToList();
 
-        var response = mapper.Map<GetAllCompetitionsQueryResponse, Competition>(Competitions);
+        var response = mapper.Map<GetAllQuestionsQueryResponse, Question>(Questions);
 
         return response;
     }

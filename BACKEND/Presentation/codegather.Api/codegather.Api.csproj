@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\codegather.Application\codegather.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\codegather.Persistance\codegather.Persistance.csproj" />
+    <ProjectReference Include="..\..\Core\codegather.Mapper\codegather.Mapper.csproj" />
   </ItemGroup>
 
 </Project>
