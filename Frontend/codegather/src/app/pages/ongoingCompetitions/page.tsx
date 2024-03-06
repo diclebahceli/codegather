@@ -13,7 +13,6 @@ export default async function OngoingCompetitions() {
                     ))}
                 </div>
                 <div className="col-3 text-center mt-5 fs-2"> Disclaimer</div>
-
             </div>
 
         </div>
