@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 interface InputFieldProps {
   type: string;
@@ -6,24 +6,21 @@ interface InputFieldProps {
   label: string;
 }
 
-class InputField extends Component<InputFieldProps> {
-  render() {
-    const { type, name, label, ...rest } = this.props;
+// Use export default function directly for the component declaration
+export default function InputField(props: InputFieldProps) {
+  const { type, name, label, ...rest } = props;
 
-    return (
-      <div className="form-floating">
-        <input
-          type={type}
-          id={name}
-          name={name}
-          placeholder={label}
-          {...rest}
-          className="form-control"
-        />
-        <label htmlFor={name}>{label}</label>
-      </div>
-    );
-  }
+  return (
+    <div className="form-floating border-1 border-orange rounded">
+      <input
+        type={type}
+        id={name}
+        name={name}
+        placeholder={label}
+        {...rest} // Spread remaining props
+        className="form-control border border-2"
+      />
+      <label htmlFor={name}>{label}</label>
+    </div>
+  );
 }
-
-export default InputField;

@@ -1,7 +1,8 @@
-import styles from "./Header.module.css";
 
-const Header = () => {
-  return <header className={styles.header}>Code Gather</header>;
+export default function Header  () {
+    return <header className=" bg-orange p-3 d-flex align-items-center" style={{ height: "4rem" }}>
+        <a href="" className=" fw-bold fs-2 "> 
+            Code Gather
+        </a>
+    </header>;
 };
-
-export default Header;
