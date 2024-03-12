@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import '../../styles/_variables.scss';
 import "./globals.css";
 import Header from "./components/header/Header";
+import { Encode_Sans } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
+const encodeSans = Encode_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -17,8 +19,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
+        <html lang="en" className={encodeSans.className}>
+            <body >
                 <Header />
                 {children}
             </body>
