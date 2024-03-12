@@ -12,10 +12,7 @@ export default function Login() {
 
   return (
     <div className="flex-col">
-      <div className="row-5">
-      </div>
-
-      <div className="d-flex justify-content-center align-items-center text-center vh-100 bg-black row-10">
+      <div className="d-flex justify-content-center align-items-center text-center vh-100 bg-dark row-10">
         <div className="d-flex flex-row align-items-center justify-content-center h-75">
           <div className="col me-5">
             <h1 className="display-1 fw-bold text-light">Welcome </h1>
@@ -40,6 +37,7 @@ export default function Login() {
 
                 <div className="m-3">
                   <Button>
+                    
                     <span>Login</span>
                   </Button>
                 </div>

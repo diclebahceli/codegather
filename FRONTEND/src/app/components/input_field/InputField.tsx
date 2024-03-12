@@ -11,7 +11,7 @@ export default function InputField(props: InputFieldProps) {
   const { type, name, label, ...rest } = props;
 
   return (
-    <div className="form-floating border-1 border-orange rounded">
+    <div className="form-floating rounded">
       <input
         type={type}
         id={name}
