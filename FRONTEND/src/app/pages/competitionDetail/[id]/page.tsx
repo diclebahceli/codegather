@@ -10,8 +10,8 @@ export default async function CompetitionDetail({ params }: { params: { id: numb
         <div className="h-100 min-vh-100 bg-dark">
             <h1 className="pt-5 container" style={{ fontSize: "3rem" }}>{competition?.name}</h1>
 
-            <div className="d-flex flex-row justify-content-evenly">
-                <div className="mt-5 ms-5 ps-5 d-flex flex-column col-6 align-self-center">
+            <div className="d-flex flex-row justify-content-around">
+                <div className="mt-5 d-flex flex-column col-3 align-self-center">
                     {questions.map((question, index) => (
                         <QuestionCard key={question.id || index} question={question} >
                         </QuestionCard>

@@ -24,17 +24,17 @@ export default async function EditorPage({ params }: { params: { id: number } })
                     </Card>
 
                 </div>
-                <div className="p-3 col-6 d-flex flex-column">
+                <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
                     <div style={{ height: "35em" }}>
                         <AceEditorComponent onValueChange={onValueChange} />
                     </div>
                     <div className="flex-grow-1 mt-2">
                         <Card>
-                            <div className="d-flex flex-row justify-content-between align-items-center p-5 pt-2 pe-2">
-                                <div className="text-white "> TEST CASES </div>
+                            <div className="d-flex flex-row justify-content-between align-items-center p-5 pt-2 pe-4">
+                                <div className="text-white fs-4 ">Results</div>
                                 <div className="d-flex flex-row justify-content-end">
-                                    <button className="btn btn-dark">Run</button>
-                                    <button className="btn btn-green">Submit</button>
+                                    <button className="btn btn-dark fs-5 me-3">Run</button>
+                                    <button className="btn btn-green fs-5">Submit</button>
 
                                 </div>
                             </div>
