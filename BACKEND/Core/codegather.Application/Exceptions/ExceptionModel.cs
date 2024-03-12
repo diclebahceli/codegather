@@ -1,0 +1,17 @@
+﻿using Newtonsoft.Json;
+
+namespace codegather.Application;
+
+public class ExceptionModel
+{
+    public IEnumerable<string> Errors { get; set; }
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
+    }
+
+}
+public class ErrorStatusCode
+{
+    public int StatusCode { get; set; }
+}

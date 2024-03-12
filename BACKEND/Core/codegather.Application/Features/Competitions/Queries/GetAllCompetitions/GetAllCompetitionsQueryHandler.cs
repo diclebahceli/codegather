@@ -28,6 +28,7 @@ public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitions
 
         var response = mapper.Map<GetAllCompetitionsQueryResponse, Competition>(Competitions);
 
-        return response;
+        // return response;
+        throw new Exception("hata mesaji: ");
     }
 }
