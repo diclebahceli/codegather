@@ -5,7 +5,10 @@ const questions: Question[] = [
         id: 1,
         name: "Question 1",
         competitionId: 1,
-        description: "Given a string, find the length of the longest substring without repeating characters.",
+        description: ` Challenge: String Reversal Imagine you're a secret agent and need to quickly encode messages to send back to headquarters. You've been given a simple encryption method: reversing the order of the letters in a message.
+        The Mission: Write a function that takes a string as input and returns a new string with the characters reversed. For example, the message "hello world" should become "dlrow olleh" after encryption.
+        Bonus Mission: Can you crack the code without using any built-in string reversal functions? This could involve using loops to iterate through the string character by character and building the reversed string from scratch.
+        `,
         testCases: "Input: s = 'abcabcbb', Output: 3"
     },
     {

@@ -4,6 +4,11 @@
 $white: #EDEDED;
 $orange: #FFA41B;
 $background: #0d0d0d;
+$darker: #0a0909;
+$dark: #151417;
+$grey: #252429;
+$green: #68c72e;
+
 
 // ...other Bootstrap color variables you want to change
 
@@ -12,6 +17,10 @@ $theme-colors: (
     "orange": $orange,
     "white": $white,
     "background": $background,
+    "darker": $darker,
+    "dark": $dark,
+    "grey": $grey,
+    "green": $green,
     // ...
 );
 // Import Bootstrap's Sass after your custom variables

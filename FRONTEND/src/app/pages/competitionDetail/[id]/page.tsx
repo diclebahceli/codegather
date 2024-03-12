@@ -7,7 +7,7 @@ export default async function CompetitionDetail({ params }: { params: { id: numb
     var competition = await GetCompetitionById(params.id);
     const questions = await GetQuestionsByCompetitionId(params.id);
     return (
-        <div className="h-100 bg-theme-background" style={{ backgroundAttachment: 'fixed' }}>
+        <div className="h-100 min-vh-100 bg-dark">
             <h1 className="pt-5 container" style={{ fontSize: "3rem" }}>{competition?.name}</h1>
 
             <div className="d-flex flex-row justify-content-evenly">
@@ -23,11 +23,11 @@ export default async function CompetitionDetail({ params }: { params: { id: numb
                         <div className="fw-bold fs-3">Leaderboard</div>
                         <div className="w-75">
                             <Card>
-                                <div className="card-body d-flex flex-column bg-white">
-                                    <div className="card-title fw-bold fs-4 text-background"> 1. John Doe</div>
-                                    <div className="card-title fw-bold fs-4 text-background"> 2. Mark Ellen</div>
-                                    <div className="card-title fw-bold fs-4 text-background"> 3. Peter Parker</div>
-                                    <div className="card-title fw-bold fs-4 text-background"> 4. Jack Stone </div>
+                                <div className="card-body d-flex flex-column bg-grey">
+                                    <div className="card-title fs-4 text-white"> 1. John Doe</div>
+                                    <div className="card-title fs-4 text-white"> 2. Mark Ellen</div>
+                                    <div className="card-title fs-4 text-white"> 3. Peter Parker</div>
+                                    <div className="card-title fs-4 text-white"> 4. Jack Stone </div>
                                 </div>
                             </Card>
 

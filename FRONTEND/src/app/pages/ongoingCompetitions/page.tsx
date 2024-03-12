@@ -4,7 +4,7 @@ import { GetAllCompetitions } from "@/app/services/CompetitionService";
 export default async function OngoingCompetitions() {
     const competitions =  await GetAllCompetitions();
     return (
-        <div className="h-100 bg-background" style={{backgroundAttachment: 'fixed'}}>
+        <div className="h-100 bg-dark">
             <h1 className="pt-5 container" style={{fontSize: "5rem"}}>ONGOING COMPETITIONS</h1>
             <div className="d-flex flex-row justify-content-evenly">
                 <div className="mt-5 ms-5 ps-5 d-flex flex-wrap  col-7">
