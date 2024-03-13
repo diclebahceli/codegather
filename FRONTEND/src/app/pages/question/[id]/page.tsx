@@ -10,7 +10,7 @@ export default async function EditorPage({ params }: { params: { id: number } })
         console.log(value);
     }
     return (
-        <div className="vh-100 bg-dark p-3">
+        <div className="bg-dark p-3" style={{height: "92vh"}}>
             <div className="d-flex flex-row h-100 justify-content-evenly">
                 <div id="explanation" className="col-6 p-3">
                     <Card>

@@ -21,8 +21,13 @@ export default function RootLayout({
     return (
         <html lang="en" className={encodeSans.className}>
             <body >
-                <Header />
-                {children}
+                <div className="d-flex flex-column vh-100">
+                    <Header />
+                    <div className="flex-grow-1">
+                        {children}
+
+                    </div>
+                </div>
             </body>
         </html>
     );

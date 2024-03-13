@@ -37,54 +37,54 @@ const competitions: Competition[] = [
             endDate: "Tomorrow",
             imageUrl: "test"
         },
-        // {
-        //     id: 4,
-        //     name: "Competition 4",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // },
-        // {
-        //     id: 5,
-        //     name: "Competition 5",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // },
-        // {
-        //     id: 6,
-        //     name: "Competition 6",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // },
-        // {
-        //     id: 7,
-        //     name: "Competition 7",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // },
-        // {
-        //     id: 8,
-        //     name: "Competition 8",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // },
-        // {
-        //     id: 9,
-        //     name: "Competition 9",
-        //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
-        //     startDate: "Today",
-        //     endDate: "Tomorrow",
-        //     imageUrl: "test"
-        // }
+        {
+            id: 4,
+            name: "Competition 4",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        },
+        {
+            id: 5,
+            name: "Competition 5",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        },
+        {
+            id: 6,
+            name: "Competition 6",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        },
+        {
+            id: 7,
+            name: "Competition 7",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        },
+        {
+            id: 8,
+            name: "Competition 8",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        },
+        {
+            id: 9,
+            name: "Competition 9",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed blandit libero. Sed mollis ante non velit sollicitudin ornare. Pellentesque.",
+            startDate: "Today",
+            endDate: "Tomorrow",
+            imageUrl: "test"
+        }
     ]
 
 

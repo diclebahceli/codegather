@@ -7,7 +7,7 @@ export default async function CompetitionDetail({ params }: { params: { id: numb
     var competition = await GetCompetitionById(params.id);
     const questions = await GetQuestionsByCompetitionId(params.id);
     return (
-        <div className="h-100 min-vh-100 bg-dark">
+        <div className="h-100 bg-dark">
             <h1 className="pt-5 container" style={{ fontSize: "3rem" }}>{competition?.name}</h1>
 
             <div className="d-flex flex-row justify-content-around">
