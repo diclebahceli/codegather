@@ -19,8 +19,11 @@ public class GetAllQuestionsQueryHandler
 
     public async Task<IList<GetAllQuestionsQueryResponse>> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
     {
-        var Questions = await unityOfWork.GetReadRepository<Question>().GetAllAsync(include: q => q.Include(q => q.Competition));
-        mapper.Config<CompetitionDto, Competition>();
+        var Questions = await unityOfWork
+        .GetReadRepository<Question>()
+        .GetAllAsync(include: q => q.Include(q => q.Competition));
+
+        mapper.AddConfig<CompetitionDto, Competition>();
         // List<GetAllCompetitionsQueryResponse> responses = Competitions.Select(p => new GetAllCompetitionsQueryResponse
         // {
         //     Title = p.Title,
@@ -31,6 +34,7 @@ public class GetAllQuestionsQueryHandler
 
         var response = mapper.Map<GetAllQuestionsQueryResponse, Question>(Questions);
 
+        throw new Exception("ERROR MESSAGE");
         return response;
     }
 }

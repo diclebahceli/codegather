@@ -32,7 +32,8 @@ public class ExceptionMiddleware : IMiddleware
 
         return context.Response.WriteAsync(new ExceptionModel
         {
-            Errors = errors
+            Errors = errors,
+            StatusCode = statusCode
         }.ToString());
 
     }

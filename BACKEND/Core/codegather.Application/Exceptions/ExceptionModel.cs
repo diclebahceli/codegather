@@ -2,7 +2,7 @@
 
 namespace codegather.Application;
 
-public class ExceptionModel
+public class ExceptionModel: ErrorStatusCode
 {
     public IEnumerable<string> Errors { get; set; }
     public override string ToString()

@@ -29,7 +29,7 @@ public class CompetitionController : ControllerBase
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPut]
     public async Task<IActionResult> UpdateCompetition(UpdateCompetitionCommandRequest request)
     {
         await mediator.Send(request);
