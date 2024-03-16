@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using SendGrid.Helpers.Errors.Model;
 
@@ -29,6 +29,12 @@ public class ExceptionMiddleware : IMiddleware
                 $"Error Message: {exception.Message}",
                 $"Message Description: {exception.InnerException?.Message}",
             };
+
+        if(exception is ValidationException validationException)
+        {
+            errors = validationException.Errors.Select(e => e.ErrorMessage).ToList();
+        }
+
 
         return context.Response.WriteAsync(new ExceptionModel
         {

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace codegather.Application;
 
-public class CreateCompetitionCommandHandler : IRequestHandler<CreateCompetitionCommandRequest>
+public class CreateCompetitionCommandHandler : IRequestHandler<CreateCompetitionCommandRequest, Unit>
 {
 
     private readonly IUnitOfWork _unitOfWork;
@@ -13,10 +13,12 @@ public class CreateCompetitionCommandHandler : IRequestHandler<CreateCompetition
 
     }
 
-    public async Task Handle(CreateCompetitionCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CreateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
         Competition competition = new(request.Title, request.Description, request.StartTime, request.EndTime);
         await _unitOfWork.GetWriteRepository<Competition>().AddAsync(competition);
         await _unitOfWork.SaveAsync();
+
+        return Unit.Value;
     }
 }
