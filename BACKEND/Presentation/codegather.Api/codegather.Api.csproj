@@ -8,12 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\codegather.Application\codegather.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\codegather.Persistance\codegather.Persistance.csproj" />
+    <ProjectReference Include="..\..\Core\codegather.Mapper\codegather.Mapper.csproj" />
   </ItemGroup>
 
 </Project>
