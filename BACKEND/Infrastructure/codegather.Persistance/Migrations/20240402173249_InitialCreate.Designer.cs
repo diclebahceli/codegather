@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240316191307_InitialCreate")]
+    [Migration("20240402173249_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,6 +19,21 @@ namespace codegather.Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+
+            modelBuilder.Entity("CompetitionUser", b =>
+                {
+                    b.Property<int>("CompetitionsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("JoinedUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CompetitionsId", "JoinedUsersId");
+
+                    b.HasIndex("JoinedUsersId");
+
+                    b.ToTable("CompetitionUser");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -153,22 +168,22 @@ namespace codegather.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8447),
-                            Description = "Molestiae et qui in aut qui et fugit. Et doloribus illo quas consequatur atque saepe voluptatem accusamus. Occaecati ut est.",
-                            EndTime = new DateTime(2024, 3, 23, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8693),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7509),
+                            Description = "Laboriosam ipsa et aliquid possimus possimus. Beatae et nam. Aut doloribus omnis impedit eveniet. Ipsam minima vero quia.",
+                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7816),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8691),
-                            Title = "Quod totam."
+                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7813),
+                            Title = "Sapiente omnis."
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8701),
-                            Description = "Autem qui culpa dolorem nulla autem impedit est. Laborum porro fugiat. Et sed qui autem a iusto voluptates. Asperiores placeat tempore ut ratione dolore. Accusamus est est necessitatibus et voluptate corrupti dolores. Magnam quibusdam animi rerum blanditiis temporibus illum repudiandae.",
-                            EndTime = new DateTime(2024, 3, 23, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8920),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7824),
+                            Description = "Et reprehenderit voluptas cumque voluptate voluptatum. Molestiae ea velit est minima iste explicabo sunt unde. Ut optio dolorum. Aut laboriosam consequuntur et et a odio ducimus quaerat. Vel et nesciunt.",
+                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8003),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8919),
-                            Title = "Id modi."
+                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8001),
+                            Title = "Qui eius."
                         });
                 });
 
@@ -199,7 +214,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 1,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(842),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1040),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -207,7 +222,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 2,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(863),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1067),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -215,7 +230,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 3,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(866),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1070),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -223,7 +238,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 4,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(868),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1072),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         });
@@ -263,8 +278,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 1,
                             CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(3605),
-                            Description = "Ut rem est aspernatur id aut consectetur illum sapiente atque. Incidunt sequi rerum atque soluta natus aut quaerat modi voluptatibus. Dolor aut minima quia porro. Laboriosam assumenda eum sequi. Autem non atque animi mollitia qui veritatis odit id.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5530),
+                            Description = "Quos aperiam consequatur. Sit quaerat possimus dignissimos ullam. Ipsum debitis qui fuga repellendus totam eveniet fugiat. Provident est autem distinctio assumenda et velit corrupti et quae. Explicabo qui non voluptatem eum non vel dolorem voluptatibus. Molestiae rerum dolores harum.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -272,8 +287,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 2,
                             CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(3924),
-                            Description = "Occaecati ullam tempora natus eos facilis officiis. Nemo ab quia. Temporibus ut dolorem est et magni voluptatem ea. Perspiciatis aut qui ut. Nulla consequatur sit dicta facilis. Est est est sed sunt sit et nihil quas aut.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5901),
+                            Description = "Sint dolor dolorem aliquid. Possimus explicabo qui optio aut ea. Sint repellendus sit sit consequatur iste consequatur officiis. Non dolorem voluptas aliquid animi minima et maxime placeat veritatis.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -281,8 +296,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 3,
                             CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(4082),
-                            Description = "Cum consectetur et eum id perferendis qui fugiat aspernatur. Officiis tenetur occaecati rem repellat perferendis. Ipsum sint molestias aut voluptas laborum. Veniam magni voluptas ipsa sit vitae.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6019),
+                            Description = "Quasi quas ea omnis velit ullam qui. Sed quasi autem officiis corrupti laboriosam. Ipsa iure ipsa debitis et aut consequatur nihil iste voluptas. Quibusdam placeat dolor corporis.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -290,8 +305,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 4,
                             CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(4219),
-                            Description = "Corporis at iste sapiente pariatur sint enim maiores ab itaque. Quos magni laborum minima esse odit aperiam. Doloremque dolorum et et. Omnis itaque et ea corporis voluptates consectetur recusandae dolores. Temporibus sed veniam illo. Suscipit maiores fugit voluptas saepe placeat.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6189),
+                            Description = "Eos doloremque dolore dolor sit laudantium. Veniam harum sequi suscipit inventore aut illum. Et voluptas aut totam. Molestias consequatur laborum numquam accusamus non voluptas.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         });
@@ -436,6 +451,21 @@ namespace codegather.Persistance.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CompetitionUser", b =>
+                {
+                    b.HasOne("codegather.Domain.Competition", null)
+                        .WithMany()
+                        .HasForeignKey("CompetitionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("JoinedUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

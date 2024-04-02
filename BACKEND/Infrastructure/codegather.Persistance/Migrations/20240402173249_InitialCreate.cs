@@ -195,6 +195,30 @@ namespace codegather.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompetitionUser",
+                columns: table => new
+                {
+                    CompetitionsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    JoinedUsersId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompetitionUser", x => new { x.CompetitionsId, x.JoinedUsersId });
+                    table.ForeignKey(
+                        name: "FK_CompetitionUser_AspNetUsers_JoinedUsersId",
+                        column: x => x.JoinedUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CompetitionUser_Competitions_CompetitionsId",
+                        column: x => x.CompetitionsId,
+                        principalTable: "Competitions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -260,8 +284,8 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CreatedTime", "Description", "EndTime", "IsDeleted", "StartTime", "Title" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8447), "Molestiae et qui in aut qui et fugit. Et doloribus illo quas consequatur atque saepe voluptatem accusamus. Occaecati ut est.", new DateTime(2024, 3, 23, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8693), false, new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8691), "Quod totam." },
-                    { 2, new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8701), "Autem qui culpa dolorem nulla autem impedit est. Laborum porro fugiat. Et sed qui autem a iusto voluptates. Asperiores placeat tempore ut ratione dolore. Accusamus est est necessitatibus et voluptate corrupti dolores. Magnam quibusdam animi rerum blanditiis temporibus illum repudiandae.", new DateTime(2024, 3, 23, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8920), false, new DateTime(2024, 3, 16, 22, 13, 7, 561, DateTimeKind.Local).AddTicks(8919), "Id modi." }
+                    { 1, new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7509), "Laboriosam ipsa et aliquid possimus possimus. Beatae et nam. Aut doloribus omnis impedit eveniet. Ipsam minima vero quia.", new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7816), false, new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7813), "Sapiente omnis." },
+                    { 2, new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7824), "Et reprehenderit voluptas cumque voluptate voluptatum. Molestiae ea velit est minima iste explicabo sunt unde. Ut optio dolorum. Aut laboriosam consequuntur et et a odio ducimus quaerat. Vel et nesciunt.", new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8003), false, new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8001), "Qui eius." }
                 });
 
             migrationBuilder.InsertData(
@@ -269,10 +293,10 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CompileTime", "CreatedTime", "IsDeleted", "MemoryUsage" },
                 values: new object[,]
                 {
-                    { 1, 0.5f, new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(842), false, 0.5f },
-                    { 2, 0.5f, new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(863), false, 0.5f },
-                    { 3, 0.5f, new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(866), false, 0.5f },
-                    { 4, 0.5f, new DateTime(2024, 3, 16, 22, 13, 7, 564, DateTimeKind.Local).AddTicks(868), false, 0.5f }
+                    { 1, 0.5f, new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1040), false, 0.5f },
+                    { 2, 0.5f, new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1067), false, 0.5f },
+                    { 3, 0.5f, new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1070), false, 0.5f },
+                    { 4, 0.5f, new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1072), false, 0.5f }
                 });
 
             migrationBuilder.InsertData(
@@ -280,10 +304,10 @@ namespace codegather.Persistance.Migrations
                 columns: new[] { "Id", "CompetitionId", "CreatedTime", "Description", "IsDeleted", "TestCases" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(3605), "Ut rem est aspernatur id aut consectetur illum sapiente atque. Incidunt sequi rerum atque soluta natus aut quaerat modi voluptatibus. Dolor aut minima quia porro. Laboriosam assumenda eum sequi. Autem non atque animi mollitia qui veritatis odit id.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 2, 1, new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(3924), "Occaecati ullam tempora natus eos facilis officiis. Nemo ab quia. Temporibus ut dolorem est et magni voluptatem ea. Perspiciatis aut qui ut. Nulla consequatur sit dicta facilis. Est est est sed sunt sit et nihil quas aut.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 3, 2, new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(4082), "Cum consectetur et eum id perferendis qui fugiat aspernatur. Officiis tenetur occaecati rem repellat perferendis. Ipsum sint molestias aut voluptas laborum. Veniam magni voluptas ipsa sit vitae.", false, "Test case 1, Test case 2, Test case 3" },
-                    { 4, 2, new DateTime(2024, 3, 16, 22, 13, 7, 566, DateTimeKind.Local).AddTicks(4219), "Corporis at iste sapiente pariatur sint enim maiores ab itaque. Quos magni laborum minima esse odit aperiam. Doloremque dolorum et et. Omnis itaque et ea corporis voluptates consectetur recusandae dolores. Temporibus sed veniam illo. Suscipit maiores fugit voluptas saepe placeat.", false, "Test case 1, Test case 2, Test case 3" }
+                    { 1, 1, new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5530), "Quos aperiam consequatur. Sit quaerat possimus dignissimos ullam. Ipsum debitis qui fuga repellendus totam eveniet fugiat. Provident est autem distinctio assumenda et velit corrupti et quae. Explicabo qui non voluptatem eum non vel dolorem voluptatibus. Molestiae rerum dolores harum.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 2, 1, new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5901), "Sint dolor dolorem aliquid. Possimus explicabo qui optio aut ea. Sint repellendus sit sit consequatur iste consequatur officiis. Non dolorem voluptas aliquid animi minima et maxime placeat veritatis.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 3, 2, new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6019), "Quasi quas ea omnis velit ullam qui. Sed quasi autem officiis corrupti laboriosam. Ipsa iure ipsa debitis et aut consequatur nihil iste voluptas. Quibusdam placeat dolor corporis.", false, "Test case 1, Test case 2, Test case 3" },
+                    { 4, 2, new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6189), "Eos doloremque dolore dolor sit laudantium. Veniam harum sequi suscipit inventore aut illum. Et voluptas aut totam. Molestias consequatur laborum numquam accusamus non voluptas.", false, "Test case 1, Test case 2, Test case 3" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,6 +348,11 @@ namespace codegather.Persistance.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CompetitionUser_JoinedUsersId",
+                table: "CompetitionUser",
+                column: "JoinedUsersId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_CompetitionId",
                 table: "Questions",
                 column: "CompetitionId");
@@ -362,6 +391,9 @@ namespace codegather.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CompetitionUser");
 
             migrationBuilder.DropTable(
                 name: "Submissions");

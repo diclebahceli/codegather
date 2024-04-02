@@ -3,6 +3,8 @@ using codegather.Persistance;
 using codegather.Mapper;
 using codegather.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using codegather.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +63,47 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+    var roles = new[] { "Admin", "Manager", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new Role()
+            {
+                Id = Guid.NewGuid(),
+                Name = role,
+                NormalizedName = role.ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+
+            });
+
+
+    }
+}
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    string email = "admin@admin.com";
+    string password = "123456789.";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        User user = new User()
+        {
+            UserName = "admin",
+            Email = email,
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
+
+        var result = await userManager.CreateAsync(user, password);
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
+
 
 app.ConfigureExceptionHandlingMiddleware();
 app.UseAuthorization();
