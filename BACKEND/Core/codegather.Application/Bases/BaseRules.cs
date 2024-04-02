@@ -1,5 +1,5 @@
 namespace codegather.Application;
-public abstract class BaseRule
+public abstract class BaseRules
 {
 
 }

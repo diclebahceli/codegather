@@ -20,8 +20,9 @@ public static class Registration
         RegisterRules(services, assembly);
     }
 
-    private static void RegisterRules(IServiceCollection services, Assembly assembly){
-        var types = assembly.GetTypes().Where(t => t.BaseType == typeof(BaseRule));
+    private static void RegisterRules(IServiceCollection services, Assembly assembly)
+    {
+        var types = assembly.GetTypes().Where(t => t.BaseType == typeof(BaseRules));
         foreach (var type in types)
         {
             services.AddTransient(type);

@@ -1,7 +1,7 @@
 using codegather.Domain;
 
 namespace codegather.Application;
-public class CompetitionRules : BaseRule
+public class CompetitionRules : BaseRules
 {
     public Task CompetitionNameMustBeUnique(List<Competition> competitions, string name)
     {
