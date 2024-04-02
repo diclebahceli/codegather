@@ -22,4 +22,32 @@ public class AuthController : ControllerBase
         await mediator.Send(request);
         return StatusCode(StatusCodes.Status201Created);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginCommandRequest request)
+    {
+        LoginCommandResponse response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout(LogoutCommandRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LogoutAll(LogoutAllCommandRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RefreshToken(RefreshTokenCommandRequest request)
+    {
+        RefreshTokenCommandResponse response = await mediator.Send(request);
+        return Ok(response);
+    }
 }

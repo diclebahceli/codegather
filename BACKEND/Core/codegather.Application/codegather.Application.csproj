@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Features/Competitions/Rules/" />
+    <Folder Include="Features/User/" />
     <Folder Include="Features\Questions\Commands\" />
   </ItemGroup>
 
