@@ -1,7 +1,7 @@
 using codegather.Application;
 using codegather.Persistance;
 using codegather.Mapper;
-
+using codegather.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,7 @@ builder.Configuration
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddCustomMapper();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 
