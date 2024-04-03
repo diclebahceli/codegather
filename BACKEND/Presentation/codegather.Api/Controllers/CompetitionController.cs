@@ -1,11 +1,13 @@
 using codegather.Application;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace codegather.Api;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
+[Authorize]
 public class CompetitionController : ControllerBase
 {
     private IMediator mediator;
@@ -22,7 +24,9 @@ public class CompetitionController : ControllerBase
         return Ok(response);
     }
 
+
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> CreateCompetition(CreateCompetitionCommandRequest request)
     {
         await mediator.Send(request);
@@ -30,6 +34,7 @@ public class CompetitionController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> UpdateCompetition(UpdateCompetitionCommandRequest request)
     {
         await mediator.Send(request);
@@ -37,7 +42,8 @@ public class CompetitionController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteCompetition(DeleteCompetitionCommandRequest request)
+    [Authorize(Roles = "Admin,Manager")]
+    public async Task<IActionResult> DeleteCompetition([FromQuery]DeleteCompetitionCommandRequest request)
     {
         await mediator.Send(request);
         return Ok();

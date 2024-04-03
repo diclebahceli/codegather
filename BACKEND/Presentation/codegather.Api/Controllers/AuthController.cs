@@ -1,5 +1,6 @@
 ﻿using codegather.Application;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace codegather.Api;
@@ -7,6 +8,7 @@ namespace codegather.Api;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
+
 public class AuthController : ControllerBase
 {
     private readonly IMediator mediator;
@@ -38,6 +40,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> LogoutAll(LogoutAllCommandRequest request)
     {
         await mediator.Send(request);
