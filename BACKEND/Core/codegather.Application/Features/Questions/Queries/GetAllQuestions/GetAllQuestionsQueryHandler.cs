@@ -1,40 +1,30 @@
 ﻿using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
 
-public class GetAllQuestionsQueryHandler
+public class GetAllQuestionsQueryHandler : BaseHandler, IRequestHandler<GetAllQuestionsQueryRequest, GetAllQuestionsQueryResponse>
 {
-
-    private IUnitOfWork unityOfWork;
-    private readonly IMapper mapper;
-    public GetAllQuestionsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetAllQuestionsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
     {
-        unityOfWork = unitOfWork;
-        this.mapper = mapper;
     }
 
-
-    public async Task<IList<GetAllQuestionsQueryResponse>> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<GetAllQuestionsQueryResponse> Handle(GetAllQuestionsQueryRequest request, CancellationToken cancellationToken)
     {
-        var Questions = await unityOfWork
+        var questions = await unitOfWork
         .GetReadRepository<Question>()
-        .GetAllAsync(include: q => q.Include(q => q.Competition));
+        .GetAllAsync(include: q => q.Include(q => q.Competition), enableTracking: false, predicate: q => !q.IsDeleted);
 
         mapper.AddConfig<CompetitionDto, Competition>();
-        // List<GetAllCompetitionsQueryResponse> responses = Competitions.Select(p => new GetAllCompetitionsQueryResponse
-        // {
-        //     Title = p.Title,
-        //     Description = p.Description,
-        //     EndTime = p.EndTime,
-        //     StartTime = p.StartTime
-        // }).ToList();
 
-        var response = mapper.Map<GetAllQuestionsQueryResponse, Question>(Questions);
+        var response = new GetAllQuestionsQueryResponse
+        {
+            Questions = mapper.Map<List<QuestionDto>, List<Question>>(questions)
+        };
 
-        throw new Exception("ERROR MESSAGE");
         return response;
     }
 }

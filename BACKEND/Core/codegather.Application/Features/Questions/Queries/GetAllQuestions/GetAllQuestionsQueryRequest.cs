@@ -1,6 +1,8 @@
-﻿namespace codegather.Application;
+﻿using MediatR;
 
-public class GetAllQuestionsQueryRequest
+namespace codegather.Application;
+
+public class GetAllQuestionsQueryRequest: IRequest<GetAllQuestionsQueryResponse>
 {
     
 }
