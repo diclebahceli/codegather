@@ -23,9 +23,12 @@ public class RegisterCommandHandler : BaseHandler, IRequestHandler<RegisterComma
     public async Task<Unit> Handle(RegisterCommandRequest request, CancellationToken cancellationToken)
     {
         await authRules.UserShouldNotExists(await userManager.FindByEmailAsync(request.Email));
-        User user = mapper.Map<User, RegisterCommandRequest>(request);
-        user.UserName = request.Email;
-        user.SecurityStamp = Guid.NewGuid().ToString();
+        User user = new()
+        {
+            Email = request.Email,
+            UserName = request.UserName,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
         IdentityResult result = await userManager.CreateAsync(user, request.Password);
         if (result.Succeeded)
         {
@@ -39,8 +42,8 @@ public class RegisterCommandHandler : BaseHandler, IRequestHandler<RegisterComma
                     ConcurrencyStamp = Guid.NewGuid().ToString()
 
                 });
-                await userManager.AddToRoleAsync(user, "User");
             }
+            await userManager.AddToRoleAsync(user, "User");
         }
         return Unit.Value;
     }
