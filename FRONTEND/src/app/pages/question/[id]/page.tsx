@@ -25,7 +25,7 @@ export default async function EditorPage({ params }: { params: { id: number } })
 
                 </div>
                 <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
-                    <div style={{ height: "35em" }}>
+                    <div style={{ height: "30em" }}>
                         <AceEditorComponent onValueChange={onValueChange} />
                     </div>
                     <div className="flex-grow-1 mt-2">
