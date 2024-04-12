@@ -13,10 +13,8 @@ export default async function CompetitionDetail({ params }: { params: { id: numb
             <div className="d-flex flex-row justify-content-around">
                 <div className="mt-5 d-flex flex-column col-3 align-self-center">
                     {questions.map((question, index) => (
-                        <QuestionCard key={question.id || index} question={question} >
-                        </QuestionCard>
+                        <QuestionCard key={question.id || index} question={question}/>
                     ))}
-
                 </div>
                 <div className="col-3 text-center mt-5 fs-2">
                     <div className="d-flex flex-column align-items-center">
