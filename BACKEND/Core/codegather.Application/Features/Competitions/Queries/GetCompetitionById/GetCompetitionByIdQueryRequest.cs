@@ -2,7 +2,7 @@
 
 namespace codegather.Application;
 
-public class DeleteCompetitionCommandRequest : IRequest<Unit>
+public class GetCompetitionByIdQueryRequest : IRequest<GetCompetitionByIdQueryResponse>
 {
     public Guid Id { get; set; }
 }

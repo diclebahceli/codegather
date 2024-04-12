@@ -3,5 +3,5 @@ using MediatR;
 namespace codegather.Application;
 public class DeleteQuestionCommandRequest: IRequest<Unit>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }

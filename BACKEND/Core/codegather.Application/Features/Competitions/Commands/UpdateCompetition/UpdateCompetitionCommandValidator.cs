@@ -1,11 +1,11 @@
 using FluentValidation;
 
 namespace codegather.Application;
-public class UpdateCompetitionCommandValidator: AbstractValidator<UpdateCompetitionCommandRequest>
+public class UpdateCompetitionCommandValidator : AbstractValidator<UpdateCompetitionCommandRequest>
 {
     public UpdateCompetitionCommandValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0).WithMessage("Id must be valid");
+        RuleFor(x => x.Id).NotNull().WithMessage("Id must be valid");
         RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required");
         RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
         RuleFor(x => x.StartTime).NotEmpty().WithMessage("StartDate is required");
