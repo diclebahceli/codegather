@@ -1,7 +1,7 @@
 using MediatR;
 
 namespace codegather.Application;
-public class GetAllCompetitionsQueryRequest: IRequest<IList<GetAllCompetitionsQueryResponse>>
+public class GetAllCompetitionsQueryRequest: IRequest<GetAllCompetitionsQueryResponse>
 {
     
 }

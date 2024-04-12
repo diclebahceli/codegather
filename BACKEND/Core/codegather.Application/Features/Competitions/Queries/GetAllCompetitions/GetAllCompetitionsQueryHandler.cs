@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
-public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitionsQueryRequest, IList<GetAllCompetitionsQueryResponse>>
+public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitionsQueryRequest, GetAllCompetitionsQueryResponse>
 {
     private IUnitOfWork unityOfWork;
     private readonly IMapper mapper;
@@ -15,7 +15,7 @@ public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitions
     }
 
 
-    public async Task<IList<GetAllCompetitionsQueryResponse>> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<GetAllCompetitionsQueryResponse> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
     {
         var Competitions = await unityOfWork.GetReadRepository<Competition>().GetAllAsync();
         // List<GetAllCompetitionsQueryResponse> responses = Competitions.Select(p => new GetAllCompetitionsQueryResponse
@@ -31,4 +31,6 @@ public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitions
         // return response;
         throw new Exception("hata mesaji: ");
     }
+
+
 }
