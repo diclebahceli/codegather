@@ -1,4 +1,5 @@
 using codegather.Application;
+using codegather.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,5 +16,13 @@ public static class Registration
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddIdentityCore<User>(options =>
+        {
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequiredLength = 8;
+            options.SignIn.RequireConfirmedEmail = false;
+        }).AddRoles<Role>().AddEntityFrameworkStores<AppDbContext>();
     }
 }

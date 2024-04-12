@@ -13,18 +13,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(s => s.UserId);
 
 
-
-        User user1 = new User
-        {
-            Id = 1,
-        };
-
-        User user2 = new User
-        {
-            Id = 2,
-        };
-
-        builder.HasData(user1, user2);
-
+        builder.HasMany(u => u.Competitions)
+            .WithMany(c => c.JoinedUsers); ;
     }
+
 }

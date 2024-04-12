@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using SendGrid.Helpers.Errors.Model;
-
 namespace codegather.Application;
 
 public class ExceptionMiddleware : IMiddleware
@@ -24,15 +23,31 @@ public class ExceptionMiddleware : IMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
 
+        if (exception.GetType() == typeof(ValidationException))
+        {
+            return context.Response.WriteAsync(new ExceptionModel
+            {
+                Errors = ((ValidationException)exception).Errors.Select(f => f.ErrorMessage),
+                StatusCode = StatusCodes.Status400BadRequest
+            }.ToString());
+        }
+
         List<string> errors = new()
             {
                 $"Error Message: {exception.Message}",
                 $"Message Description: {exception.InnerException?.Message}",
             };
 
+        if(exception is ValidationException validationException)
+        {
+            errors = validationException.Errors.Select(e => e.ErrorMessage).ToList();
+        }
+
+
         return context.Response.WriteAsync(new ExceptionModel
         {
-            Errors = errors
+            Errors = errors,
+            StatusCode = statusCode
         }.ToString());
 
     }
