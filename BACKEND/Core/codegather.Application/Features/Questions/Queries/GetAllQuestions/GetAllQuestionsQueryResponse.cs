@@ -2,6 +2,5 @@
 
 public class GetAllQuestionsQueryResponse
 {
-    public string? Description { get; set; }
-    public CompetitionDto? Competition { get; set; }
+    public ICollection<QuestionDto> Questions { get; set; } = new List<QuestionDto>();
 }

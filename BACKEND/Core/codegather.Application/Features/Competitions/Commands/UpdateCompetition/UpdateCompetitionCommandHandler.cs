@@ -4,7 +4,7 @@ using MediatR;
 
 namespace codegather.Application;
 
-public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetitionCommandRequest>
+public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetitionCommandRequest,Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -13,7 +13,7 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         this._unitOfWork = unitOfWork;
         this._mapper = mapper;
     }
-    public async Task Handle(UpdateCompetitionCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
         var competition = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true);
         var newObject = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
@@ -23,5 +23,7 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         competition.EndTime = newObject.EndTime;
         await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(competition);
         await _unitOfWork.SaveAsync();
+
+        return Unit.Value;
     }
 }

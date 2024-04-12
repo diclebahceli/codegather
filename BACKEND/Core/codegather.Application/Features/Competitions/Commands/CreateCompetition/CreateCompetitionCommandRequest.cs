@@ -2,7 +2,7 @@
 
 namespace codegather.Application;
 
-public class CreateCompetitionCommandRequest : IRequest
+public class CreateCompetitionCommandRequest : IRequest<Unit>
 {
     public string Title { get; set; }
     public string Description { get; set; }

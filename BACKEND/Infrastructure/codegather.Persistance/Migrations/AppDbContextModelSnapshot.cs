@@ -17,6 +17,120 @@ namespace codegather.Persistance.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
+            modelBuilder.Entity("CompetitionUser", b =>
+                {
+                    b.Property<int>("CompetitionsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("JoinedUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CompetitionsId", "JoinedUsersId");
+
+                    b.HasIndex("JoinedUsersId");
+
+                    b.ToTable("CompetitionUser");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("codegather.Domain.Competition", b =>
                 {
                     b.Property<int>("Id")
@@ -51,22 +165,22 @@ namespace codegather.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8385),
-                            Description = "Consequatur aliquid sunt temporibus tenetur omnis voluptatem quasi natus. Dolorum eius inventore rerum soluta rerum provident beatae commodi. Accusantium est ut eos rerum doloremque libero modi aut. Et dolore possimus excepturi et quia. Hic illo voluptatem id exercitationem.",
-                            EndTime = new DateTime(2024, 3, 5, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8796),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7509),
+                            Description = "Laboriosam ipsa et aliquid possimus possimus. Beatae et nam. Aut doloribus omnis impedit eveniet. Ipsam minima vero quia.",
+                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7816),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8792),
-                            Title = "Vero repellendus."
+                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7813),
+                            Title = "Sapiente omnis."
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8804),
-                            Description = "Eligendi qui illo optio nulla quis. Aliquam soluta odit aspernatur autem et. Aut aut possimus est labore quidem quas porro id cupiditate. Facilis quidem error laboriosam error eius voluptate. Necessitatibus veniam asperiores ut.",
-                            EndTime = new DateTime(2024, 3, 5, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8999),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7824),
+                            Description = "Et reprehenderit voluptas cumque voluptate voluptatum. Molestiae ea velit est minima iste explicabo sunt unde. Ut optio dolorum. Aut laboriosam consequuntur et et a odio ducimus quaerat. Vel et nesciunt.",
+                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8003),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 2, 27, 17, 56, 8, 77, DateTimeKind.Local).AddTicks(8997),
-                            Title = "Alias fuga."
+                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8001),
+                            Title = "Qui eius."
                         });
                 });
 
@@ -97,7 +211,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 1,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5478),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1040),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -105,7 +219,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 2,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5519),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1067),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -113,7 +227,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 3,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5522),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1070),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         },
@@ -121,7 +235,7 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 4,
                             CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 80, DateTimeKind.Local).AddTicks(5524),
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1072),
                             IsDeleted = false,
                             MemoryUsage = 0.5f
                         });
@@ -161,8 +275,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 1,
                             CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1428),
-                            Description = "Earum harum molestias voluptates est ad non. Harum qui totam laudantium sit quas eum molestiae rerum. Porro delectus vitae. Quia vitae esse qui rerum. Quia enim id numquam quo dicta reiciendis. Dolorem consequatur illum accusantium et aliquid perspiciatis.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5530),
+                            Description = "Quos aperiam consequatur. Sit quaerat possimus dignissimos ullam. Ipsum debitis qui fuga repellendus totam eveniet fugiat. Provident est autem distinctio assumenda et velit corrupti et quae. Explicabo qui non voluptatem eum non vel dolorem voluptatibus. Molestiae rerum dolores harum.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -170,8 +284,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 2,
                             CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1837),
-                            Description = "Rerum qui modi cum atque aut. Numquam quod magnam enim neque saepe. Consequuntur voluptatem commodi maiores animi reiciendis. Fugiat aut ipsum architecto qui fugiat et.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5901),
+                            Description = "Sint dolor dolorem aliquid. Possimus explicabo qui optio aut ea. Sint repellendus sit sit consequatur iste consequatur officiis. Non dolorem voluptas aliquid animi minima et maxime placeat veritatis.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -179,8 +293,8 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 3,
                             CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(1950),
-                            Description = "Cupiditate temporibus assumenda minima officia eveniet eum quis. Itaque iure unde rerum est doloremque. Repellendus omnis consectetur magnam eum ratione molestiae est. Corrupti ut voluptas.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6019),
+                            Description = "Quasi quas ea omnis velit ullam qui. Sed quasi autem officiis corrupti laboriosam. Ipsa iure ipsa debitis et aut consequatur nihil iste voluptas. Quibusdam placeat dolor corporis.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         },
@@ -188,11 +302,38 @@ namespace codegather.Persistance.Migrations
                         {
                             Id = 4,
                             CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 84, DateTimeKind.Local).AddTicks(2100),
-                            Description = "Suscipit consequatur necessitatibus. Illum enim inventore at voluptatem distinctio. Sit sint odit.",
+                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6189),
+                            Description = "Eos doloremque dolore dolor sit laudantium. Veniam harum sequi suscipit inventore aut illum. Et voluptas aut totam. Molestias consequatur laborum numquam accusamus non voluptas.",
                             IsDeleted = false,
                             TestCases = "Test case 1, Test case 2, Test case 3"
                         });
+                });
+
+            modelBuilder.Entity("codegather.Domain.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("codegather.Domain.Submission", b =>
@@ -223,8 +364,8 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -236,87 +377,143 @@ namespace codegather.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Submissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "Consequatur tenetur eum est veniam corporis labore pariatur voluptatum ut. Quod quo assumenda cumque. Qui laboriosam vero eligendi in. Soluta unde aut recusandae.",
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1490),
-                            IsCorrect = true,
-                            IsDeleted = false,
-                            MetricsId = 1,
-                            QuestionId = 1,
-                            SubmissionTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1759),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "Molestiae ut deleniti quibusdam. Unde labore ut culpa quisquam eveniet quibusdam quia delectus. Cum ad voluptas voluptates sit perferendis. Quam possimus repellendus. Accusamus est in ipsum. Aperiam quis quia distinctio in facilis dolores quis error ea.",
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1763),
-                            IsCorrect = true,
-                            IsDeleted = false,
-                            MetricsId = 2,
-                            QuestionId = 1,
-                            SubmissionTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1913),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "Voluptatem voluptatum quae delectus veniam illo optio. Eligendi accusantium ab magnam quisquam mollitia sequi quas. Aut perspiciatis eum nihil doloremque. Blanditiis vero rerum. Voluptate perspiciatis veritatis est aut.",
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(1916),
-                            IsCorrect = true,
-                            IsDeleted = false,
-                            MetricsId = 3,
-                            QuestionId = 2,
-                            SubmissionTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2141),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = "Non nihil ex voluptas quam odio porro fugit. Corporis rerum sed rerum fugit est laudantium aperiam impedit exercitationem. Ut non quo minus architecto rerum aspernatur nulla facilis. Consectetur perspiciatis eos. Ab sit et voluptatibus itaque vitae cumque possimus iste.",
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2145),
-                            IsCorrect = false,
-                            IsDeleted = false,
-                            MetricsId = 4,
-                            QuestionId = 2,
-                            SubmissionTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(2335),
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("codegather.Domain.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(8333),
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2024, 2, 27, 17, 56, 8, 87, DateTimeKind.Local).AddTicks(8352),
-                            IsDeleted = false
-                        });
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CompetitionUser", b =>
+                {
+                    b.HasOne("codegather.Domain.Competition", null)
+                        .WithMany()
+                        .HasForeignKey("CompetitionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("JoinedUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("codegather.Domain.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("codegather.Domain.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("codegather.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("codegather.Domain.Question", b =>
