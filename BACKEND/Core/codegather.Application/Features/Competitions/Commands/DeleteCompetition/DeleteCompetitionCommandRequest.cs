@@ -4,5 +4,5 @@ namespace codegather.Application;
 
 public class DeleteCompetitionCommandRequest : IRequest<Unit>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }
