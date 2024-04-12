@@ -4,6 +4,7 @@ import '../../styles/_variables.scss';
 import "./globals.css";
 import Header from "./components/header/Header";
 import { Encode_Sans } from "next/font/google";
+import {Toaster} from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 const encodeSans = Encode_Sans({ subsets: ["latin"] });
@@ -25,7 +26,7 @@ export default function RootLayout({
                     <Header />
                     <div className="flex-grow-1">
                         {children}
-
+                        <Toaster />
                     </div>
                 </div>
             </body>

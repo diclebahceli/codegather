@@ -24,7 +24,7 @@ function AceEditorComponent({ onValueChange }: { onValueChange: (value: string) 
             name="blah2"
             onLoad={onLoad}
             onChange={onChange}
-            fontSize={18}
+            fontSize={15}
             showPrintMargin={true}
             showGutter={true}
             highlightActiveLine={true}
