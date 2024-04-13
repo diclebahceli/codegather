@@ -33,5 +33,14 @@ public static class Registration
                 ClockSkew = TimeSpan.Zero
             };
         });
+
+        services.AddHttpClient<ICodeEditorService, CodeEditorApiService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["CodeEditorApi:BaseUrl"]);
+        });
+
+        services.AddTransient<ICodeEditorService, CodeEditorApiService>();
+
+        
     }
 }
