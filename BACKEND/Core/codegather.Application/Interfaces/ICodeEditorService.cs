@@ -2,6 +2,6 @@
 
 public interface ICodeEditorService
 {
-    Task CreateSubmission(JudgeSubmissionDto content);
+    Task<JudgeResultDto> CreateSubmission(JudgeSubmissionDto content);
     Task<JudgeResultDto> GetResult(string token);
 }

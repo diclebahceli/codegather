@@ -14,13 +14,14 @@ public class GetResultByTokenQueryHandler : BaseHandler, IRequestHandler<GetResu
 
     public async Task<GetResultByTokenQueryResponse> Handle(GetResultByTokenQueryRequest request, CancellationToken cancellationToken)
     {
-        var result = await codeEditorService.GetResult(request.Token);
-        if (result == null)
-            throw new Exception("No such submission found");
+        // var result = await codeEditorService.GetResult(request.Token);
+        // if (result == null)
+        //     throw new Exception("No such submission found");
 
-        return new GetResultByTokenQueryResponse
-        {
-            Submission = result
-        };
+        // return new GetResultByTokenQueryResponse
+        // {
+        //     Submission = result
+        // };
+        return new GetResultByTokenQueryResponse();
     }
 }

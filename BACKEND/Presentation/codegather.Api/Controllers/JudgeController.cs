@@ -18,8 +18,8 @@ public class JudgeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Submit(JudgeSubmitCommandRequest request)
     {
-        await mediator.Send(request);
-        return Ok();
+        var response = await mediator.Send(request);
+        return Ok(response);
     }
 
     [HttpGet]

@@ -2,6 +2,7 @@
 using System.Text;
 using codegather.Application;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace codegather.Infrastructure;
 
@@ -16,15 +17,13 @@ public class CodeEditorApiService : ICodeEditorService
     }
 
 
-    public async Task CreateSubmission(JudgeSubmissionDto judgeSubmissionDto)
+    public async Task<JudgeResultDto> CreateSubmission(JudgeSubmissionDto judgeSubmissionDto)
     {
-        var url = $"{_baseUrl}/submissions/?base64_encoded=false&wait=false";
-        var contentString = JsonConvert.SerializeObject(judgeSubmissionDto);
 
         using var request = new HttpRequestMessage()
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*"),
+            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&fields=*"),
             Headers =
     {
         { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
@@ -39,27 +38,67 @@ public class CodeEditorApiService : ICodeEditorService
             }
         };
 
-        using var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+        using (var response = await _httpClient.SendAsync(request))
+        {
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject jsonObject = JObject.Parse(body);
+
+            // Extract the token
+            string token = (string)jsonObject["token"];
+            JudgeResultDto res = await GetResult(token);
+            Console.WriteLine(token);
+            return res;
+        }
     }
 
 
 
     public async Task<JudgeResultDto> GetResult(string token)
     {
-        var url = $"{_baseUrl}/submissions/{token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id";
+        using var request = new HttpRequestMessage()
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"https://judge0-ce.p.rapidapi.com/submissions/{token}?base64_encoded=false&fields=*"),
+            Headers =
+    {
+        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
+    },
 
-        using var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer");
+        };
 
-        using var response = await _httpClient.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+        using (var response = await _httpClient.SendAsync(request))
+        {
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject jsonObject = JObject.Parse(body);
 
-        var responseString = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<JudgeResultDto>(responseString);
+            // Extract the token
+            string time = (string)jsonObject["time"];
+            string memory = (string)jsonObject["memory"];
 
-        return result;
+            string stderr = (string)jsonObject["stderr"];
+            string stdout = (string)jsonObject["stdout"];
+
+
+            string tokenn = (string)jsonObject["token"];
+
+            Console.WriteLine(body);
+
+            return new JudgeResultDto()
+            {
+                time = time,
+                memory = Convert.ToInt32(memory),
+                stderr = stderr,
+                stdout = stdout,
+                token = tokenn
+            };
+
+
+        }
     }
-
-
 }
+
+
+
