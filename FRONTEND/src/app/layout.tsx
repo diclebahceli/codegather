@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "./components/header/Header";
 import { Encode_Sans } from "next/font/google";
 import {Toaster} from "react-hot-toast";
+import {SetInterceptors} from "./services/AuthService";
 
 const inter = Inter({ subsets: ["latin"] });
 const encodeSans = Encode_Sans({ subsets: ["latin"] });
@@ -19,6 +20,7 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    SetInterceptors();
     return (
         <html lang="en" className={encodeSans.className}>
             <body >
