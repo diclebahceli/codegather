@@ -36,11 +36,11 @@ public static class Registration
 
         services.AddHttpClient<ICodeEditorService, CodeEditorApiService>(client =>
         {
-            client.BaseAddress = new Uri(configuration["CodeEditorApi:BaseUrl"]);
+            client.BaseAddress = new Uri("https://ce.judge0.com");
         });
 
-        services.AddTransient<ICodeEditorService, CodeEditorApiService>();
+        services.AddScoped<ICodeEditorService, CodeEditorApiService>();
 
-        
+
     }
 }

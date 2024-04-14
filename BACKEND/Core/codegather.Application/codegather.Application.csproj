@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\codegather.Domain\codegather.Domain.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\codegather.Infrastructure\codegather.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
