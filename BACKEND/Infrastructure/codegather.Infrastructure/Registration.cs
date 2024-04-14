@@ -33,5 +33,14 @@ public static class Registration
                 ClockSkew = TimeSpan.Zero
             };
         });
+
+        services.AddHttpClient<ICodeEditorService, CodeEditorApiService>(client =>
+        {
+            client.BaseAddress = new Uri("https://ce.judge0.com");
+        });
+
+        services.AddScoped<ICodeEditorService, CodeEditorApiService>();
+
+
     }
 }
