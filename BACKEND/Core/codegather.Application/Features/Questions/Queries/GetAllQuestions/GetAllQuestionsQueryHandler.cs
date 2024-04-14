@@ -22,7 +22,7 @@ public class GetAllQuestionsQueryHandler : BaseHandler, IRequestHandler<GetAllQu
 
         var response = new GetAllQuestionsQueryResponse
         {
-            Questions = mapper.Map<List<QuestionDto>, List<Question>>(questions)
+            Questions = questions.Select(q => mapper.Map<QuestionDto, Question>(q)).ToList()
         };
 
         return response;

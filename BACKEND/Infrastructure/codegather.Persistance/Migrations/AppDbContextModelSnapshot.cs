@@ -19,8 +19,8 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("CompetitionUser", b =>
                 {
-                    b.Property<int>("CompetitionsId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("CompetitionsId")
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("JoinedUsersId")
                         .HasColumnType("TEXT");
@@ -133,9 +133,9 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.Competition", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
@@ -160,35 +160,13 @@ namespace codegather.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Competitions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7509),
-                            Description = "Laboriosam ipsa et aliquid possimus possimus. Beatae et nam. Aut doloribus omnis impedit eveniet. Ipsam minima vero quia.",
-                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7816),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7813),
-                            Title = "Sapiente omnis."
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(7824),
-                            Description = "Et reprehenderit voluptas cumque voluptate voluptatum. Molestiae ea velit est minima iste explicabo sunt unde. Ut optio dolorum. Aut laboriosam consequuntur et et a odio ducimus quaerat. Vel et nesciunt.",
-                            EndTime = new DateTime(2024, 4, 9, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8003),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 4, 2, 20, 32, 49, 299, DateTimeKind.Local).AddTicks(8001),
-                            Title = "Qui eius."
-                        });
                 });
 
             modelBuilder.Entity("codegather.Domain.Metrics", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<float>("CompileTime")
                         .HasColumnType("REAL");
@@ -205,50 +183,16 @@ namespace codegather.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Metrics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1040),
-                            IsDeleted = false,
-                            MemoryUsage = 0.5f
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1067),
-                            IsDeleted = false,
-                            MemoryUsage = 0.5f
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1070),
-                            IsDeleted = false,
-                            MemoryUsage = 0.5f
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CompileTime = 0.5f,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 302, DateTimeKind.Local).AddTicks(1072),
-                            IsDeleted = false,
-                            MemoryUsage = 0.5f
-                        });
                 });
 
             modelBuilder.Entity("codegather.Domain.Question", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("CompetitionId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("CompetitionId")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
@@ -269,44 +213,6 @@ namespace codegather.Persistance.Migrations
                     b.HasIndex("CompetitionId");
 
                     b.ToTable("Questions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5530),
-                            Description = "Quos aperiam consequatur. Sit quaerat possimus dignissimos ullam. Ipsum debitis qui fuga repellendus totam eveniet fugiat. Provident est autem distinctio assumenda et velit corrupti et quae. Explicabo qui non voluptatem eum non vel dolorem voluptatibus. Molestiae rerum dolores harum.",
-                            IsDeleted = false,
-                            TestCases = "Test case 1, Test case 2, Test case 3"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CompetitionId = 1,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(5901),
-                            Description = "Sint dolor dolorem aliquid. Possimus explicabo qui optio aut ea. Sint repellendus sit sit consequatur iste consequatur officiis. Non dolorem voluptas aliquid animi minima et maxime placeat veritatis.",
-                            IsDeleted = false,
-                            TestCases = "Test case 1, Test case 2, Test case 3"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6019),
-                            Description = "Quasi quas ea omnis velit ullam qui. Sed quasi autem officiis corrupti laboriosam. Ipsa iure ipsa debitis et aut consequatur nihil iste voluptas. Quibusdam placeat dolor corporis.",
-                            IsDeleted = false,
-                            TestCases = "Test case 1, Test case 2, Test case 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CompetitionId = 2,
-                            CreatedTime = new DateTime(2024, 4, 2, 20, 32, 49, 304, DateTimeKind.Local).AddTicks(6189),
-                            Description = "Eos doloremque dolore dolor sit laudantium. Veniam harum sequi suscipit inventore aut illum. Et voluptas aut totam. Molestias consequatur laborum numquam accusamus non voluptas.",
-                            IsDeleted = false,
-                            TestCases = "Test case 1, Test case 2, Test case 3"
-                        });
                 });
 
             modelBuilder.Entity("codegather.Domain.Role", b =>
@@ -338,9 +244,9 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.Submission", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -355,11 +261,11 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MetricsId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("MetricsId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");

@@ -26,6 +26,20 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+
+builder.Services.AddCors(options =>
+{
+    string frontEndUrl = builder.Configuration["JWT:Audience"];
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins(frontEndUrl).AllowAnyMethod().AllowAnyHeader();
+            // builder.AllowAnyOrigin()
+            // .AllowAnyMethod()
+            // .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "socialMedia.Api", Version = "v1", Description = "Socail Media API swagger client" });
@@ -109,6 +123,7 @@ app.ConfigureExceptionHandlingMiddleware();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseCors();
 
 
 app.Run();
