@@ -124,10 +124,11 @@ function isAccessTokenValid(): boolean {
 
 export function ExtractErrorMessage(error: any): string {
   if (error.response) {
-    return error.response.data.Errors[0].split(":")[1].trim();
+    console.log(error.response.data);
+    return error.response.data;
   }
   else if (error.data) {
-    return error.data.Errors[0].split(":")[1].trim();
+    return error.data.Errors[0];
   }
   return error.message;
 }

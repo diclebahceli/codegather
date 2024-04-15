@@ -29,7 +29,13 @@ export default function RootLayout({
           <div className="flex-grow-1">
             {children}
             <Toaster
-              position="bottom-right" />
+              position="bottom-right"
+              toastOptions={
+                {
+                  success: {
+                    duration: 800
+                  }
+                }} />
           </div>
         </div>
       </body>
