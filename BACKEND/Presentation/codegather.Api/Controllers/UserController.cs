@@ -7,8 +7,8 @@ namespace codegather.Api;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-[Authorize]
-public class UserController: ControllerBase
+// [Authorize]
+public class UserController : ControllerBase
 {
 
     private readonly IMediator mediator;
@@ -19,7 +19,7 @@ public class UserController: ControllerBase
 
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
         var response = await mediator.Send(new GetAllUsersRequest());
