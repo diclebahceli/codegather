@@ -1,11 +1,10 @@
 "use client";
-import Button from "@/app/components/button/Button";
 import InputField from "@/app/components/input_field/InputField";
 import {LoginUserDTO} from "@/app/models/LoginUserDTO";
 import {Login} from "@/app/services/AuthService";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {useRef, useState} from "react";
+import {useRef} from "react";
 import {useFormStatus} from "react-dom";
 import toast from "react-hot-toast";
 
@@ -22,6 +21,7 @@ export default function LoginForm() {
 
     const reponse = await Login(loginInfo);
 
+
     ref.current?.reset();
 
     if (reponse.error) {
@@ -29,7 +29,9 @@ export default function LoginForm() {
       return;
     }
 
+
     toast.success("Logged in successfully");
+
     setTimeout(() => {
       router.push("/pages/ongoingCompetitions")
     }, 1000);

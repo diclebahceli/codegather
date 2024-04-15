@@ -24,14 +24,23 @@ export function RegisterForm() {
 
     const reponse = await Register(registerInfo);
 
+
     ref.current?.reset();
 
-    if (reponse.error) {
+    if(formData.get("password") !== formData.get("passwordag")) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+
+    if (reponse.error ) {
       toast.error(reponse.error);
       return;
     }
 
-    toast.success("Logged in successfully");
+
+
+    toast.success("Registered successfully");
     setTimeout(() => {
       router.push("/pages/login");
     }, 1000);
