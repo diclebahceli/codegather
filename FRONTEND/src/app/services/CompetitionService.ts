@@ -36,3 +36,41 @@ export async function getAllCompetitions(): Promise<{data: Competition[] | null,
       return { success: false, error: 'Failed to create competition' };
     }
   }
+
+
+  export async function updateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}>{
+    const {id, title, description, startDate, endDate} = competition;
+
+    try{
+      const response: AxiosResponse<Competition> = await axios.put(`${competitionEndPoint}/updateCompetition`, {id,title, description, startDate, endDate});
+
+      if(response.status === 200){
+        return {success:true, error:null};
+      }else{
+        console.error('Failed to update competition. Status:', response.status);
+        return {success:false, error:'Failed to update competition'}
+      }
+
+    }catch(error){
+      console.error('Error updating competition:', error);
+      return { success: false, error: 'Failed to update competition' };
+    }
+  }
+
+
+  export async function deleteCompetition(competitionId: string): Promise<{ success: boolean;  error: string| null}>{
+
+    try{
+      const response: AxiosResponse = await axios.delete(`${competitionEndPoint}/deleteCompetition/${competitionId}`);
+
+      if(response.status === 200){
+        return {success:true, error:null};
+      }else{
+        console.error('Failed to delete competition. Status:', response.status);
+        return {success:false, error:'Failed to delete competition'}
+      }
+    }catch(error){
+      console.error('Error deleting competition:', error);
+      return { success: false, error: 'Failed to delete competition' };
+    }
+  }
