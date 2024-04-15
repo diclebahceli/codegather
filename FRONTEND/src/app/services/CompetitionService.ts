@@ -2,11 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import { Competition } from "../models/Competition";
 import { BACKEND_URL } from "../utils/config";
 
-const competitionEndPoint = BACKEND_URL + "/competitions";
+const competitionEndPoint = BACKEND_URL + "/competition";
 
 export async function getAllCompetitions(): Promise<{data: Competition[] | null, error : string | null}> {
   try {
-    const response: AxiosResponse = await axios.get(`${competitionEndPoint}/getAll`);
+    const response = await axios.get(`${competitionEndPoint}/getAll`);
     if(response.status != 200) {
         const errors = response.data.Errors;
         console.log(errors);
