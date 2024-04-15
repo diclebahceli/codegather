@@ -14,14 +14,12 @@ export async function Register(info: RegisterUserDTO): Promise<{error: string | 
     const response = await axios.post(`${authEndpointUrl}/register`, {username, email, password})
 
     if (response.status != 200) {
-      const errors = response.data.Errors
-      console.log(errors)
-      return {error: errors}
+      return {error: ExtractErrorMessage(response)}
     }
     return {error: null};
   }
   catch (error: Error | any) {
-    return {error: error.message};
+    return {error: ExtractErrorMessage(error)};
   }
 }
 
@@ -41,17 +39,12 @@ export async function Login(info: LoginUserDTO): Promise<{error: string | null}>
       return {error: null};
     }
     else {
-
-      const errors = response.data.Errors
-      return {error: errors[0].message}
+      return {error: ExtractErrorMessage(response)}
     }
   }
   catch (error: Error | any) {
-    let errorMessage = error.message;
-    if (error.response.data.Errors[0]) {
-      errorMessage = error.response.data.Errors[0];
-    }
-    return {error: errorMessage};
+
+    return {error: ExtractErrorMessage(error)};
   }
 }
 
@@ -127,4 +120,14 @@ function isAccessTokenValid(): boolean {
     console.error('Error decoding token:', error);
     return false; // Handle decoding errors conservatively
   }
+}
+
+export function ExtractErrorMessage(error: any): string {
+  if (error.response) {
+    return error.response.data.Errors[0].split(":")[1].trim();
+  }
+  else if (error.data) {
+    return error.data.Errors[0].split(":")[1].trim();
+  }
+  return error.message;
 }
