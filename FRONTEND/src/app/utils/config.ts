@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.API_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export { BACKEND_URL };
 
