@@ -9,6 +9,17 @@ $dark: #151417;
 $grey: #252429;
 $green: #68c72e;
 
+$font-size-base: 1rem;
+$h1-font-size:                $font-size-base * 2.5;
+$h2-font-size:                $font-size-base * 2;
+$h3-font-size:                $font-size-base * 1.75;
+$h4-font-size:                $font-size-base * 1.5;
+$h5-font-size:                $font-size-base * 1.25;
+$h6-font-size:                $font-size-base;
+$hm-font-size:                $font-size-base * 5;
+$hl-font-size:                $font-size-base * 8;
+$hxl-font-size:                $font-size-base * 10;
+
 
 // ...other Bootstrap color variables you want to change
 
@@ -22,6 +33,20 @@ $theme-colors: (
     "grey": $grey,
     "green": $green,
     // ...
+);
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size,
+  m: $hm-font-size,
+  l: $hl-font-size,
+  xl: $hxl-font-size
+
+
+
 );
 // Import Bootstrap's Sass after your custom variables
 @import "../node_modules/bootstrap/scss/bootstrap"; // Adjust the path if needed
