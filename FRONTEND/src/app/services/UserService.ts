@@ -24,14 +24,47 @@ export async function getAllUsers(): Promise<{data:UserDto[] | null; error: stri
 
 export async function getUserById(userId: string): Promise<{data: UserDto | null; error: string | null}>{
     try{
-        const response = await axios.get(`${userEndPoint}/getById`);
+
+        const response = await axios.get(`${userEndPoint}/getById/${userId}`);
         if(response.status != 200){
             //TODO
-
+            const error = response.data.Errors;
+            return {data: null, error: error[0].message};
         }
-        //return {data: response.data.user}
-
-    }catch(error){
+        return {data: response.data.user as UserDto, error: null};
+    }catch(error : Error | any){
             //TODO
+            return {data: null, error: error.message};
+    }
+
+
+}
+
+
+export async function updateUser(userId: string) : Promise<{success: boolean ; error: string | null}>{
+
+    try{
+        const response = await axios.put(`${userEndPoint}/update/${userId}`);
+        if(response.status != 200){
+            const error = response.data.Errors;
+            return {success: false, error: error[0].message};
+        }
+        return {success: true, error: null};
+    }catch(error : Error | any){
+        return {success: false, error: error.message};
+    }
+}
+
+
+export async function deleteUser(userId: string) : Promise<{success: boolean ; error: string | null}>{
+    try{
+        const response = await axios.delete(`${userEndPoint}/delete/${userId}`);
+        if(response.status != 200){
+            const error = response.data.Errors;
+            return {success: false, error: error[0].message};
+        }
+        return {success: true, error: null};
+    }catch(error : Error | any){
+        return {success: false, error: error.message};
     }
 }
