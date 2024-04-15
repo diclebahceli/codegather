@@ -39,16 +39,16 @@ export function RegisterForm() {
   };
   return (
     <form action={handleSubmit} ref={ref}>
-      <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
+      <div style={{margin: "0.5rem", padding: "0rem 2.5rem"}}>
         <InputField type="text" name="username" label="username" required={true} />
       </div>
-      <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
+      <div style={{margin: "0.5rem", padding: "0rem 2.5rem"}}>
         <InputField type="text" name="email" label="email" required={true} />
       </div>
-      <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
+      <div style={{margin: "0.5rem", padding: "0rem 2.5rem"}}>
         <InputField type="password" name="password" label="password" required={true} />
       </div>
-      <div style={{margin: "0.5rem", padding: "0rem 3.75rem"}}>
+      <div style={{margin: "0.5rem", padding: "0rem 2.5rem"}}>
         <InputField type="password" name="passwordag" label="password again" required={true} />
       </div>
       <div className="m-3 mb-0">
