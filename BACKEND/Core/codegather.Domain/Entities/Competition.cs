@@ -3,8 +3,8 @@ public class Competition : EntityBase
 {
     public string Title { get; set; }
     public string Description { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     public ICollection<User> JoinedUsers { get; set; } = new List<User>();
 
@@ -13,8 +13,8 @@ public class Competition : EntityBase
     {
         Title = title;
         Description = description;
-        StartTime = startTime;
-        EndTime = endTime;
+        StartDate = startTime;
+        EndDate = endTime;
     }
 
 }
