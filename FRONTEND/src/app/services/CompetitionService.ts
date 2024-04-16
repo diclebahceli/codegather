@@ -73,4 +73,16 @@ export async function getAllCompetitions(): Promise<{data: Competition[] | null,
       console.error('Error deleting competition:', error);
       return { success: false, error: 'Failed to delete competition' };
     }
+
+  }
+
+
+  export async function getCompetitionById(competitionId: string): Promise<Competition> {
+    try {
+      const response = await axios.get(`${competitionEndPoint}/getCompetitionById/${competitionId}`);
+      return response.data.competition as Competition;
+    } catch (error) {
+      console.error('Error fetching competition:', error);
+      return {} as Competition;
+    }
   }
