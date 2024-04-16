@@ -1,20 +1,41 @@
+"use client";
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
-import { GetAllCompetitions } from "@/app/services/CompetitionService";
+import { Competition } from "@/app/models/Competition";
+import { getAllCompetitions } from "@/app/services/CompetitionService";
+import toast from "react-hot-toast";
 
 export default async function OngoingCompetitions() {
-    const competitions =  await GetAllCompetitions();
-    return (
-        <div className="h-100 bg-dark">
-            <h1 className="pt-5 container text-white" style={{fontSize: "5rem"}}>ONGOING COMPETITIONS</h1>
-            <div className="d-flex flex-row justify-content-evenly">
-                <div className="mt-5 ms-5 d-flex flex-wrap justify-content-evenly  col-7">
-                    {competitions.map((competition, index) => (
-                        <CompetitionCard key={competition.id || index} competition={competition} />
-                    ))}
-                </div>
-                <div className="col-3 text-center mt-5 fs-2"> Disclaimer</div>
-            </div>
+  const result = await getAllCompetitions();
+  let competitions: Competition[] = [];
 
+  if (result.error) {
+    toast.error(result.error);
+  } else {
+    if (result.data) {
+      competitions = result.data;
+    }
+  }
+
+  return (
+    <div className="h-100 bg-dark">
+      <h1 className="pt-5 container text-white" style={{ fontSize: "5rem" }}>
+        ONGOING COMPETITIONS
+      </h1>
+      <div className="d-flex flex-row justify-content-evenly">
+        <div className="mt-5 ms-5 d-flex flex-wrap justify-content-evenly  col-7">
+          {competitions.length === 0 ? (
+            <div className="text-white fs-2">No competitions yet!</div>
+          ) : (
+            competitions.map((competition, index) => (
+              <CompetitionCard
+                key={competition.id || index}
+                competition={competition}
+              />
+            ))
+          )}
         </div>
-    );
+        <div className="col-3 text-center mt-5 fs-2"> Disclaimer</div>
+      </div>
+    </div>
+  );
 }
