@@ -27,5 +27,6 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommandRequest
             .MinimumLength(8)
             .WithName("Password")
             .WithMessage("Password must be at least 8 characters");
+
     }
 }
