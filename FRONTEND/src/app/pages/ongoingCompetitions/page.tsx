@@ -41,7 +41,9 @@ export default function OngoingCompetitions() {
       <div className="d-flex flex-row justify-content-evenly">
         <div className="mt-5 ms-5 d-flex flex-wrap col-7">
           {ongoingCompetitions.length === 0 ? (
-            <div className="text-white fs-2">No competitions yet!</div>
+            <div className="spinner-border text-white" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
           ) : (
             ongoingCompetitions.map((competition, index) => (
               <CompetitionCard
