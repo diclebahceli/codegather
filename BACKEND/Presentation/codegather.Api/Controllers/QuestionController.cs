@@ -22,7 +22,14 @@ public class QuestionController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetById(GetQuestionByIdQueryRequest request)
+    public async Task<IActionResult> GetById([FromQuery]GetQuestionByIdQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetByCompetitionId([FromQuery]GetQuestionsByCompetitionIdQueryRequest request)
     {
         var response = await mediator.Send(request);
         return Ok(response);

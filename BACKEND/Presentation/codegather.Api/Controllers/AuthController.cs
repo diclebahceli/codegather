@@ -41,9 +41,9 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> LogoutAll(LogoutAllCommandRequest request)
+    public async Task<IActionResult> LogoutAll()
     {
-        await mediator.Send(request);
+        await mediator.Send(new LogoutAllCommandRequest());
         return Ok();
     }
 

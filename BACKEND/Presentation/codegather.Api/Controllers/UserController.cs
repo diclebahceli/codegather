@@ -47,4 +47,11 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    [HttpPut]
+    public async Task<IActionResult> JoinCompetition(JoinCompetitionQueryRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
 }
