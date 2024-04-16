@@ -2,11 +2,37 @@
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import { Competition } from "@/app/models/Competition";
 import { getAllCompetitions } from "@/app/services/CompetitionService";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-export default async function OngoingCompetitions() {
-  const result = await getAllCompetitions();
+export default function OngoingCompetitions() {
+  const router = useRouter();
+  const result: { data: Competition[] | null; error: string | null } = {
+    data: null,
+    error: null,
+  };
   let competitions: Competition[] = [];
+
+  if (localStorage.getItem("accessToken") === null) {
+    router.push("/pages/login");
+  }
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      const result = await getAllCompetitions();
+      let competitions: Competition[] = [];
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        if (result.data) {
+          competitions = result.data;
+        }
+      }
+    };
+    fetchdata();
+  }, []);
 
   if (result.error) {
     toast.error(result.error);
