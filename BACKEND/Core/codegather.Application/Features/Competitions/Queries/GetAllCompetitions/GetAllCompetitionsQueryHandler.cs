@@ -16,7 +16,7 @@ public class GetAllCompetitionsQueryHandler : IRequestHandler<GetAllCompetitions
 
     public async Task<GetAllCompetitionsQueryResponse> Handle(GetAllCompetitionsQueryRequest request, CancellationToken cancellationToken)
     {
-        var competitions = await unityOfWork.GetReadRepository<Competition>().GetAllAsync();
+        var competitions = await unityOfWork.GetReadRepository<Competition>().GetAllAsync(predicate: c => !c.IsDeleted, enableTracking: false);
 
         return new GetAllCompetitionsQueryResponse
         {
