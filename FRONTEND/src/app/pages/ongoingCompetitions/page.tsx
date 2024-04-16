@@ -1,8 +1,8 @@
 "use client";
-import Card from "@/app/components/card/Card";
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import {Competition} from "@/app/models/Competition";
 import {getAllCompetitions} from "@/app/services/CompetitionService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
@@ -11,22 +11,24 @@ export default function OngoingCompetitions() {
   const router = useRouter();
   const [ongoingCompetitions, setOngoingCompetitions] = useState<Competition[]>([]);
 
-  if (localStorage.getItem("accessToken") === null) {
-    router.push("/pages/login");
-  }
 
   useEffect(() => {
+
+    if (getWithExpiry("accessToken") === null) {
+      router.push("/pages/login");
+      return;
+    }
     const fetchdata = async () => {
       const result = await getAllCompetitions();
       if (result.error) {
         toast.error(result.error);
       } else {
-        console.log(result.data);
         if (result.data) {
           setOngoingCompetitions(result.data);
         }
       }
     };
+
     fetchdata();
   }, []);
 
@@ -42,10 +44,10 @@ export default function OngoingCompetitions() {
             <div className="text-white fs-2">No competitions yet!</div>
           ) : (
             ongoingCompetitions.map((competition, index) => (
-                <CompetitionCard
-                  key={competition.id || index}
-                  competition={competition}
-                />
+              <CompetitionCard
+                key={competition.id || index}
+                competition={competition}
+              />
             ))
           )}
         </div>
