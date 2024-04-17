@@ -18,7 +18,7 @@ export default function CompetitionCard({
   return (
     <div className=" col-md-4 col-sm-6 m-3">
       <Card>
-        <div className="card-body d-flex flex-column bg-grey ">
+        <div className="card-body d-flex flex-column bg-grey rounded rounded-3">
           <div className="card-title fw-bold fs-4 text-white">
             {competition.title}
           </div>
