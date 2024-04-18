@@ -3,20 +3,19 @@ import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import {Competition} from "@/app/models/Competition";
 import {getAllCompetitions} from "@/app/services/CompetitionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
-import {useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
 export default function OngoingCompetitions() {
-  const router = useRouter();
   const [ongoingCompetitions, setOngoingCompetitions] = useState<Competition[]>([]);
+  const router = useRouter();
 
 
   useEffect(() => {
 
     if (getWithExpiry("accessToken") === null) {
-      router.push("/pages/login");
-      return;
+      router.replace("/pages/login");
     }
     const fetchdata = async () => {
       const result = await getAllCompetitions();
