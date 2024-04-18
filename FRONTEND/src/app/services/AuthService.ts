@@ -4,6 +4,7 @@ import {BACKEND_URL} from "../utils/config";
 import {LoginUserDTO} from "../models/LoginUserDTO";
 import {jwtDecode} from "jwt-decode";
 import {Claims} from "../models/Claims";
+import {getWithExpiry, setWithExpiry} from "../utils/StorageGetter";
 
 const authEndpointUrl = `${BACKEND_URL}/auth`;
 
@@ -32,10 +33,8 @@ export async function Login(info: LoginUserDTO): Promise<{error: string | null}>
       const accessToken = response.data.accessToken;
       const decoded: Claims = jwtDecode(accessToken);
 
-      console.log(decoded);
-
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("userId", decoded.id);
+      setWithExpiry("accessToken", accessToken, decoded.exp * 1000)
+      setWithExpiry("userId", decoded.id, decoded.exp * 1000)
       return {error: null};
     }
     else {
@@ -73,7 +72,7 @@ export async function LogoutAll(): Promise<{error: string | null}> {
 }
 
 export async function GetAccessToken(): Promise<string> {
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = getWithExpiry("accessToken");
   try {
     const response = await axios.post(`${authEndpointUrl}/refreshtoken`, {accessToken});
 
@@ -94,9 +93,11 @@ export function SetInterceptors() {
       if (!isAccessTokenValid()) {
         // Refresh token logic (call your refresh token endpoint)
         const newAccessToken = await GetAccessToken();
-        localStorage.setItem('accessToken', newAccessToken);
+        const decoded: Claims = jwtDecode(newAccessToken);
+        setWithExpiry("accessToken", newAccessToken, decoded.exp * 1000);
+        setWithExpiry("userId", decoded.id, decoded.exp * 1000);
       }
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = getWithExpiry("accessToken");
       config.headers.Authorization = `Bearer ${accessToken}`;
       return config;
     },
@@ -106,7 +107,7 @@ export function SetInterceptors() {
 }
 
 function isAccessTokenValid(): boolean {
-  const storedToken = localStorage.getItem('accessToken');
+  const storedToken = getWithExpiry("accessToken");
   if (!storedToken) {
     return false; // No token stored
   }
@@ -118,13 +119,12 @@ function isAccessTokenValid(): boolean {
     return expirationTime > currentTime;
   } catch (error) {
     console.error('Error decoding token:', error);
-    return false; // Handle decoding errors conservatively
+    return false; 
   }
 }
 
 export function ExtractErrorMessage(error: any): string {
   if (error.response) {
-    console.log(error.response.data);
     return error.response.data.Errors[0];
   }
   else if (error.data) {
@@ -132,3 +132,4 @@ export function ExtractErrorMessage(error: any): string {
   }
   return error.message;
 }
+

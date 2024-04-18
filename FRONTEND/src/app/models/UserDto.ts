@@ -1,5 +1,8 @@
+import {Competition} from "./Competition";
+
 export interface UserDto {
     id: string;
-    username: string;
+    userName: string;
     email: string;
+    competitions?: Competition[];
 };

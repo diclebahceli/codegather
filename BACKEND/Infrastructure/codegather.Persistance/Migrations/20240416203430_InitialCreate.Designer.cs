@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240416121707_InitialCreate")]
+    [Migration("20240416203430_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

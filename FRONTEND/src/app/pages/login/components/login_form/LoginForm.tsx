@@ -51,11 +51,11 @@ export default function LoginForm() {
           required={true}
         />
       </div>
-      <div className="m-3 mb-0">
+      <div className="m-3">
         <button className="btn btn-dark m-3 mb-0 p-2" disabled={pending}>
           <span className="fs-5 p-2" >Login</span>
         </button>
-      </div>loginform
+      </div>
       <div className="mb-3">
         <Link href="/pages/register" className="mb-3 fs-6 text-decoration-none">
           Create an account
