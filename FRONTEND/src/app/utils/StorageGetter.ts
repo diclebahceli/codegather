@@ -1,6 +1,6 @@
 export function setWithExpiry(key: string, value: string, ttl: number) {
   const item = {
-    value: value,
+    value: btoa(value),
     expiry: ttl,
   };
   localStorage.setItem(key, JSON.stringify(item));
@@ -18,6 +18,6 @@ export function getWithExpiry(key: string) {
     localStorage.removeItem(key);
     return null;
   }
-  return item.value;
+  return atob(item.value);
 }
 
