@@ -27,7 +27,6 @@ export default function OngoingCompetitions() {
 
 
   return (
-    <Protected>
       <div className="h-100 bg-dark">
         <h1 className="pt-5 container text-white fs-m">
           ONGOING COMPETITIONS
@@ -48,6 +47,5 @@ export default function OngoingCompetitions() {
           <div className="col-3 text-center mt-5 fs-2 text-white"> Disclaimer</div>
         </div>
       </div>
-    </Protected>
   );
 }
