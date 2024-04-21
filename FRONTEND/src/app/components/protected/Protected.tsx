@@ -14,11 +14,16 @@ export default function Protected({children, protectedRoutes}:
   useEffect(() => {
     const token = getWithExpiry("accessToken");
     if (token === null) {
-      router.replace("/pages/login", {scroll: false})
-      return;
+      if (protectedRoutes.includes(pathName)){
+        router.replace("/pages/login", {scroll: false})
+        return;
+
+      }
+    }
+    else {
+      setToken(token);
     }
 
-    setToken(token);
 
   }, [pathName])
 

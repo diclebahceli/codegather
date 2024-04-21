@@ -71,7 +71,7 @@ export default function LoginForm() {
       </div>
       loginform
       <div className="mb-3">
-        <Link href="/pages/register" className="mb-3 fs-6 text-decoration-none">
+        <Link href="/pages/register" scroll={false} className="mb-3 fs-6 text-decoration-none">
           Create an account
         </Link>
       </div>
