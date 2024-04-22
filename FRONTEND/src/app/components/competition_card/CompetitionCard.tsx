@@ -27,7 +27,7 @@ export default function CompetitionCard({
           </div>
           <button
             onClick={handleDetailsClick}
-            className="btn btn-green mt-2 ms-auto mt-auto"
+            className="btn btn-green mt-2 ms-auto mt-auto stretched-link"
           >
             Details
           </button>
