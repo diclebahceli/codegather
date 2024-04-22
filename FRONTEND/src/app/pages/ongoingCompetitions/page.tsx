@@ -1,4 +1,5 @@
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
+import Protected from "@/app/components/protected/Protected";
 import {Competition} from "@/app/models/Competition";
 import {getAllCompetitions} from "@/app/services/CompetitionService";
 import toast from "react-hot-toast";
@@ -41,6 +42,6 @@ export default async function OngoingCompetitions() {
         <div className="flex-grow-1"></div>
         <div className="col-3 text-center mt-5 fs-2 text-white"> Disclaimer</div>
       </div>
-    </div>
+      </div>
   );
 }

@@ -9,8 +9,9 @@ import {SetInterceptors} from "./services/AuthService";
 import {AuthProvider} from "./contexts/AuthContext";
 import Protected from "./components/protected/Protected";
 
-const inter = Inter({subsets: ["latin"]});
-const encodeSans = Encode_Sans({subsets: ["latin"]});
+
+const inter = Inter({ subsets: ["latin"] });
+const encodeSans = Encode_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -47,6 +48,5 @@ export default function RootLayout({
         </AuthProvider>
       </body>
     </html>
-
   );
 }
