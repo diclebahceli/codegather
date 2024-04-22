@@ -21,6 +21,10 @@ export default function Protected({children, protectedRoutes}:
       }
     }
     else {
+      if(pathName === "/pages/login" || pathName === "/pages/register"){
+        router.replace("/", {scroll: false})
+        return;
+      }
       setToken(token);
     }
 
