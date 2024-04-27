@@ -1,6 +1,5 @@
 using codegather.Application;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace codegather.Api;
@@ -28,6 +27,13 @@ public class UserController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetById([FromQuery] GetUserByIdRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetByUsername([FromQuery] GetUserByUserNameRequest request)
     {
         var response = await mediator.Send(request);
         return Ok(response);

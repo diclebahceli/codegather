@@ -2,10 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using codegather.Domain;
-using codegather.Application;
 using codegather.Application.Interfaces.AutoMapper;
 
-namespace socialMedia.Application.Features;
+namespace codegather.Application.Features;
 public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdRequest, GetUserByIdResponse>
 {
 
