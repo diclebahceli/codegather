@@ -3,6 +3,6 @@ using MediatR;
 namespace codegather.Application;
 public class GetUserByIdRequest : IRequest<GetUserByIdResponse>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
 }
