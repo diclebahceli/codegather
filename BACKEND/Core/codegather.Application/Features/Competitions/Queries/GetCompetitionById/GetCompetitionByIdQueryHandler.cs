@@ -16,11 +16,11 @@ public class GetCompetitionByIdQueryHandler : BaseHandler, IRequestHandler<GetCo
     {
         var competition = await unitOfWork.GetReadRepository<Competition>().GetAsync(predicate: t => t.Id == request.Id && !t.IsDeleted
         , include: x => x.Include(x => x.JoinedUsers).Include(x => x.Questions)
-        , enableTracking: false) ?? throw new Exception("Team not found");
+        , enableTracking: false) ?? throw new Exception("Competition not found");
 
         return new GetCompetitionByIdQueryResponse()
         {
-            Competition = mapper.Map<CompetitionDto>(competition),
+            Competition = mapper.Map<CompetitionDto, Competition>(competition),
             Questions = competition.Questions.Select(x => mapper.Map<QuestionDto, Question>(x)).ToList(),
             JoinedUsers = competition.JoinedUsers.Select(x => mapper.Map<UserDto, User>(x)).ToList(),
         };
