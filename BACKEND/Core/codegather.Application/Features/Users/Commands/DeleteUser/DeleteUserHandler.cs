@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using codegather.Application;
 using codegather.Domain;
 
-namespace socialMedia.Application;
+namespace codegather.Application;
 
 public class DeleteUserHandler : IRequestHandler<DeleteUserRequest, Unit>
 {

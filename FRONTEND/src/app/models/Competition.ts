@@ -1,10 +1,14 @@
-import { Question } from "./Question";
+
+import {Question} from "./Question";
+import {UserDto} from "./UserDto";
 
 export interface Competition {
-  id: number;
+  id: string;
   title: string;
   description: string;
   startDate: string;
   endDate: string;
-  questions?: Question[] | null;
+
+  questions?: Question[];
+  joinedUsers?: UserDto[];
 }

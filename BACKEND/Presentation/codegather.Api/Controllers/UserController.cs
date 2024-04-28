@@ -1,6 +1,5 @@
 using codegather.Application;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace codegather.Api;
@@ -33,6 +32,13 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetByUsername([FromQuery] GetUserByUserNameRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
     [HttpPut]
     public async Task<IActionResult> UpdateUser(UpdateUserCommandRequest request)
     {
@@ -42,6 +48,13 @@ public class UserController : ControllerBase
 
     [HttpDelete]
     public async Task<IActionResult> DeleteUser(DeleteUserRequest request)
+    {
+        await mediator.Send(request);
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> JoinCompetition(JoinCompetitionQueryRequest request)
     {
         await mediator.Send(request);
         return Ok();

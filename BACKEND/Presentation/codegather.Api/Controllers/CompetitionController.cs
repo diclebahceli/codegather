@@ -23,6 +23,20 @@ public class CompetitionController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetById([FromQuery]GetCompetitionByIdQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetByUserId([FromQuery]GetCompetitionsByUserIdRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
 
     [HttpPost]
     //[Authorize(Roles = "Admin,Manager")]

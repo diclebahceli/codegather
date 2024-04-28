@@ -19,8 +19,8 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         var newObject = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
         competition.Title = newObject.Title;
         competition.Description = newObject.Description;
-        competition.StartTime = newObject.StartTime;
-        competition.EndTime = newObject.EndTime;
+        competition.StartDate = newObject.StartDate;
+        competition.EndDate = newObject.EndDate;
         await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(competition);
         await _unitOfWork.SaveAsync();
 

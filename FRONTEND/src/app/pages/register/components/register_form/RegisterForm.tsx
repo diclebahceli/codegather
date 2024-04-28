@@ -66,7 +66,7 @@ export function RegisterForm() {
         </button>
       </div>
       <div className="mb-3">
-        <Link href="/pages/login" className="m-5 text-decoration-none ">
+        <Link href="/pages/login" className="m-2 text-decoration-none text-center">
           You already have an account?
         </Link>
       </div>

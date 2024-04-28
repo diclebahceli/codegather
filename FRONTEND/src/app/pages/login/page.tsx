@@ -6,7 +6,7 @@ import LoginForm from "./components/login_form/LoginForm";
 export default function LoginPage() {
 
   return (
-    <div className="flex-col">
+    <div className="position-fixed h-100 w-100">
       <div className="d-flex justify-content-center align-items-center text-center vh-100 bg-dark">
         <div className="d-flex flex-row align-items-center justify-content-evenly h-75 col-10">
           <div className="">

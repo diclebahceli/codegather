@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace codegather.Domain;
-public class User : IdentityUser<Guid>
+public class User : IdentityUser<Guid>, IEntityBase
 {
     public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
     public ICollection<Competition> Competitions { get; set; } = new List<Competition>();

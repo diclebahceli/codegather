@@ -2,16 +2,17 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using codegather.Domain;
-using codegather.Application;
 using codegather.Application.Interfaces.AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
-namespace socialMedia.Application.Features;
+namespace codegather.Application.Features;
 public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdRequest, GetUserByIdResponse>
 {
 
     UserManager<User> userManager;
 
-    public GetUserByIdHandler(UserManager<User> userManager, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
+    public GetUserByIdHandler(UserManager<User> userManager, IMapper mapper, IUnitOfWork unitOfWork
+            , IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
     {
         this.userManager = userManager;
     }
@@ -19,11 +20,15 @@ public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdReques
 
     public async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
-        User user = await userManager.FindByIdAsync(request.Id) ?? throw new Exception("User not found");
+        User user = await unitOfWork.GetReadRepository<User>().GetAsync(predicate: u => u.Id == request.Id
+                , include: u => u.Include(u => u.Submissions).Include(u => u.Competitions))
+            ?? throw new Exception("User not found");
 
         return new GetUserByIdResponse
         {
-            User = mapper.Map<UserDto, User>(user)
+            User = mapper.Map<UserDto, User>(user),
+            Competitions = user.Competitions.Select(c => mapper.Map<CompetitionDto, Competition>(c)).ToList(),
+            Submissions = user.Submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList()
         };
 
     }
