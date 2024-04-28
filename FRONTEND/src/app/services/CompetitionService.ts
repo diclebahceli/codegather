@@ -4,7 +4,7 @@ import {BACKEND_URL} from "../utils/config";
 
 const competitionEndPoint = BACKEND_URL + "/competition";
 
-export async function getAllCompetitions(): Promise<{data: Competition[] | null, error: string | null}> {
+export async function GetAllCompetitions(): Promise<{data: Competition[] | null, error: string | null}> {
   try {
     const response = await axios.get(`${competitionEndPoint}/getAll`);
     if (response.status != 200) {
@@ -20,7 +20,7 @@ export async function getAllCompetitions(): Promise<{data: Competition[] | null,
 
 }
 
-export async function getCompetitionById(competitionId: string):
+export async function GetCompetitionById(competitionId: string):
   Promise<{data: Competition | null, error: string | null}> {
   try {
     const response = await axios.get(`${competitionEndPoint}/GetById?Id=${competitionId}`);
@@ -36,7 +36,7 @@ export async function getCompetitionById(competitionId: string):
     return {data: null, error: error.message};
   }
 }
-export async function createCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
+export async function CreateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
   const {title, description, startDate, endDate} = competition;
   try {
     const response: AxiosResponse<Competition> = await axios.post(`${competitionEndPoint}/createCompetition`, {title, description, startDate, endDate});
@@ -55,7 +55,7 @@ export async function createCompetition(competition: Competition): Promise<{succ
 }
 
 
-export async function updateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
+export async function UpdateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
   const {id, title, description, startDate, endDate} = competition;
 
   try {
@@ -75,10 +75,11 @@ export async function updateCompetition(competition: Competition): Promise<{succ
 }
 
 
-export async function deleteCompetition(competitionId: string): Promise<{success: boolean; error: string | null}> {
+export async function DeleteCompetition(competitionId: string): Promise<{success: boolean; error: string | null}> {
 
   try {
-    const response: AxiosResponse = await axios.delete(`${competitionEndPoint}/deleteCompetition/${competitionId}`);
+
+    const response: AxiosResponse = await axios.delete(`${competitionEndPoint}/deleteCompetition?Id=${competitionId}`);
 
     if (response.status === 200) {
       return {success: true, error: null};

@@ -1,22 +1,24 @@
 "use client";
-import { Competition } from "@/app/models/Competition";
+import {Competition} from "@/app/models/Competition";
 import {
-  deleteCompetition,
-  getAllCompetitions,
+  DeleteCompetition,
+  GetAllCompetitions,
 } from "@/app/services/CompetitionService";
-import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 const CompetitionPage = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pickedId, setPickedId] = useState("");
+  const [show, setShow] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const fetchCompetitions = async () => {
       try {
-        const response = await getAllCompetitions();
+        const response = await GetAllCompetitions();
         if (response.error || !response.data) {
           toast.error(response.error);
           return;
@@ -34,15 +36,21 @@ const CompetitionPage = () => {
     fetchCompetitions();
   }, []);
 
-  const handleDelete = async (competitionId: string) => {
-    if (showConfirmation) {
-      await deleteCompetition(competitionId);
-      window.location.reload();
-      setShowConfirmation(false);
-    } else {
-      setShowConfirmation(true);
-    }
+  const handleModal = (e: any) => {
+    setPickedId(e as string);
+    setShow(!show);
   };
+
+  const handleDeleteCompetition = async () => {
+    const response = await DeleteCompetition(pickedId);
+    if (response.error) {
+      toast.error(response.error);
+      return;
+    }
+    toast.success("Competition deleted successfully");
+    setCompetitions(competitions.filter((competition) => competition.id !== pickedId));
+    setShow(!show);
+  }
 
   const handleEditCompetition = (competitionId: string) => {
     router.push(`/pages/admin/competition/editCompetitions/${competitionId}`);
@@ -80,28 +88,33 @@ const CompetitionPage = () => {
                 </button>
                 <button
                   className="btn btn-danger text-white"
-                  onClick={() => handleDelete(competition.id)}
+                  onClick={() => handleModal(competition.id)}
                 >
                   Delete
                 </button>
-                {showConfirmation && (
-                  <div>
-                    <p>Are you sure you want to delete this team?</p>
-                    <button onClick={() => handleDelete(competition.id)}>
-                      Yes
-                    </button>
-                    <button onClick={() => setShowConfirmation(false)}>
-                      No
-                    </button>
-                  </div>
-                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <Modal isOpen={show} toggle={handleModal} >
+        <ModalHeader>Modal title</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this competition?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" className="text-white" onClick={handleModal}>
+            Cancel
+          </Button>{' '}
+          <Button color="danger" className="text-white" onClick={handleDeleteCompetition}>
+            Delete
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
+
 };
 
 export default CompetitionPage;

@@ -2,8 +2,8 @@
 import InputField from "@/app/components/input_field/InputField";
 import { Competition } from "@/app/models/Competition";
 import {
-  getCompetitionById,
-  updateCompetition,
+  GetCompetitionById,
+  UpdateCompetition,
 } from "@/app/services/CompetitionService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchCompetition = async (competitionId: string) => {
       try {
-        const competition = await getCompetitionById(competitionId);
+        const competition = await GetCompetitionById(competitionId);
         if (competition.error || !competition.data) {
           toast.error(competition.error);
           return;
@@ -51,7 +51,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
       endDate: formData.get("endDate") as string,
     };
 
-    const reponse = await updateCompetition(competitionInfo);
+    const reponse = await UpdateCompetition(competitionInfo);
 
     if (reponse.error) {
       toast.error(reponse.error);
