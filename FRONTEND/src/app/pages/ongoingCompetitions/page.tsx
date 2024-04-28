@@ -1,13 +1,13 @@
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import Protected from "@/app/components/protected/Protected";
 import {Competition} from "@/app/models/Competition";
-import {getAllCompetitions} from "@/app/services/CompetitionService";
+import {GetAllCompetitions} from "@/app/services/CompetitionService";
 import toast from "react-hot-toast";
 
 export default async function OngoingCompetitions() {
   let competitions: Competition[] = []
 
-  const result = await getAllCompetitions();
+  const result = await GetAllCompetitions();
   if (result.error) {
     // toast.error(result.error);
   } else {

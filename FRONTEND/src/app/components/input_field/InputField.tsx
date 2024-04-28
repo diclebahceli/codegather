@@ -5,11 +5,12 @@ interface InputFieldProps {
   name: string;
   label: string;
   required: boolean;
+  value?: string;
 }
 
 // Use export default function directly for the component declaration
 export default function InputField(props: InputFieldProps) {
-  const {type, name, label, required} = props;
+  const { type, name, label, required, value } = props;
 
   return (
     <div className="form-floating rounded">
@@ -19,6 +20,7 @@ export default function InputField(props: InputFieldProps) {
         id={name}
         name={name}
         placeholder={label}
+        value={value}
         className="form-control border border-2"
       />
       <label htmlFor={name}>{label}</label>

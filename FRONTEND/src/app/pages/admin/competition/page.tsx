@@ -1,0 +1,120 @@
+"use client";
+import {Competition} from "@/app/models/Competition";
+import {
+  DeleteCompetition,
+  GetAllCompetitions,
+} from "@/app/services/CompetitionService";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import toast from "react-hot-toast";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+
+const CompetitionPage = () => {
+  const [competitions, setCompetitions] = useState<Competition[]>([]);
+  const [pickedId, setPickedId] = useState("");
+  const [show, setShow] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCompetitions = async () => {
+      try {
+        const response = await GetAllCompetitions();
+        if (response.error || !response.data) {
+          toast.error(response.error);
+          return;
+        }
+        const competitions = response.data as Competition[];
+        for (let i = 0; i < competitions.length; i++) {
+          competitions[i].startDate = competitions[i].startDate.split("T")[0];
+          competitions[i].endDate = competitions[i].endDate.split("T")[0];
+        }
+        setCompetitions(competitions);
+      } catch (error) {
+        console.error("Error fetching competitions:", error);
+      }
+    };
+    fetchCompetitions();
+  }, []);
+
+  const handleModal = (e: any) => {
+    setPickedId(e as string);
+    setShow(!show);
+  };
+
+  const handleDeleteCompetition = async () => {
+    const response = await DeleteCompetition(pickedId);
+    if (response.error) {
+      toast.error(response.error);
+      return;
+    }
+    toast.success("Competition deleted successfully");
+    setCompetitions(competitions.filter((competition) => competition.id !== pickedId));
+    setShow(!show);
+  }
+
+  const handleEditCompetition = (competitionId: string) => {
+    router.push(`/pages/admin/competition/editCompetitions/${competitionId}`);
+  };
+
+  return (
+    <div className="container">
+      <div className="d-flex justify-content-between">
+        <h1>Competition Page</h1>
+      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th className="col-2">Competition Date</th>
+            <th className="col-2">Competition Title</th>
+            <th className="col-5">Competition Description</th>
+            <th className="col-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {competitions.map((competition) => (
+            <tr key={competition.id}>
+              <td>
+                {competition.startDate} / {competition.endDate}
+              </td>
+              <td>{competition.title}</td>
+              <td>{competition.description}</td>
+
+              <td>
+                <button
+                  className="btn btn-primary me-2 text-white"
+                  onClick={() => handleEditCompetition(competition.id)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger text-white"
+                  onClick={() => handleModal(competition.id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <Modal isOpen={show} toggle={handleModal} >
+        <ModalHeader>Modal title</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this competition?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" className="text-white" onClick={handleModal}>
+            Cancel
+          </Button>{' '}
+          <Button color="danger" className="text-white" onClick={handleDeleteCompetition}>
+            Delete
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+
+};
+
+export default CompetitionPage;

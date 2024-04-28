@@ -4,7 +4,7 @@ using MediatR;
 
 namespace codegather.Application;
 
-public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetitionCommandRequest,Unit>
+public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetitionCommandRequest, Unit>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

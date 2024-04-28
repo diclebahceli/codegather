@@ -2,7 +2,7 @@
 import Card from "@/app/components/card/Card";
 import QuestionCard from "@/app/components/question_card/QuestionCard";
 import {Competition} from "@/app/models/Competition";
-import {getCompetitionById} from "@/app/services/CompetitionService";
+import {GetCompetitionById} from "@/app/services/CompetitionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
@@ -19,7 +19,7 @@ export default function CompetitionDetailnumber({params}: {params: {id: string}}
       return;
     }
     const fetchdata = async () => {
-      var result = await getCompetitionById(params.id);
+      var result = await GetCompetitionById(params.id);
       if (result.error) {
           router.push("/pages/ongoingCompetitions")
           return;
