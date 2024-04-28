@@ -14,14 +14,29 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
   const [competitionData, setCompetitionData] = useState<Competition>(
     {} as Competition
   );
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setCompetitionData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   useEffect(() => {
     const fetchCompetition = async (competitionId: string) => {
       try {
         const competition = await getCompetitionById(competitionId);
-        setCompetitionData(competition);
-        console.log("Competition", competition);
+        if (competition.error || !competition.data) {
+          toast.error(competition.error);
+          return;
+        }
+        competition.data.startDate = competition.data.startDate.split("T")[0];
+        competition.data.endDate = competition.data.endDate.split("T")[0];
+        setCompetitionData(competition.data as Competition);
       } catch (error: Error | any) {
-        throw new Error("Error fetching user from backend", error);
+        toast.error("Error fetching competition");
       }
     };
     fetchCompetition(params.id);
@@ -43,64 +58,72 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
       return;
     }
 
-    toast.success("Logged in successfully");
+    toast.success("Updated successfully");
 
     setTimeout(() => {
-      router.push("/pages/ongoingCompetitions");
+      router.push("/pages/admin/competition");
     }, 1000);
   };
 
   return (
-    <form action={handleSubmit}>
-      <div className="container">
-        <h1>Edit Competitions</h1>
+    <div className="d-flex justify-content-center align-items-center h-100">
+      <form action={handleSubmit} className="col-6">
+        <div className="container">
+          <h1>Edit Competitions</h1>
 
-        <div className="form-group">
-          <label htmlFor="fullName">Competition Title</label>
-          <InputField
-            type="text"
-            name="title"
-            label="title"
-            required={true}
-            value={competitionData.description}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="fullName">Competition Description</label>
-          <InputField
-            type="text"
-            name="description"
-            label="description"
-            required={true}
-            value={competitionData.description}
-          />
-        </div>
+          <div className="form-group m-3">
+            <input
+              className="form-control border border-2"
+              type="text"
+              name="title"
+              placeholder="title"
+              required={true}
+              value={competitionData.title}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group m-3">
+            <input
+              className="form-control border border-2"
+              type="text"
+              name="description"
+              placeholder="description"
+              required={true}
+              value={competitionData.description}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="fullName">Competition Start-Date</label>
-          <InputField
-            type="text"
-            name="startDate"
-            label="startDate"
-            required={true}
-            value={competitionData.startDate}
-          />
-        </div>
+          <div className="form-group m-3">
+            <label>Start Date </label>
+            <input
+              className="form-control border border-2"
+              type="date"
+              name="startDate"
+              placeholder="Start Date"
+              required={true}
+              value={competitionData.startDate}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="fullName">Competition End-Date</label>
-          <InputField
-            type="text"
-            name="endDate"
-            label="endDate"
-            required={true}
-            value={competitionData.endDate}
-          />
-        </div>
+          <div className="form-group m-3">
+            <label>End Date </label>
+            <input
+              className="form-control border border-2"
+              type="date"
+              name="endDate"
+              placeholder="End Date"
+              required={true}
+              value={competitionData.endDate}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <button className="btn btn-primary mt-3">Save</button>
-      </div>
-    </form>
+          <button className="btn btn-primary mt-3 text-white">Save</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

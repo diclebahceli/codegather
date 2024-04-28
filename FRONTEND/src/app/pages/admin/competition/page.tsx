@@ -6,6 +6,7 @@ import {
 } from "@/app/services/CompetitionService";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const CompetitionPage = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
@@ -16,9 +17,16 @@ const CompetitionPage = () => {
     const fetchCompetitions = async () => {
       try {
         const response = await getAllCompetitions();
-        setCompetitions(response.data || []);
-        console.log(competitions);
-        console.log(response);
+        if (response.error || !response.data) {
+          toast.error(response.error);
+          return;
+        }
+        const competitions = response.data as Competition[];
+        for (let i = 0; i < competitions.length; i++) {
+          competitions[i].startDate = competitions[i].startDate.split("T")[0];
+          competitions[i].endDate = competitions[i].endDate.split("T")[0];
+        }
+        setCompetitions(competitions);
       } catch (error) {
         console.error("Error fetching competitions:", error);
       }
@@ -48,16 +56,18 @@ const CompetitionPage = () => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Competition ID</th>
-            <th>Competition Title</th>
-            <th>Competition Description</th>
-            <th>Actions</th>
+            <th className="col-2">Competition Date</th>
+            <th className="col-2">Competition Title</th>
+            <th className="col-5">Competition Description</th>
+            <th className="col-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {competitions.map((competition) => (
             <tr key={competition.id}>
-              <td>{competition.id}</td>
+              <td>
+                {competition.startDate} / {competition.endDate}
+              </td>
               <td>{competition.title}</td>
               <td>{competition.description}</td>
 

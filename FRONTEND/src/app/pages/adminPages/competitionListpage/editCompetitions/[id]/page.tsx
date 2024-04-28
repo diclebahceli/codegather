@@ -30,8 +30,8 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
       id: competitionData.id,
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      startDate: formData.get("startDate") as string,
-      endDate: formData.get("endDate") as string,
+      startTime: formData.get("startDate") as string,
+      endTime: formData.get("endDate") as string,
     };
 
     const reponse = await updateCompetition(competitionInfo);
@@ -74,7 +74,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
             name="startDate"
             label="startDate"
             required={true}
-            value={competitionData.startDate}
+            value={competitionData.startTime}
           />
         </div>
 
@@ -85,7 +85,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
             name="endDate"
             label="endDate"
             required={true}
-            value={competitionData.endDate}
+            value={competitionData.endTime}
           />
         </div>
 
