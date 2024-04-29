@@ -47,7 +47,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteUser(DeleteUserRequest request)
+    public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserRequest request)
     {
         await mediator.Send(request);
         return Ok();

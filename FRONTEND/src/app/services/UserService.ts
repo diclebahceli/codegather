@@ -42,10 +42,11 @@ export async function getUserById(userId: string): Promise<{data: UserDto | null
 }
 
 
-export async function updateUser(userId: string): Promise<{success: boolean; error: string | null}> {
+export async function updateUser(userDto: UserDto): Promise<{success: boolean; error: string | null}> {
+  const {id, userName, email} = userDto;
 
   try {
-    const response = await axios.put(`${userEndPoint}/update/${userId}`);
+    const response = await axios.put(`${userEndPoint}/updateUser/`, {id, userName, email});
     if (response.status != 200) {
       const error = response.data.Errors;
       return {success: false, error: error[0].message};
@@ -59,7 +60,7 @@ export async function updateUser(userId: string): Promise<{success: boolean; err
 
 export async function deleteUser(userId: string): Promise<{success: boolean; error: string | null}> {
   try {
-    const response = await axios.delete(`${userEndPoint}/delete/${userId}`);
+    const response = await axios.delete(`${userEndPoint}/deleteUser?Id=${userId}`);
     if (response.status != 200) {
       const error = response.data.Errors;
       return {success: false, error: error[0].message};
