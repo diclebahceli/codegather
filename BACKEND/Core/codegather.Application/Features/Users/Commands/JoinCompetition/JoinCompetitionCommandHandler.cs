@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Identity;
 
 namespace codegather.Application;
 
-public class JoinCompetitionQueryHandler : BaseHandler, IRequestHandler<JoinCompetitionQueryRequest, Unit>
+public class JoinCompetitionCommandHandler : BaseHandler, IRequestHandler<JoinCompetitionCommandRequest, Unit>
 {
     private readonly UserManager<User> userManager;
 
-    public JoinCompetitionQueryHandler(UserManager<User> userManager, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
+    public JoinCompetitionCommandHandler(UserManager<User> userManager, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
     {
         this.userManager = userManager;
     }
 
-    public async Task<Unit> Handle(JoinCompetitionQueryRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(JoinCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
         var competition = await unitOfWork.GetReadRepository<Competition>().GetAsync(predicate: t => t.Id == request.CompetitionId && !t.IsDeleted, enableTracking: true);
         if (competition == null)

@@ -54,10 +54,33 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> JoinCompetition(JoinCompetitionQueryRequest request)
+    public async Task<IActionResult> JoinCompetition(JoinCompetitionCommandRequest request)
     {
         await mediator.Send(request);
         return Ok();
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllRoles()
+    {
+        var response = await mediator.Send(new GetAllRolesQueryRequest());
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetUserRole([FromQuery] GetUserRoleQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+
+    [HttpPut]
+    public async Task<IActionResult> SetUserRole(SetUserRoleCommandRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
     }
 
 }
