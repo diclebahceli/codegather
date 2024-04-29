@@ -48,7 +48,7 @@ const UserPage = () => {
   };
 
   const handleEditUser = (userId: string) => {
-    router.push(`/pages/admin/user/editUser/${userId}`);
+    router.push(`/pages/admin/user/editUsers/${userId}`);
   };
 
   return (
