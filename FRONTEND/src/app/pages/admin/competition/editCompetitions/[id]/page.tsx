@@ -1,22 +1,22 @@
 "use client";
 import InputField from "@/app/components/input_field/InputField";
-import { Competition } from "@/app/models/Competition";
+import {Competition} from "@/app/models/Competition";
 import {
   GetCompetitionById,
   UpdateCompetition,
 } from "@/app/services/CompetitionService";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
-const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
+const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const router = useRouter();
   const [competitionData, setCompetitionData] = useState<Competition>(
     {} as Competition
   );
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     console.log(name, value);
     setCompetitionData((prevState) => ({
       ...prevState,
@@ -32,8 +32,6 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
           toast.error(competition.error);
           return;
         }
-        competition.data.startDate = competition.data.startDate.split("T")[0];
-        competition.data.endDate = competition.data.endDate.split("T")[0];
         setCompetitionData(competition.data as Competition);
       } catch (error: Error | any) {
         toast.error("Error fetching competition");
@@ -71,7 +69,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
         <div className="container">
           <h1>Edit Competitions</h1>
 
-          <div className="form-group m-3">
+          <div className="form-floating rounded my-3">
             <input
               className="form-control border border-2"
               type="text"
@@ -81,43 +79,43 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
               value={competitionData.title}
               onChange={handleInputChange}
             />
+            <label htmlFor={"title"}>Title</label>
           </div>
-          <div className="form-group m-3">
-            <input
+
+          <div className="form-floating rounded my-3">
+            <textarea
               className="form-control border border-2"
-              type="text"
               name="description"
               placeholder="description"
               required={true}
+              onChange={handleInputChange}
               value={competitionData.description}
-              onChange={handleInputChange}
             />
+            <label htmlFor={"description"}>Description</label>
           </div>
 
-          <div className="form-group m-3">
-            <label>Start Date </label>
+          <div className="form-floating rounded my-3">
             <input
               className="form-control border border-2"
-              type="date"
+              type="datetime-local"
               name="startDate"
-              placeholder="Start Date"
-              required={true}
               value={competitionData.startDate}
+              required={true}
               onChange={handleInputChange}
             />
+            <label htmlFor="startDate">Start Date</label>
           </div>
 
-          <div className="form-group m-3">
-            <label>End Date </label>
+          <div className="form-floating rounded my-3">
             <input
               className="form-control border border-2"
-              type="date"
+              type="datetime-local"
               name="endDate"
-              placeholder="End Date"
-              required={true}
               value={competitionData.endDate}
+              required={true}
               onChange={handleInputChange}
             />
+            <label htmlFor="endDate">End Date </label>
           </div>
 
           <button className="btn btn-primary mt-3 text-white">Save</button>

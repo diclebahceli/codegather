@@ -4,6 +4,7 @@ import {
   DeleteCompetition,
   GetAllCompetitions,
 } from "@/app/services/CompetitionService";
+import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
@@ -57,61 +58,64 @@ const CompetitionPage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="d-flex justify-content-between">
-        <h1>Competition Page</h1>
-      </div>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th className="col-2">Competition Date</th>
-            <th className="col-2">Competition Title</th>
-            <th className="col-5">Competition Description</th>
-            <th className="col-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {competitions.map((competition) => (
-            <tr key={competition.id}>
-              <td>
-                {competition.startDate} / {competition.endDate}
-              </td>
-              <td>{competition.title}</td>
-              <td>{competition.description}</td>
+    <div className="d-flex justify-content-center bg-dark h-100">
+      <div className="container mt-5">
 
-              <td>
-                <button
-                  className="btn btn-primary me-2 text-white"
-                  onClick={() => handleEditCompetition(competition.id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger text-white"
-                  onClick={() => handleModal(competition.id)}
-                >
-                  Delete
-                </button>
-              </td>
+        <h1 className="text-white">Competition Page</h1>
+        <Link className="btn btn-primary text-white m-3" href="/pages/admin/competition/createCompetition"> Create Competition</Link>
+        <table className="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th className="col-2">Competition Date</th>
+              <th className="col-2">Competition Title</th>
+              <th className="col-5">Competition Description</th>
+              <th className="col-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {competitions.map((competition) => (
+              <tr key={competition.id}>
+                <td>
+                  {competition.startDate} / {competition.endDate}
+                </td>
+                <td>{competition.title}</td>
+                <td>{competition.description}</td>
 
-      <Modal isOpen={show} toggle={handleModal} >
-        <ModalHeader>Modal title</ModalHeader>
-        <ModalBody>
-          Are you sure you want to delete this competition?
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" className="text-white" onClick={handleModal}>
-            Cancel
-          </Button>{' '}
-          <Button color="danger" className="text-white" onClick={handleDeleteCompetition}>
-            Delete
-          </Button>
-        </ModalFooter>
-      </Modal>
+                <td>
+                  <button
+                    className="btn btn-primary me-2 text-white"
+                    onClick={() => handleEditCompetition(competition.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger text-white"
+                    onClick={() => handleModal(competition.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <Modal isOpen={show} toggle={handleModal} >
+          <ModalHeader>Modal title</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete this competition?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" className="text-white" onClick={handleModal}>
+              Cancel
+            </Button>{' '}
+            <Button color="danger" className="text-white" onClick={handleDeleteCompetition}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+      </div>
     </div>
   );
 
