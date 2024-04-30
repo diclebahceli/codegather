@@ -22,20 +22,19 @@ export default function Page({params}: {params: {compid: string}}) {
   function onValueChange(value: string) {
     setQuestion((prevState) => ({
       ...prevState,
-      testCases: value,
+      starterCode: value,
     }));
   }
   return (
-    <div className="position-fixed vh-100 w-100 bg-grey">
+    <div className="h-100 bg-dark p-5">
       <div className="container ">
         <h1 className="text-white">Create Question</h1>
         <div className="d-flex flex-column w-100">
-          <form action={handleSubmit} className="">
+          <form action={"handleSubmit"} className="col-6">
             <div className="container">
-
               <div className="form-floating rounded my-3">
                 <input
-                  className="form-control border border-2"
+                  className="form-control border border-2 fs-5"
                   type="text"
                   name="name"
                   placeholder="name"
@@ -45,10 +44,11 @@ export default function Page({params}: {params: {compid: string}}) {
               </div>
               <div className="form-floating rounded my-3">
                 <textarea
-                  className="form-control border border-2"
+                  className="form-control border border-2 fs-5 h-100"
                   name="description"
                   placeholder="description"
                   required={true}
+                  rows={12}
                 />
                 <label htmlFor={"description"}>Description</label>
               </div>
@@ -57,12 +57,12 @@ export default function Page({params}: {params: {compid: string}}) {
 
           </form>
 
-          <div className="d-flex flex-row w-100 justify-content-between">
-            <div className="col-8">
+          <div className="d-flex flex-row w-100 justify-content-around">
+            <div className="col-6">
               <TestCaseForm />
             </div>
 
-            <div className="col-4" style={{height: "30em"}}>
+            <div className="col-6" style={{height: "30em"}}>
               <label className="text-white">Starter Code</label>
               <AceEditorComponent onValueChange={onValueChange} />
             </div>
@@ -70,7 +70,7 @@ export default function Page({params}: {params: {compid: string}}) {
 
 
         </div>
-        <button className="btn btn-primary mt-3 text-white">Create</button>
+        <button className="btn btn-primary mt-3 text-white fs-4">Create</button>
 
       </div>
 

@@ -62,7 +62,7 @@ const CompetitionPage = () => {
       <div className="container mt-5">
 
         <h1 className="text-white">Competition Page</h1>
-        <Link className="btn btn-primary text-white m-3" href="/pages/admin/competition/createCompetition"> Create Competition</Link>
+        <Link className="btn btn-primary text-white m-3" href="/pages/admin/competition/create"> Create Competition</Link>
         <table className="table table-dark table-borderless">
           <thead>
             <tr>
