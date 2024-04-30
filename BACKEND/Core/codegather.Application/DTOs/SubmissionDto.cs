@@ -1,5 +1,3 @@
-using codegather.Domain;
-
 namespace codegather.Application;
 public class SubmissionDto
 {
@@ -7,8 +5,6 @@ public class SubmissionDto
     public Guid QuestionId {get; set;}
     public Guid UserId {get; set;}
     public DateTime SubmissionTime {get; set;} = DateTime.Now;
-    public string Code {get; set;}
+    public string? Code {get; set;}
     public bool IsCorrect {get; set;}
-    public Guid MetricsId {get; set;}
-
 }

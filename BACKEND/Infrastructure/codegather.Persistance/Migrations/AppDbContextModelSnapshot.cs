@@ -165,29 +165,6 @@ namespace codegather.Persistance.Migrations
                     b.ToTable("Competitions");
                 });
 
-            modelBuilder.Entity("codegather.Domain.Metrics", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("CompileTime")
-                        .HasColumnType("REAL");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("MemoryUsage")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Metrics");
-                });
-
             modelBuilder.Entity("codegather.Domain.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -255,6 +232,9 @@ namespace codegather.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<float>("CompileTime")
+                        .HasColumnType("REAL");
+
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
 
@@ -264,8 +244,8 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("MetricsId")
-                        .HasColumnType("TEXT");
+                    b.Property<float>("MemoryUsage")
+                        .HasColumnType("REAL");
 
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("TEXT");
@@ -277,9 +257,6 @@ namespace codegather.Persistance.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MetricsId")
-                        .IsUnique();
 
                     b.HasIndex("QuestionId");
 
@@ -438,12 +415,6 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.Submission", b =>
                 {
-                    b.HasOne("codegather.Domain.Metrics", "Metrics")
-                        .WithOne()
-                        .HasForeignKey("codegather.Domain.Submission", "MetricsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("codegather.Domain.Question", "Question")
                         .WithMany("Submissions")
                         .HasForeignKey("QuestionId")
@@ -455,8 +426,6 @@ namespace codegather.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Metrics");
 
                     b.Navigation("Question");
 
