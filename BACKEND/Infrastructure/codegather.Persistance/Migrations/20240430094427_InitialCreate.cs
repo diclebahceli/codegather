@@ -61,27 +61,13 @@ namespace codegather.Persistance.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsPublic = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Competitions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Metrics",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CompileTime = table.Column<float>(type: "REAL", nullable: false),
-                    MemoryUsage = table.Column<float>(type: "REAL", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Metrics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,7 +232,8 @@ namespace codegather.Persistance.Migrations
                     SubmissionTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Code = table.Column<string>(type: "TEXT", nullable: false),
                     IsCorrect = table.Column<bool>(type: "INTEGER", nullable: false),
-                    MetricsId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CompileTime = table.Column<float>(type: "REAL", nullable: false),
+                    MemoryUsage = table.Column<float>(type: "REAL", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -257,12 +244,6 @@ namespace codegather.Persistance.Migrations
                         name: "FK_Submissions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Submissions_Metrics_MetricsId",
-                        column: x => x.MetricsId,
-                        principalTable: "Metrics",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -321,12 +302,6 @@ namespace codegather.Persistance.Migrations
                 column: "CompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Submissions_MetricsId",
-                table: "Submissions",
-                column: "MetricsId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Submissions_QuestionId",
                 table: "Submissions",
                 column: "QuestionId");
@@ -366,9 +341,6 @@ namespace codegather.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Metrics");
 
             migrationBuilder.DropTable(
                 name: "Questions");
