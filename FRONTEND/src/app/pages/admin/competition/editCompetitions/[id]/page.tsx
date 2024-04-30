@@ -11,13 +11,10 @@ import toast from "react-hot-toast";
 
 const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const router = useRouter();
-  const [competitionData, setCompetitionData] = useState<Competition>(
-    {} as Competition
-  );
+  const [competitionData, setCompetitionData] = useState<Competition>({} as Competition);
 
   const handleInputChange = (e: any) => {
     const {name, value} = e.target;
-    console.log(name, value);
     setCompetitionData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -99,6 +96,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
               className="form-control border border-2"
               type="datetime-local"
               name="startDate"
+              disabled={new Date(competitionData.startDate) < new Date()}
               value={competitionData.startDate}
               required={true}
               onChange={handleInputChange}
@@ -118,7 +116,11 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
             <label htmlFor="endDate">End Date </label>
           </div>
 
-          <button className="btn btn-primary mt-3 text-white">Save</button>
+          <div className="d-flex flex-row w-100">
+            <button type="submit" className="btn btn-primary mt-3 text-white">Save</button>
+            <button onClick={() => {router.push(`/pages/admin/question/createQuestion/${competitionData.id}`)}}
+              className="btn btn-green mt-3 text-white ms-auto">Add Question</button>
+          </div>
         </div>
       </form>
     </div>
