@@ -13,12 +13,15 @@ public class CreateTestCaseCommandHandler : BaseHandler, IRequestHandler<CreateT
 
     public async Task<CreateTestCaseCommandResponse> Handle(CreateTestCaseCommandRequest request, CancellationToken cancellationToken)
     {
-        var question = unitOfWork.GetReadRepository<Question>().GetAsync(predicate: q => q.Id == request.TestCase.QuestionId) ?? throw new Exception("No such question exist!");
-        await unitOfWork.GetWriteRepository<TestCase>().AddAsync(request.TestCase);
+
+        var question = unitOfWork.GetReadRepository<Question>().GetAsync(predicate: q => q.Id == request.QuestionId) ?? throw new Exception("No such question exist!");
+        var newTestCase = mapper.Map<TestCase, CreateTestCaseCommandRequest>(request);
+        await unitOfWork.GetWriteRepository<TestCase>().AddAsync(newTestCase);
         await unitOfWork.SaveAsync();
         return new CreateTestCaseCommandResponse
         {
-            TestCase = request.TestCase
+            TestCase = mapper.Map<TestCaseDto>(newTestCase)
+
         };
     }
 }
