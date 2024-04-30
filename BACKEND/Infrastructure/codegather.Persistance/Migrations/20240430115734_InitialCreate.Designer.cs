@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240430094427_InitialCreate")]
+    [Migration("20240430115734_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -187,7 +187,7 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("TestCases")
+                    b.Property<string>("StarterCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -266,6 +266,36 @@ namespace codegather.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Submissions");
+                });
+
+            modelBuilder.Entity("codegather.Domain.TestCase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Input")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Output")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("TestCase");
                 });
 
             modelBuilder.Entity("codegather.Domain.User", b =>
@@ -435,6 +465,15 @@ namespace codegather.Persistance.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("codegather.Domain.TestCase", b =>
+                {
+                    b.HasOne("codegather.Domain.Question", null)
+                        .WithMany("TestCases")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("codegather.Domain.Competition", b =>
                 {
                     b.Navigation("Questions");
@@ -443,6 +482,8 @@ namespace codegather.Persistance.Migrations
             modelBuilder.Entity("codegather.Domain.Question", b =>
                 {
                     b.Navigation("Submissions");
+
+                    b.Navigation("TestCases");
                 });
 
             modelBuilder.Entity("codegather.Domain.User", b =>

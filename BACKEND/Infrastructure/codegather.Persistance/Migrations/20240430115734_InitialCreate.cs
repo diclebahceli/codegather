@@ -207,7 +207,7 @@ namespace codegather.Persistance.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CompetitionId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    TestCases = table.Column<string>(type: "TEXT", nullable: false),
+                    StarterCode = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
@@ -248,6 +248,28 @@ namespace codegather.Persistance.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Submissions_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TestCase",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Input = table.Column<string>(type: "TEXT", nullable: false),
+                    Output = table.Column<string>(type: "TEXT", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestCase", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TestCase_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
@@ -310,6 +332,11 @@ namespace codegather.Persistance.Migrations
                 name: "IX_Submissions_UserId",
                 table: "Submissions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestCase_QuestionId",
+                table: "TestCase",
+                column: "QuestionId");
         }
 
         /// <inheritdoc />
@@ -335,6 +362,9 @@ namespace codegather.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "Submissions");
+
+            migrationBuilder.DropTable(
+                name: "TestCase");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
