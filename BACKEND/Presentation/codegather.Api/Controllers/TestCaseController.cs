@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace codegather.Api;
 
+[Route("api/[controller]/[action]")]
+[ApiController]
 public class TestCaseController : ControllerBase
 {
     private readonly IMediator mediator;
