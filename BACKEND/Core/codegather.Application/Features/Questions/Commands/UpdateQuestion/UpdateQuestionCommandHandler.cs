@@ -19,7 +19,7 @@ public class UpdateQuestionCommandHandler: BaseHandler, IRequestHandler<UpdateQu
 
 
         question.Description = request.Description;
-        question.TestCases = request.TestCases;
+        question.StarterCode = request.StarterCode ;
 
         await unitOfWork.GetWriteRepository<Question>().UpdateAsync(question);
 

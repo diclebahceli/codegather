@@ -17,13 +17,14 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
     }
     public async Task<Unit> Handle(UpdateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
-        var competition = await _unitOfWork.GetReadRepository<Competition>()
-            .GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true);
+        var competition = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true) ?? throw new Exception("No such competition found");
+
 
         var competitions = await _unitOfWork.GetReadRepository<Competition>().GetAllAsync();
 
         var otherComps = competitions.Where(c => c.Id != competition.Id).ToList();
         await competitionRules.CompetitionNameMustBeUnique(otherComps, request.Title);
+
 
         var newObject = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
         competition.Title = newObject.Title;
