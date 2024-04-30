@@ -7,6 +7,7 @@ public class Competition : EntityBase
     public DateTime EndDate { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     public ICollection<User> JoinedUsers { get; set; } = new List<User>();
+    public bool IsPublic { get; set; } = false;
 
     public Competition() { }
     public Competition(string title, string description, DateTime startTime, DateTime endTime)
