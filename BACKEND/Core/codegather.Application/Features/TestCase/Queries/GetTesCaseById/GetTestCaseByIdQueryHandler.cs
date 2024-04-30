@@ -17,7 +17,7 @@ public class GetTestCaseByIdQueryHandler : BaseHandler, IRequestHandler<GetTestC
 
         return new GetTestCaseByIdQueryResponse
         {
-            TestCase = mapper.Map<TestCase>(testCase)
+            TestCase = mapper.Map<TestCaseDto, TestCase>(testCase)
         };
     }
 }

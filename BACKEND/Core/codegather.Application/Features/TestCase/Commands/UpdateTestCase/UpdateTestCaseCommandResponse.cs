@@ -4,5 +4,5 @@ namespace codegather.Application;
 
 public class UpdateTestCaseCommandResponse
 {
-    public TestCase TestCase { get; set; }
+    public TestCaseDto TestCase { get; set; }
 }

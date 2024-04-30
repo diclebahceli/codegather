@@ -4,5 +4,5 @@ namespace codegather.Application;
 
 public class GetTestCaseByIdQueryResponse
 {
-    public TestCase TestCase { get; set; }
+    public TestCaseDto TestCase { get; set; }
 }

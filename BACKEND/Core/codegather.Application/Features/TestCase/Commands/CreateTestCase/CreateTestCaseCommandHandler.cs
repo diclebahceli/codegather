@@ -20,7 +20,7 @@ public class CreateTestCaseCommandHandler : BaseHandler, IRequestHandler<CreateT
         await unitOfWork.SaveAsync();
         return new CreateTestCaseCommandResponse
         {
-            TestCase = mapper.Map<TestCaseDto>(newTestCase)
+            TestCase = mapper.Map<TestCaseDto, TestCase>(newTestCase)
 
         };
     }

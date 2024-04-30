@@ -23,7 +23,7 @@ public class UpdateTestCaseCommandHandler : BaseHandler, IRequestHandler<UpdateT
 
         return new UpdateTestCaseCommandResponse
         {
-            TestCase = mapper.Map<TestCase>(testCase)
+            TestCase = mapper.Map<TestCaseDto, TestCase>(testCase)
         };
     }
 }
