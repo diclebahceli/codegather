@@ -15,7 +15,7 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
     }
     public async Task<Unit> Handle(UpdateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
-        var competition = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true);
+        var competition = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true) ?? throw new Exception("No such competition found");
         var newObject = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
         competition.Title = newObject.Title;
         competition.Description = newObject.Description;

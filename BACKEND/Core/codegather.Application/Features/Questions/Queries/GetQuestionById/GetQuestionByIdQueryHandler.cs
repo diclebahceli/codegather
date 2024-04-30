@@ -14,8 +14,8 @@ public class GetQuestionByIdQueryHandler : BaseHandler, IRequestHandler<GetQuest
     public async Task<GetQuestionByIdQueryResponse> Handle(GetQuestionByIdQueryRequest request, CancellationToken cancellationToken)
     {
         var question = await unitOfWork.GetReadRepository<Question>().GetAsync(
-            predicate: q => q.Id == request.Id, 
-            include: q => q.Include(q => q.Submissions));
+            predicate: q => q.Id == request.Id,
+            include: q => q.Include(q => q.Submissions).Include(q => q.TestCases));
 
         if (question == null)
             throw new Exception("No such question found");
@@ -23,7 +23,8 @@ public class GetQuestionByIdQueryHandler : BaseHandler, IRequestHandler<GetQuest
         return new GetQuestionByIdQueryResponse
         {
             Question = mapper.Map<QuestionDto>(question),
-            Submissions = mapper.Map<ICollection<SubmissionDto>>(question.Submissions)
+            Submissions = mapper.Map<ICollection<SubmissionDto>>(question.Submissions),
+            TestCases = mapper.Map<ICollection<TestCase>>(question.TestCases)
         };
     }
 }
