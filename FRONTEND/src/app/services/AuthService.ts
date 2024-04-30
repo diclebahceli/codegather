@@ -119,13 +119,20 @@ function isAccessTokenValid(): boolean {
     return expirationTime > currentTime;
   } catch (error) {
     console.error('Error decoding token:', error);
-    return false; 
+    return false;
   }
 }
 
 export function ExtractErrorMessage(error: any): string {
+  console.log("ERROR", error);
   if (error.response) {
-    return error.response.data.Errors[0];
+    if (error.response.data.errors) {
+      return error.response.data.title;
+
+    }
+    else if (error.response.data.Errors) {
+      return error.response.data.Errors[0];
+    }
   }
   else if (error.data) {
     return error.data.Errors[0];

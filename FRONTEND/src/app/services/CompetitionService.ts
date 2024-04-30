@@ -26,7 +26,6 @@ export async function GetCompetitionById(competitionId: string):
 
     if (response.status != 200) {
       const errors = response.data.Errors;
-      console.log(errors);
       return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.competition as Competition, error: null};
