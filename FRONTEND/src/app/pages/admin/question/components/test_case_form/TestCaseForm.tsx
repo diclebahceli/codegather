@@ -1,14 +1,23 @@
 "use client";
 import React, {useState} from 'react';
-import {TestCaseProps} from '../test_case/TestCase';
 
+export interface TestCaseProps {
+  input: string;
+  expectedOutput: string;
+}
 
 const TestCaseForm = () => {
   const [testCases, setTestCases] = useState<TestCaseProps[]>([{input: '', expectedOutput: ''}]);
+  const [error, setError] = useState<string>('');
 
   const handleAddTestCase = (testCase: TestCaseProps) => {
     //Try to add test cases in backend than add a new blank
     //TODO
+    setError('');
+    if (testCase.input === '' || testCase.expectedOutput === '') {
+      setError('Please fill all fields');
+      return;
+    }
     setTestCases([...testCases, {input: "", expectedOutput: ''}]);
   };
 
@@ -28,37 +37,46 @@ const TestCaseForm = () => {
       return testCase;
     });
     setTestCases(newTestCases);
-    console.log(newTestCases)
   }
 
   return (
-    <div className="">
-      <h2>Test Cases</h2>
+    <div className="container">
+      <div className='text-white fs-3'>Test Cases</div>
       {testCases.map((testCase, index) => (
         <div className="test-case" key={index}>
-          <input
-            type="text"
-            placeholder="Input"
-            name='input'
-            value={testCase.input}
-            required={true}
-            onChange={(e) => handleValueChanged(index, 'input', e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Expected Output"
-            name='expectedOutput'
-            required={true}
-            value={testCase.expectedOutput}
-            onChange={(e) => handleValueChanged(index, 'expectedOutput', e.target.value)}
-          />
-          <button onClick={() => handleRemoveTestCase(index)}>Remove</button>
-          {index === testCases.length - 1 && (
+          <div className='col-8'>
+            <div className="input-group rounded my-2">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Input"
+                required={true}
+                name='input'
+                value={testCase.input}
+                onChange={(e) => handleValueChanged(index, 'input', e.target.value)}
+              />
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Expected Output"
+                name='expectedOutput'
+                required={true}
+                value={testCase.expectedOutput}
+                onChange={(e) => handleValueChanged(index, 'expectedOutput', e.target.value)}
+              />
+              {testCases.length > 1 && (
+                <button className='btn btn-danger mx-2' onClick={() => handleRemoveTestCase(index)}>Remove</button>)
+              }
+              {index === testCases.length - 1 && (
 
-            <button onClick={() => handleAddTestCase(testCase)}>Add</button>)
-          }
+                <button type='submit' className='btn btn-primary mx-2 ' onClick={() => handleAddTestCase(testCase)}>Add</button>)
+              }
+            </div>
+
+          </div>
         </div>
       ))}
+      <small className='text-danger'>{error}</small>
     </div>
   );
 };

@@ -3,5 +3,5 @@ export interface Question {
     name: string;
     competitionId: number;
     description: string;
-    testCases: string;
+    starterCode: string;
 }
