@@ -18,6 +18,11 @@
   <ItemGroup>
     <Folder Include="Features/Competitions/Rules/" />
     <Folder Include="Features\Questions\Commands\" />
+    <Folder Include="Features\TestCase\Commands\DeleteTestCase\" />
+    <Folder Include="Features\TestCase\Commands\UpdateTestCase\" />
+    <Folder Include="Features\TestCase\Queries\" />
+    <Folder Include="Features\TestCase\Queries\GetTesCaseById\" />
+    <Folder Include="Features\TestCase\Queries\GetTestCasesByQuestionId\" />
   </ItemGroup>
 
   <PropertyGroup>
