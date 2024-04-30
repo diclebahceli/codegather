@@ -30,8 +30,8 @@ const CompetitionPage = () => {
           competitions[i].endDate = competitions[i].endDate.split("T")[0];
         }
         setCompetitions(competitions);
-      } catch (error) {
-        console.error("Error fetching competitions:", error);
+      } catch (error: Error | any) {
+          toast.error(error.message);
       }
     };
     fetchCompetitions();
@@ -54,7 +54,7 @@ const CompetitionPage = () => {
   }
 
   const handleEditCompetition = (competitionId: string) => {
-    router.push(`/pages/admin/competition/editCompetitions/${competitionId}`);
+    router.push(`/pages/admin/competition/edit/${competitionId}`);
   };
 
   return (
@@ -63,7 +63,7 @@ const CompetitionPage = () => {
 
         <h1 className="text-white">Competition Page</h1>
         <Link className="btn btn-primary text-white m-3" href="/pages/admin/competition/createCompetition"> Create Competition</Link>
-        <table className="table table-dark table-striped">
+        <table className="table table-dark table-borderless">
           <thead>
             <tr>
               <th className="col-2">Competition Date</th>
