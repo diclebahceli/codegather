@@ -17,7 +17,7 @@ public class CreateCompetitionCommandHandler : IRequestHandler<CreateCompetition
 
     public async Task<Unit> Handle(CreateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
-        Competition competition = new(request.Title, request.Description, request.StartTime, request.EndTime);
+        Competition competition = new(request.Title, request.Description, request.StartDate, request.EndDate);
 
         var competitions = await _unitOfWork.GetReadRepository<Competition>().GetAllAsync();
 

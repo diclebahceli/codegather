@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {Competition} from "../models/Competition";
 import {BACKEND_URL} from "../utils/config";
+import {ExtractErrorMessage} from "./AuthService";
 
 const competitionEndPoint = BACKEND_URL + "/competition";
 
@@ -8,14 +9,12 @@ export async function GetAllCompetitions(): Promise<{data: Competition[] | null,
   try {
     const response = await axios.get(`${competitionEndPoint}/getAll`);
     if (response.status != 200) {
-      const errors = response.data.Errors;
-      console.log(errors);
-      return {data: null, error: errors[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.competitions as Competition[], error: null};
 
   } catch (error: Error | any) {
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 
 }
@@ -27,13 +26,12 @@ export async function GetCompetitionById(competitionId: string):
 
     if (response.status != 200) {
       const errors = response.data.Errors;
-      console.log(errors);
-      return {data: null, error: errors[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.competition as Competition, error: null};
   }
   catch (error: Error | any) {
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 export async function CreateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
@@ -44,13 +42,11 @@ export async function CreateCompetition(competition: Competition): Promise<{succ
     if (response.status === 200) {
       return {success: true, error: null};
     } else {
-      console.error('Failed to create competition. Status:', response.status);
-      return {success: false, error: 'Failed to create competition'};
+      return {success: false, error: ExtractErrorMessage(response)};
     }
 
   } catch (error) {
-    console.error('Error creating competition:', error);
-    return {success: false, error: 'Failed to create competition'};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -64,13 +60,11 @@ export async function UpdateCompetition(competition: Competition): Promise<{succ
     if (response.status === 200) {
       return {success: true, error: null};
     } else {
-      console.error('Failed to update competition. Status:', response.status);
-      return {success: false, error: 'Failed to update competition'}
+      return {success: false, error: ExtractErrorMessage(response)}
     }
 
   } catch (error) {
-    console.error('Error updating competition:', error);
-    return {success: false, error: 'Failed to update competition'};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -84,11 +78,9 @@ export async function DeleteCompetition(competitionId: string): Promise<{success
     if (response.status === 200) {
       return {success: true, error: null};
     } else {
-      console.error('Failed to delete competition. Status:', response.status);
-      return {success: false, error: 'Failed to delete competition'}
+      return {success: false, error: ExtractErrorMessage(response)}
     }
   } catch (error) {
-    console.error('Error deleting competition:', error);
-    return {success: false, error: 'Failed to delete competition'};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
