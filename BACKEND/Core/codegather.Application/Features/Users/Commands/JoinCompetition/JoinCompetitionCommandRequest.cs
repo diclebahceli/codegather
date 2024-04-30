@@ -2,7 +2,7 @@
 
 namespace codegather.Application;
 
-public class JoinCompetitionQueryRequest : IRequest<Unit>   
+public class JoinCompetitionCommandRequest : IRequest<Unit>
 {
     public Guid UserId { get; set; }
     public Guid CompetitionId { get; set; }

@@ -30,6 +30,8 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         competition.Description = newObject.Description;
         competition.StartDate = newObject.StartDate;
         competition.EndDate = newObject.EndDate;
+        competition.IsPublic = newObject.IsPublic;
+
         await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(competition);
         await _unitOfWork.SaveAsync();
 

@@ -8,9 +8,6 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
 {
     public void Configure(EntityTypeBuilder<Submission> builder)
     {
-        builder.HasOne(s => s.Metrics)
-            .WithOne()
-            .HasForeignKey<Submission>(s => s.MetricsId);
 
         // Faker faker = new();
 
