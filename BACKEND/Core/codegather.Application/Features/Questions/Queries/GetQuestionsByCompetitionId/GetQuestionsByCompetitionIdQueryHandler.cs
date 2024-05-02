@@ -13,8 +13,12 @@ public class GetQuestionsByCompetitionIdQueryHandler : BaseHandler, IRequestHand
 
     public async Task<GetQuestionsByCompetitionIdQueryResponse> Handle(GetQuestionsByCompetitionIdQueryRequest request, CancellationToken cancellationToken)
     {
-        var questions = await unitOfWork.GetReadRepository<Question>().GetAllAsync(predicate: q => q.CompetitionId == request.CompetitionId && !q.IsDeleted,
-        enableTracking: false) ?? throw new Exception("Team not found");
+        var competition = await unitOfWork.GetReadRepository<Competition>()
+            .GetAsync(predicate: c => c.Id == request.CompetitionId, enableTracking: false)
+            ?? throw new Exception("Competition not found");
+
+        var questions = await unitOfWork.GetReadRepository<Question>()
+            .GetAllAsync(predicate: q => q.CompetitionId == request.CompetitionId && !q.IsDeleted, enableTracking: false);
 
         return new GetQuestionsByCompetitionIdQueryResponse()
         {
