@@ -38,15 +38,15 @@ public class QuestionController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateQuestion(CreateQuestionCommandRequest request)
     {
-        await mediator.Send(request);
-        return Ok();
+        var response = await mediator.Send(request);
+        return Ok(response);
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateQuestion(UpdateQuestionCommandRequest request)
     {
-        await mediator.Send(request);
-        return Ok();
+        var response = await mediator.Send(request);
+        return Ok(response);
     }
 
     [HttpDelete]
