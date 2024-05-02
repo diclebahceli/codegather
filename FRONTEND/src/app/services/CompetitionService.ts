@@ -25,10 +25,12 @@ export async function GetCompetitionById(competitionId: string):
     const response = await axios.get(`${competitionEndPoint}/GetById?Id=${competitionId}`);
 
     if (response.status != 200) {
-      const errors = response.data.Errors;
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data.competition as Competition, error: null};
+    const competition = response.data.competition as Competition;
+    competition.questions = response.data.questions;
+    competition.joinedUsers = response.data.joinedUsers;
+    return {data: competition, error: null};
   }
   catch (error: Error | any) {
     return {data: null, error: ExtractErrorMessage(error)};

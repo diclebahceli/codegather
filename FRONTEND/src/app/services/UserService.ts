@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {BACKEND_URL} from "../utils/config";
 import {UserDto} from "../models/UserDto";
+import {ExtractErrorMessage} from "./AuthService";
 
 
 const userEndPoint = BACKEND_URL + "/user";
@@ -12,12 +13,12 @@ export async function getAllUsers(): Promise<{data: UserDto[] | null; error: str
     if (response.status != 200) {
       const errors = response.data.Errors;
       console.log(errors);
-      return {data: null, error: errors[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.users as UserDto[], error: null};
 
   } catch (error: Error | any) {
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -29,17 +30,39 @@ export async function getUserById(userId: string): Promise<{data: UserDto | null
     if (response.status != 200) {
       //TODO
       const error = response.data.Errors;
-      return {data: null, error: error[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
+    const usr = response.data.user as UserDto;
+    usr.competitions = response.data.competitions;
+    usr.submissions = response.data.submissions;
 
-    return {data: response.data.user as UserDto, error: null};
+    return {data: usr, error: null};
   } catch (error: Error | any) {
     //TODO
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 
 
 }
+
+export async function GetUserByUsername(username: string): Promise<{data: UserDto | null; error: string | null}> {
+
+  try {
+    const response = await axios.get(`${userEndPoint}/getByUsername?UserName=${username}`);
+    if (response.status != 200) {
+      const error = response.data.Errors;
+      return {data: null, error: ExtractErrorMessage(response)};
+    }
+
+    const usr = response.data.user as UserDto;
+    usr.competitions = response.data.competitions;
+    usr.submissions = response.data.submissions;
+    return {data: usr, error: null};
+  } catch (error: Error | any) {
+    return {data: null, error: ExtractErrorMessage(error)};
+  }
+}
+
 
 
 export async function updateUser(userDto: UserDto): Promise<{success: boolean; error: string | null}> {
@@ -49,11 +72,11 @@ export async function updateUser(userDto: UserDto): Promise<{success: boolean; e
     const response = await axios.put(`${userEndPoint}/updateUser/`, {id, userName, email});
     if (response.status != 200) {
       const error = response.data.Errors;
-      return {success: false, error: error[0].message};
+      return {success: false, error: ExtractErrorMessage(response)};
     }
     return {success: true, error: null};
   } catch (error: Error | any) {
-    return {success: false, error: error.message};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -63,11 +86,11 @@ export async function deleteUser(userId: string): Promise<{success: boolean; err
     const response = await axios.delete(`${userEndPoint}/deleteUser?Id=${userId}`);
     if (response.status != 200) {
       const error = response.data.Errors;
-      return {success: false, error: error[0].message};
+      return {success: false, error: ExtractErrorMessage(response)};
     }
     return {success: true, error: null};
   } catch (error: Error | any) {
-    return {success: false, error: error.message};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -77,11 +100,11 @@ export async function GetUserRoles(id: string): Promise<{data: string[] | null; 
     const response = await axios.get(`${userEndPoint}/getUserRole?UserId=${id}`);
     if (response.status != 200) {
       const error = response.data.Errors;
-      return {data: null, error: error[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.roles as string[], error: null};
   } catch (error: Error | any) {
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -92,11 +115,11 @@ export async function SetUserRole(userId: string, roles: string[]): Promise<{suc
     const response = await axios.put(`${userEndPoint}/setUserRole`, {userId, roles});
     if (response.status != 200) {
       const error = response.data.Errors;
-      return {success: false, error: error[0].message};
+      return {success: false, error: ExtractErrorMessage(response)};
     }
     return {success: true, error: null};
   } catch (error: Error | any) {
-    return {success: false, error: error.message};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -105,12 +128,11 @@ export async function GetAllRoles(): Promise<{data: string[] | null; error: stri
   try {
     const response = await axios.get(`${userEndPoint}/getAllRoles`);
     if (response.status != 200) {
-      const error = response.data.Errors;
-      return {data: null, error: error[0].message};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
     return {data: response.data.roles as string[], error: null};
   } catch (error: Error | any) {
-    return {data: null, error: error.message};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 

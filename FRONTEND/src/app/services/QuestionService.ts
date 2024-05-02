@@ -26,7 +26,10 @@ export async function GetQuestionById(questionId: string): Promise<{data: Questi
     if (response.status != 200) {
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data.question as Question, error: null};
+    const question = response.data.question as Question;
+    question.submissions = response.data.submissions;
+    question.testCases = response.data.testCases;
+    return {data: question, error: null};
   } catch (e: Error | any) {
     return {data: null, error: ExtractErrorMessage(e)};
   }
