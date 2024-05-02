@@ -15,7 +15,8 @@ public class GetQuestionByIdQueryHandler : BaseHandler, IRequestHandler<GetQuest
     {
         var question = await unitOfWork.GetReadRepository<Question>().GetAsync(
             predicate: q => q.Id == request.Id,
-            include: q => q.Include(q => q.Submissions).Include(q => q.TestCases));
+            include: q => q.Include(q => q.Submissions.Where(s => !s.IsDeleted))
+            .Include(q => q.TestCases.Where(t => !t.IsDeleted)));
 
         if (question == null)
             throw new Exception("No such question found");

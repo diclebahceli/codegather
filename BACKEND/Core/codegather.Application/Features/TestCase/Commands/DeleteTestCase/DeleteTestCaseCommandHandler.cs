@@ -15,9 +15,8 @@ public class DeleteTestCaseCommandHandler : BaseHandler, IRequestHandler<DeleteT
     {
         var testCase = await unitOfWork.GetReadRepository<TestCase>().GetAsync(predicate: q => q.Id == request.TestCaseId && !q.IsDeleted) ?? throw new Exception("No such test case found");
 
-        testCase.IsDeleted = true;
 
-        await unitOfWork.GetWriteRepository<TestCase>().UpdateAsync(testCase);
+        await unitOfWork.GetWriteRepository<TestCase>().HardDeleteAsync(testCase);
         await unitOfWork.SaveAsync();
 
         return Unit.Value;

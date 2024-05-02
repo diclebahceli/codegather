@@ -14,7 +14,7 @@ public class GetQuestionsByCompetitionIdQueryHandler : BaseHandler, IRequestHand
     public async Task<GetQuestionsByCompetitionIdQueryResponse> Handle(GetQuestionsByCompetitionIdQueryRequest request, CancellationToken cancellationToken)
     {
         var competition = await unitOfWork.GetReadRepository<Competition>()
-            .GetAsync(predicate: c => c.Id == request.CompetitionId, enableTracking: false)
+            .GetAsync(predicate: c => c.Id == request.CompetitionId && !c.IsDeleted, enableTracking: false)
             ?? throw new Exception("Competition not found");
 
         var questions = await unitOfWork.GetReadRepository<Question>()
