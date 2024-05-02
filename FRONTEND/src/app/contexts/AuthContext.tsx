@@ -3,8 +3,8 @@
 import React, { createContext, useState } from "react";
 
 export interface AuthContextType {
-  role: string | null;
-  loginn: (token: string) => void;
+  roles: string[];
+  loginn: (roles: string[]) => void;
   logout: () => void;
 }
 
@@ -13,18 +13,18 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [role, setRole] = useState<string | null>(null);
+  const [roles, setRoles] = useState<string[]>([]);
 
-  const loginn = (newToken: string) => {
-    setRole(newToken);
+  const loginn = (roles: string[]) => {
+    setRoles(roles);
   };
 
   const logout = () => {
-    setRole(null);
+    setRoles([]);
   };
 
   return (
-    <AuthContext.Provider value={{ role: role, loginn: loginn, logout }}>
+    <AuthContext.Provider value={{ roles: roles, loginn: loginn, logout }}>
       {children}
     </AuthContext.Provider>
   );

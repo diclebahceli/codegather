@@ -2,7 +2,7 @@
 
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
 import {Logout} from "@/app/services/AuthService";
-import {getUserById} from "@/app/services/UserService";
+import {GetUserRoles, getUserById} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import Link from "next/link";
 import {usePathname, useRouter} from "next/navigation";
@@ -20,6 +20,26 @@ export default function Navbar() {
   useEffect(() => {
     const id = getWithExpiry("userId");
     setUserId(id as string);
+
+    const fetchRoles = async () => {
+      if (!id) return;
+      try {
+        const result = await GetUserRoles(id)
+        if (result.error || !result.data) {
+          toast.error(result.error)
+          return;
+        }
+        context.loginn(result.data);
+      } catch (e: Error | any) {
+        toast.error(e);
+      }
+
+
+    }
+
+    if (context.roles.length === 0) {
+      fetchRoles();
+    }
   }, [path])
 
   const handleLogout = async () => {
@@ -40,7 +60,7 @@ export default function Navbar() {
     <div>
       {userId ? (
         <div className="d-flex flex-row align-items-center">
-          {context.role === "Admin" ?
+          {context.roles.includes("Admin") ?
             <Link href={"/pages/admin"} scroll={false} className="text-white text-decoration-none mx-2 fs-5">Admin</Link>
             : null}
           <Link href={`/pages/ongoingCompetitions`} scroll={false} className="text-white text-decoration-none mx-4 fs-5">Ongoing Competitions</Link>
