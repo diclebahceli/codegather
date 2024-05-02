@@ -54,10 +54,10 @@ export async function CreateCompetition(competition: Competition): Promise<{succ
 
 
 export async function UpdateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
-  const {id, title, description, startDate, endDate} = competition;
+  const {id, title, description, startDate, endDate, isPublic} = competition;
 
   try {
-    const response: AxiosResponse<Competition> = await axios.put(`${competitionEndPoint}/updateCompetition`, {id, title, description, startDate, endDate});
+    const response: AxiosResponse<Competition> = await axios.put(`${competitionEndPoint}/updateCompetition`, {id, title, description, startDate, endDate, isPublic});
 
     if (response.status === 200) {
       return {success: true, error: null};

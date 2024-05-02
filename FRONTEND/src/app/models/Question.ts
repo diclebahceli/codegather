@@ -3,7 +3,7 @@ import {TestCase} from "./TestCase";
 export interface Question {
     id: string;
     name: string;
-    competitionId: number;
+    competitionId: string;
     description: string;
     starterCode: string;
     testCases?: TestCase[];

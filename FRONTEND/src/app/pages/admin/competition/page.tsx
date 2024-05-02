@@ -1,4 +1,5 @@
 "use client";
+import DeleteModal from "@/app/components/delete_modal/DeleteModal";
 import {Competition} from "@/app/models/Competition";
 import {
   DeleteCompetition,
@@ -8,7 +9,6 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 const CompetitionPage = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
@@ -31,7 +31,7 @@ const CompetitionPage = () => {
         }
         setCompetitions(competitions);
       } catch (error: Error | any) {
-          toast.error(error.message);
+        toast.error(error.message);
       }
     };
     fetchCompetitions();
@@ -100,20 +100,8 @@ const CompetitionPage = () => {
           </tbody>
         </table>
 
-        <Modal isOpen={show} toggle={handleModal} >
-          <ModalHeader>Modal title</ModalHeader>
-          <ModalBody>
-            Are you sure you want to delete this competition?
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" className="text-white" onClick={handleModal}>
-              Cancel
-            </Button>{' '}
-            <Button color="danger" className="text-white" onClick={handleDeleteCompetition}>
-              Delete
-            </Button>
-          </ModalFooter>
-        </Modal>
+        <DeleteModal handleOnDelete={handleDeleteCompetition} isOpen={show} message="Are you sure you want to delete this competition" handleToggle={handleModal} />
+
 
       </div>
     </div>

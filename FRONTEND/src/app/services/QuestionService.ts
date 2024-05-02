@@ -83,6 +83,7 @@ export async function UpdateQuestion(question: Question): Promise<{data: Questio
 export async function DeleteQuestion(questionId: string): Promise<{success: boolean; error: string | null}> {
   try {
     const response = await axios.delete(`${questionEndPoint}/deleteQuestion?Id=${questionId}`);
+    console.log(response);
     if (response.status != 200) {
       return {success: false, error: ExtractErrorMessage(response)};
     }

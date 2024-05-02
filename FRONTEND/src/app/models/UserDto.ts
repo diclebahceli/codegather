@@ -5,4 +5,5 @@ export interface UserDto {
     userName: string;
     email: string;
     competitions?: Competition[];
+    submissions?: any[];
 };

@@ -8,7 +8,7 @@ export interface Competition {
   description: string;
   startDate: string;
   endDate: string;
-
   questions?: Question[];
   joinedUsers?: UserDto[];
+  isPublic: boolean;
 }
