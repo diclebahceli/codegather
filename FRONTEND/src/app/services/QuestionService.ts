@@ -1,91 +1,90 @@
-import { Question } from "../models/Question";
+import axios from "axios";
+import {Competition} from "../models/Competition";
+import {Question} from "../models/Question";
+import {BACKEND_URL} from "../utils/config";
+import {ExtractErrorMessage} from "./AuthService";
 
-const questions: Question[] = [
-    {
-        id: 1,
-        name: "Question 1",
-        competitionId: 1,
-        description: ` Challenge: String Reversal Imagine you're a secret agent and need to quickly encode messages to send back to headquarters. You've been given a simple encryption method: reversing the order of the letters in a message.
-        The Mission: Write a function that takes a string as input and returns a new string with the characters reversed. For example, the message "hello world" should become "dlrow olleh" after encryption.
-        Bonus Mission: Can you crack the code without using any built-in string reversal functions? This could involve using loops to iterate through the string character by character and building the reversed string from scratch.
-        `,
-        starterCode: "Input: s = 'abcabcbb', Output: 3"
-    },
-    {
-        id: 2,
-        name: "Question 2",
-        competitionId: 1,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 3,
-        name: "Question 3",
-        competitionId: 2,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 4,
-        name: "Question 4",
-        competitionId: 2,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 5,
-        name: "Question 5",
-        competitionId: 3,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 6,
-        name: "Question 6",
-        competitionId: 3,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 7,
-        name: "Question 7",
-        competitionId: 4,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 8,
-        name: "Question 8",
-        competitionId: 4,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
-    },
-    {
-        id: 9,
-        name: "Question 9",
-        competitionId: 5,
-        description: "Given a string s, find the length of the longest substring without repeating characters.",
-        starterCode: "Input: s = 'pwwkew', Output: 3"
+const questionEndPoint = BACKEND_URL + "/question";
+
+export async function GetAllQuestions(): Promise<{data: Question[] | null; error: string | null}> {
+  try {
+    const response = await axios.get(`${questionEndPoint}/getAll`);
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
     }
-]
+    return {data: response.data.questions as Question[], error: null};
 
-
-export async function GetAllQuestions(): Promise<Question[]> {
-    return questions;
+  } catch (e: Error | any) {
+    return {data: null, error: ExtractErrorMessage(e)};
+  }
 };
 
-export async function GetQuestionById(id: number): Promise<Question> {
-    const question = await questions.find(question => question.id == id);
-    if (question) {
-        return question;
+export async function GetQuestionById(questionId: string): Promise<{data: Question | null; error: string | null}> {
+  try {
+    const response = await axios.get(`${questionEndPoint}/GetById?Id=${questionId}`);
+
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
     }
-    throw new Error(`Competition with id ${id} not found`);
+    return {data: response.data.question as Question, error: null};
+  } catch (e: Error | any) {
+    return {data: null, error: ExtractErrorMessage(e)};
+  }
 }
 
-export async function GetQuestionsByCompetitionId(id: number): Promise<Question[]> {
-    const questionsByCompetition = await questions.filter(question => question.competitionId == id);
-    if (questionsByCompetition) {
-        return questionsByCompetition;
+
+export async function GetQuestionsByCompetitionId(id: string): Promise<{data: Question[] | null; error: string | null}> {
+  try {
+    const response = await axios.get(`${questionEndPoint}/GetByCompetitionId?CompetitionId=${id}`);
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
     }
-    throw new Error(`Competition with id ${id} not found`);
+    return {data: response.data.questions as Question[], error: null};
+  } catch (e: Error | any) {
+    return {data: null, error: ExtractErrorMessage(e)};
+  }
+
+}
+
+
+export async function CreateQuestion(question: Question): Promise<{data: Question | null; error: string | null}> {
+  const {competitionId, name, description, starterCode} = question;
+
+  try {
+    const response = await axios.post(`${questionEndPoint}/createQuestion`, {competitionId, name, description, starterCode});
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
+    }
+    return {data: response.data.question as Question, error: null};
+  }
+  catch (e: Error | any) {
+    return {data: null, error: ExtractErrorMessage(e)};
+  }
+}
+
+export async function UpdateQuestion(question: Question): Promise<{data: Question | null; error: string | null}> {
+  const {id, name, description, starterCode} = question;
+
+  try {
+    const response = await axios.put(`${questionEndPoint}/updateQuestion`, {id, name, description, starterCode});
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
+    }
+    return {data: response.data.question as Question, error: null};
+  }
+  catch (e: Error | any) {
+    return {data: null, error: ExtractErrorMessage(e)};
+  }
+}
+
+export async function DeleteQuestion(questionId: string): Promise<{success: boolean; error: string | null}> {
+  try {
+    const response = await axios.delete(`${questionEndPoint}/deleteQuestion?Id=${questionId}`);
+    if (response.status != 200) {
+      return {success: false, error: ExtractErrorMessage(response)};
+    }
+    return {success: true, error: null};
+  } catch (e: Error | any) {
+    return {success: false, error: ExtractErrorMessage(e)};
+  }
 }
