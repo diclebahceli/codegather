@@ -5,33 +5,33 @@ import {ExtractErrorMessage} from "./AuthService";
 
 const testcaseEndPoint = BACKEND_URL + "/TestCase";
 
-export async function CreateTestCase(testCase: TestCase) {
+export async function CreateTestCase(testCase: TestCase): Promise<{data: TestCase | null, error: string | null}> {
   const {input, output, questionId} = testCase;
   try {
     const response = await axios.post(`${testcaseEndPoint}/CreateTestCase`, {questionId, input, output});
     if (response.status === 200) {
-      return {success: true, error: null};
+      return {data: response.data.testCase as TestCase, error: null};
     } else {
-      return {success: false, error: ExtractErrorMessage(response)};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
 
   } catch (error) {
-    return {success: false, error: ExtractErrorMessage(error)};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 
-export async function UpdateTestCase(testCase: TestCase) {
+export async function UpdateTestCase(testCase: TestCase): Promise<{data: TestCase | null, error: string | null}> {
   const {id, input, output, questionId} = testCase;
   try {
     const response = await axios.put(`${testcaseEndPoint}/UpdateTestCase`, {id, input, output, questionId});
     if (response.status === 200) {
-      return {success: true, error: null};
+      return {data: response.data.testCase as TestCase, error: null};
     } else {
-      return {success: false, error: ExtractErrorMessage(response)};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
 
   } catch (error) {
-    return {success: false, error: ExtractErrorMessage(error)};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 
@@ -49,30 +49,29 @@ export async function DeleteTestCase(id: number) {
   }
 }
 
-export async function GetTestCaseById(id: string) {
+export async function GetTestCaseById(id: string): Promise<{error: string | null, data: TestCase | null}> {
   try {
     const response = await axios.get(`${testcaseEndPoint}/GetById?Id=${id}`);
     if (response.status === 200) {
-      return {success: true, error: null, data: response.data};
+      return {error: null, data: response.data.testCase as TestCase};
     } else {
-      return {success: false, error: ExtractErrorMessage(response)};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
-
   } catch (error) {
-    return {success: false, error: ExtractErrorMessage(error)};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }
 
-export async function GetTestCasesByQuestionId(questionId: string) {
+export async function GetTestCasesByQuestionId(questionId: string): Promise<{error: string | null, data: TestCase[] | null}>{
   try {
     const response = await axios.get(`${testcaseEndPoint}/GetByQuestionId?QuestionId=${questionId}`);
     if (response.status === 200) {
-      return {success: true, error: null, data: response.data};
+      return {error: null, data: response.data.testCases as TestCase[]};
     } else {
-      return {success: false, error: ExtractErrorMessage(response)};
+      return {data: null, error: ExtractErrorMessage(response)};
     }
 
   } catch (error) {
-    return {success: false, error: ExtractErrorMessage(error)};
+    return {data: null, error: ExtractErrorMessage(error)};
   }
 }

@@ -1,24 +1,26 @@
 "use client";
+import {TestCase} from '@/app/models/TestCase';
 import React, {useState} from 'react';
 
 export interface TestCaseProps {
   input: string;
-  expectedOutput: string;
+  output: string;
 }
 
+// USE THIS FORM IN A NEW EDIT QUESTION PAGE INSTEAD OF CREATE
+// USER WILL FIRST CREATE THE QUESTION AND THEN ADD TEST CASES
 const TestCaseForm = () => {
-  const [testCases, setTestCases] = useState<TestCaseProps[]>([{input: '', expectedOutput: ''}]);
+
+  const [testCases, setTestCases] = useState<TestCase[]>([{id: "", questionId: "", input: "", output: ''}]);
   const [error, setError] = useState<string>('');
 
-  const handleAddTestCase = (testCase: TestCaseProps) => {
-    //Try to add test cases in backend than add a new blank
-    //TODO
+  const handleAddTestCase = (testCase: TestCase) => {
     setError('');
-    if (testCase.input === '' || testCase.expectedOutput === '') {
+    if (testCase.input === '' || testCase.output === '') {
       setError('Please fill all fields');
       return;
     }
-    setTestCases([...testCases, {input: "", expectedOutput: ''}]);
+    setTestCases([...testCases, {id: "", questionId: "", input: "", output: ''}]);
   };
 
   const handleRemoveTestCase = (index: number) => {
@@ -59,19 +61,20 @@ const TestCaseForm = () => {
                 className="form-control"
                 type="text"
                 placeholder="Expected Output"
-                name='expectedOutput'
+                name='output'
                 required={true}
-                value={testCase.expectedOutput}
-                onChange={(e) => handleValueChanged(index, 'expectedOutput', e.target.value)}
+                value={testCase.output}
+                onChange={(e) => handleValueChanged(index, 'output', e.target.value)}
               />
               {testCases.length > 1 && (
                 <button className='btn btn-danger mx-2' onClick={() => handleRemoveTestCase(index)}>Remove</button>)
               }
-              {index === testCases.length - 1 && (
-
-                <button type='submit' className='btn btn-primary mx-2 ' onClick={() => handleAddTestCase(testCase)}>Add</button>)
-              }
             </div>
+
+            {index === testCases.length - 1 && (
+
+              <button type='submit' className='btn btn-primary ms-auto' onClick={() => handleAddTestCase(testCase)}>Add</button>)
+            }
 
           </div>
         </div>
