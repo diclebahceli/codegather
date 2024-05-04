@@ -24,8 +24,8 @@ public class GetQuestionByIdQueryHandler : BaseHandler, IRequestHandler<GetQuest
         return new GetQuestionByIdQueryResponse
         {
             Question = mapper.Map<QuestionDto, Question>(question),
-            Submissions = question.Submissions.Select(s => mapper.Map<SubmissionDto>(s)).ToList(),
-            TestCases = question.TestCases.Select(t => mapper.Map<TestCaseDto>(t)).ToList()
+            Submissions = question.Submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList(),
+            TestCases = question.TestCases.Select(t => mapper.Map<TestCaseDto, TestCase>(t)).ToList()
         };
     }
 }
