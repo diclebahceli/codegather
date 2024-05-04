@@ -206,6 +206,7 @@ namespace codegather.Persistance.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CompetitionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     StarterCode = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
