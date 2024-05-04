@@ -21,9 +21,8 @@ export async function CreateTestCase(testCase: TestCase): Promise<{data: TestCas
 }
 
 export async function UpdateTestCase(testCase: TestCase): Promise<{data: TestCase | null, error: string | null}> {
-  const {id, input, output, questionId} = testCase;
   try {
-    const response = await axios.put(`${testcaseEndPoint}/UpdateTestCase`, {id, input, output, questionId});
+    const response = await axios.put(`${testcaseEndPoint}/UpdateTestCase`, {testCase});
     if (response.status === 200) {
       return {data: response.data.testCase as TestCase, error: null};
     } else {
@@ -35,7 +34,7 @@ export async function UpdateTestCase(testCase: TestCase): Promise<{data: TestCas
   }
 }
 
-export async function DeleteTestCase(id: number) {
+export async function DeleteTestCase(id: string) {
   try {
     const response = await axios.delete(`${testcaseEndPoint}/DeleteTestCase?TestCaseId=${id}`);
     if (response.status === 200) {
