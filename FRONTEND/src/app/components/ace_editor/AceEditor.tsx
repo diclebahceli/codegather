@@ -11,8 +11,9 @@ import "ace-builds/src-noconflict/theme-monokai"
 import {Ace} from "ace-builds";
 
 
-function AceEditorComponent({onValueChange}: {onValueChange: (value: string) => void}) {
-  const [value , setValue] = useState<string>("");
+function AceEditorComponent({onValueChange, defaultValue}
+  : {onValueChange: (value: string) => void, defaultValue: string}) {
+  const [value, setValue] = useState<string>(defaultValue);
   function onChange(newValue: string) {
     onValueChange(newValue);
     setValue(newValue);
@@ -34,7 +35,8 @@ function AceEditorComponent({onValueChange}: {onValueChange: (value: string) => 
       highlightActiveLine={true}
       style={{borderRadius: "5px", height: "100%"}}
       width="100%"
-      value={value}
+      value={defaultValue}
+      defaultValue=""
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: false,

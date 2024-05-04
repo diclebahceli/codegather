@@ -37,7 +37,7 @@ export default function Navbar() {
 
     }
 
-    if (context.roles.length === 0) {
+    if (context.roles === undefined || context.roles.length === 0) {
       fetchRoles();
     }
   }, [path])
@@ -60,8 +60,8 @@ export default function Navbar() {
     <div>
       {userId ? (
         <div className="d-flex flex-row align-items-center">
-          {context.roles.includes("Admin") ?
-            <Link href={"/pages/admin"} scroll={false} className="text-white text-decoration-none mx-2 fs-5">Admin</Link>
+          { context.roles !== undefined && context.roles.includes("Admin") ?
+            <Link href={"/pages/admin/competition"} scroll={false} className="text-white text-decoration-none mx-2 fs-5">Admin</Link>
             : null}
           <Link href={`/pages/ongoingCompetitions`} scroll={false} className="text-white text-decoration-none mx-4 fs-5">Ongoing Competitions</Link>
           <Link href={`/pages/profile/${userId}`} scroll={false} className="text-white text-decoration-none mx-4 fs-5">Profile</Link>
