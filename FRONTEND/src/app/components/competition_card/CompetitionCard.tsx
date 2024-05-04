@@ -2,6 +2,11 @@
 import { Competition } from "@/app/models/Competition";
 import Card from "../card/Card";
 import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
+import { GetAllCompetitions } from "@/app/services/CompetitionService";
+import { JoinCompetition, getUserById } from "@/app/services/UserService";
+import { getWithExpiry } from "@/app/utils/StorageGetter";
+import toast from "react-hot-toast";
 
 export default function CompetitionCard({
   competition,
@@ -9,10 +14,48 @@ export default function CompetitionCard({
   competition: Competition;
 }) {
   const router = useRouter();
+  const [joinedCompetitions, setJoinedCompetitions] = useState<Competition[]>(
+    []
+  );
 
   const handleDetailsClick = () => {
     //add the competition id to the route
+
     router.push(`/pages/competitionDetail/${competition.id}`);
+  };
+
+  useEffect(() => {
+    const SwitchText = async () => {
+      const userId = getWithExpiry("userId");
+      if (userId) {
+        const result = await getUserById(userId);
+        const userComp = result.data?.competitions;
+        if (userComp) {
+          setJoinedCompetitions(userComp);
+        }
+      }
+    };
+    SwitchText();
+  }, []);
+
+  const handle = () => {
+    handleJoin(competition.id);
+  };
+
+  const handleJoin = async (compId: string) => {
+    const userId = getWithExpiry("userId");
+    if (userId) {
+      const result = await JoinCompetition(userId, compId);
+      if (result) {
+        const newCopm = await getUserById(userId);
+        if (newCopm.data?.competitions) {
+          setJoinedCompetitions(newCopm.data?.competitions);
+        }
+        toast.success("You have joined the competition");
+      } else {
+        toast.error("You have already joined the competition");
+      }
+    }
   };
 
   return (
@@ -25,12 +68,15 @@ export default function CompetitionCard({
           <div className="card-text mb-3 fs-5 text-wrap text-white">
             {competition.description}
           </div>
-          <button
-            onClick={handleDetailsClick}
-            className="btn btn-green mt-2 ms-auto mt-auto stretched-link"
-          >
-            Details
-          </button>
+          {joinedCompetitions.find((c) => c.id === competition.id) ? (
+            <button className="btn btn-primary" onClick={handleDetailsClick}>
+              Details
+            </button>
+          ) : (
+            <button className="btn btn-primary" onClick={handle}>
+              Join
+            </button>
+          )}
         </div>
       </Card>
     </div>

@@ -1,14 +1,13 @@
-import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "../../styles/_variables.scss";
 import "./globals.css";
 import Header from "./components/header/Header";
-import {Encode_Sans} from "next/font/google";
-import {Toaster} from "react-hot-toast";
-import {SetInterceptors} from "./services/AuthService";
-import {AuthProvider} from "./contexts/AuthContext";
+import { Encode_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { SetInterceptors } from "./services/AuthService";
+import { AuthProvider } from "./contexts/AuthContext";
 import Protected from "./components/protected/Protected";
-
 
 const inter = Inter({ subsets: ["latin"] });
 const encodeSans = Encode_Sans({ subsets: ["latin"] });
@@ -23,7 +22,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const protectedRoutes = ["/pages/ongoingCompetitions"];
+  const protectedRoutes = [
+    "/pages/ongoingCompetitions",
+    "/pages/myCompetitions",
+  ];
   SetInterceptors();
   return (
     <html lang="en" className={encodeSans.className}>

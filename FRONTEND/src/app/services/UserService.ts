@@ -37,6 +37,7 @@ export async function getUserById(userId: string): Promise<{data: UserDto | null
     usr.submissions = response.data.submissions;
 
     return {data: usr, error: null};
+
   } catch (error: Error | any) {
     //TODO
     return {data: null, error: ExtractErrorMessage(error)};
@@ -136,4 +137,17 @@ export async function GetAllRoles(): Promise<{data: string[] | null; error: stri
   }
 }
 
+
+export async function JoinCompetition(userId: string, competitionId: string): Promise<{success: boolean; error: string | null}> {
+  try {
+    const response = await axios.put(`${userEndPoint}/joinCompetition`, {userId, competitionId});
+    if (response.status != 200) {
+      const error = response.data.Errors;
+      return {success: false, error: error[0].message};
+    }
+    return {success: true, error: null};
+  } catch (error: Error | any) {
+    return {success: false, error: error.message};
+  }
+}
 
