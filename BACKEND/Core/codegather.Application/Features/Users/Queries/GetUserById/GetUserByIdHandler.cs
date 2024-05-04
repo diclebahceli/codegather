@@ -21,7 +21,8 @@ public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdReques
     public async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
         User user = await unitOfWork.GetReadRepository<User>().GetAsync(predicate: u => u.Id == request.Id
-                , include: u => u.Include(u => u.Submissions).Include(u => u.Competitions))
+                , include: u => u.Include(u => u.Submissions.Where(s => !s.IsDeleted))
+                .Include(u => u.Competitions.Where(c => !c.IsDeleted)))
             ?? throw new Exception("User not found");
 
         return new GetUserByIdResponse

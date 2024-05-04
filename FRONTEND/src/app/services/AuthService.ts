@@ -33,8 +33,8 @@ export async function Login(info: LoginUserDTO): Promise<{error: string | null}>
       const accessToken = response.data.accessToken;
       const decoded: Claims = jwtDecode(accessToken);
 
-      setWithExpiry("accessToken", accessToken, decoded.exp * 1000)
-      setWithExpiry("userId", decoded.id, decoded.exp * 1000)
+      setWithExpiry("accessToken", accessToken, new Date().getTime() + 45 * 24 * 60 * 60 * 1000);
+      setWithExpiry("userId", decoded.id, new Date().getTime() + 45 * 24 * 60 * 60 * 1000);
       return {error: null};
     }
     else {
@@ -94,8 +94,8 @@ export function SetInterceptors() {
         // Refresh token logic (call your refresh token endpoint)
         const newAccessToken = await GetAccessToken();
         const decoded: Claims = jwtDecode(newAccessToken);
-        setWithExpiry("accessToken", newAccessToken, decoded.exp * 1000);
-        setWithExpiry("userId", decoded.id, decoded.exp * 1000);
+        setWithExpiry("accessToken", newAccessToken, new Date().getTime() + 45 * 24 * 60 * 60 * 1000);
+        setWithExpiry("userId", decoded.id, new Date().getTime() + 45 * 24 * 60 * 60 * 1000);
       }
       const accessToken = getWithExpiry("accessToken");
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -124,7 +124,6 @@ function isAccessTokenValid(): boolean {
 }
 
 export function ExtractErrorMessage(error: any): string {
-  console.log("ERROR", error);
   if (error.response) {
     if (error.response.data.errors) {
       return error.response.data.title;

@@ -3,6 +3,7 @@ public class Question : EntityBase
 {
     public Competition Competition { get; set; }
     public Guid CompetitionId { get; set; }
+    public string Name { get; set; }
     public ICollection<Submission> Submissions { get; set; }
     public string Description { get; set; }
     public ICollection<TestCase> TestCases { get; set; }
