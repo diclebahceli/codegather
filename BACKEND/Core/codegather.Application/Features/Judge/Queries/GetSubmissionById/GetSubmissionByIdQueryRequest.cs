@@ -4,5 +4,5 @@ namespace codegather.Application;
 
 public class GetSubmissionByIdQueryRequest : IRequest<GetSubmissionByIdQueryResponse>
 {
-    public string SubmissionId { get; set; }
+    public Guid SubmissionId { get; set; }
 }

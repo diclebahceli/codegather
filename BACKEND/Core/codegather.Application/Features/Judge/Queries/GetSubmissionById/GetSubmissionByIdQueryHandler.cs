@@ -11,9 +11,9 @@ public class GetSubmissionByIdQueryHandler : BaseHandler, IRequestHandler<GetSub
     {
     }
 
-    public Task<GetSubmissionByIdQueryResponse> Handle(GetSubmissionByIdQueryRequest request, CancellationToken cancellationToken)
+    public async Task<GetSubmissionByIdQueryResponse> Handle(GetSubmissionByIdQueryRequest request, CancellationToken cancellationToken)
     {
-        var submission = await unitOfWork.GetReadRepository<Submission>().GetByIdAsync(request.SubmissionId);
+        var submission = await unitOfWork.GetReadRepository<Submission>().GetAsync(predicate: s => s.Id == request.SubmissionId && !s.IsDeleted, enableTracking: false) ?? throw new Exception("Submission not found");
         return new GetSubmissionByIdQueryResponse
         {
             Submission = submission
