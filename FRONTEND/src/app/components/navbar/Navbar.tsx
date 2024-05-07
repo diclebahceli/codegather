@@ -4,6 +4,7 @@ import { AuthContext, AuthContextType } from "@/app/contexts/AuthContext";
 import { Logout } from "@/app/services/AuthService";
 import { getUserById } from "@/app/services/UserService";
 import { getWithExpiry } from "@/app/utils/StorageGetter";
+import { get } from "http";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
@@ -12,12 +13,24 @@ import toast from "react-hot-toast";
 export default function Navbar() {
   const path = usePathname();
   const [userId, setUserId] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
   const router = useRouter();
   const context = useContext(AuthContext) as AuthContextType;
 
   useEffect(() => {
-    const id = getWithExpiry("userId");
-    setUserId(id as string);
+    const getUserName = async () => {
+      const id = getWithExpiry("userId");
+      setUserId(id as string);
+      if (!id) return;
+      const user = await getUserById(id);
+      console.log(user);
+      if (user.error || !user.data) {
+        toast.error(user.error);
+        return;
+      }
+      setUserName(user.data.userName);
+    };
+    getUserName();
   }, [path]);
 
   const handleLogout = async () => {
@@ -62,7 +75,7 @@ export default function Navbar() {
             My Competitions
           </Link>
           <Link
-            href={`/pages/profile/${userId}`}
+            href={`/pages/profile/${userName}`}
             scroll={false}
             className="text-white text-decoration-none mx-4 fs-5"
           >
