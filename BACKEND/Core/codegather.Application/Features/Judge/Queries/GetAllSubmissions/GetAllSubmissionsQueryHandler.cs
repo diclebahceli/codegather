@@ -14,9 +14,11 @@ public class GetAllSubmissionsQueryHandler : BaseHandler, IRequestHandler<GetAll
     public async Task<GetAllSubmissionsQueryResponse> Handle(GetAllSubmissionsQueryRequest request, CancellationToken cancellationToken)
     {
         var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync();
+
+        mapper.AddConfig<SubmissionDto, Submission>();
         return new GetAllSubmissionsQueryResponse
         {
-            Submissions = submissions
+            Submissions = submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList()
         };
     }
 }
