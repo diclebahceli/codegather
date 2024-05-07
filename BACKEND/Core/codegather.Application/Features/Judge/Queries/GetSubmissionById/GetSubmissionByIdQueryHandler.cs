@@ -16,7 +16,7 @@ public class GetSubmissionByIdQueryHandler : BaseHandler, IRequestHandler<GetSub
         var submission = await unitOfWork.GetReadRepository<Submission>().GetAsync(predicate: s => s.Id == request.SubmissionId && !s.IsDeleted, enableTracking: false) ?? throw new Exception("Submission not found");
         return new GetSubmissionByIdQueryResponse
         {
-            Submission = submission
+            Submission = mapper.Map<SubmissionDto, Submission>(submission)
         };
     }
 }
