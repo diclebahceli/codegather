@@ -1,11 +1,11 @@
 "use client";
-import { Competition } from "@/app/models/Competition";
+import {Competition} from "@/app/models/Competition";
 import Card from "../card/Card";
-import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
-import { GetAllCompetitions } from "@/app/services/CompetitionService";
-import { JoinCompetition, getUserById } from "@/app/services/UserService";
-import { getWithExpiry } from "@/app/utils/StorageGetter";
+import {useRouter} from "next/navigation";
+import {use, useEffect, useState} from "react";
+import {GetAllCompetitions} from "@/app/services/CompetitionService";
+import {JoinCompetition, getUserById} from "@/app/services/UserService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
 import toast from "react-hot-toast";
 
 export default function CompetitionCard({
@@ -46,17 +46,17 @@ export default function CompetitionCard({
     const userId = getWithExpiry("userId");
     if (userId) {
       const result = await JoinCompetition(userId, compId);
-      if (result) {
-        const newCopm = await getUserById(userId);
-        if (newCopm.data?.competitions) {
-          setJoinedCompetitions(newCopm.data?.competitions);
-        }
-        toast.success("You have joined the competition");
-      } else {
-        toast.error("You have already joined the competition");
+      if (result.error) {
+        toast.error(result.error);
+        return;
       }
-    }
-  };
+      toast.success("You have joined the competition");
+      const user = await getUserById(userId);
+      if (user.data?.competitions) {
+        setJoinedCompetitions(user.data?.competitions);
+      }
+    };
+  }
 
   return (
     <div className=" col-md-4 col-sm-6 m-3">
@@ -81,4 +81,6 @@ export default function CompetitionCard({
       </Card>
     </div>
   );
+
 }
+

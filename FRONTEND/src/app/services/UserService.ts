@@ -142,12 +142,11 @@ export async function JoinCompetition(userId: string, competitionId: string): Pr
   try {
     const response = await axios.put(`${userEndPoint}/joinCompetition`, {userId, competitionId});
     if (response.status != 200) {
-      const error = response.data.Errors;
-      return {success: false, error: error[0].message};
+      return {success: false, error: ExtractErrorMessage(response)};
     }
     return {success: true, error: null};
   } catch (error: Error | any) {
-    return {success: false, error: error.message};
+    return {success: false, error: ExtractErrorMessage(error)};
   }
 }
 
