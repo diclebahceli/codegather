@@ -1,6 +1,8 @@
-﻿namespace codegather.Application;
+﻿using MediatR;
 
-public class GetSubmissionsByQuestionIdQueryRequest
+namespace codegather.Application;
+
+public class GetSubmissionsByQuestionIdQueryRequest : IRequest<GetSubmissionsByQuestionIdQueryResponse>
 {
-
+    public Guid QuestionId { get; set; }
 }
