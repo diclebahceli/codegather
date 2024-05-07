@@ -14,10 +14,10 @@ public class GetSubmissionsByQuestionIdQueryHandler : BaseHandler, IRequestHandl
     public async Task<GetSubmissionsByQuestionIdQueryResponse> Handle(GetSubmissionsByQuestionIdQueryRequest request, CancellationToken cancellationToken)
     {
         var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync(predicate: s => s.QuestionId == request.QuestionId && !s.IsDeleted, enableTracking: false) ?? throw new Exception("Submissions not found");
-
+        mapper.AddConfig<SubmissionDto, Submission>();
         return new GetSubmissionsByQuestionIdQueryResponse
         {
-            Submissions = submissions
+            Submissions = submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList()
         };
     }
 }
