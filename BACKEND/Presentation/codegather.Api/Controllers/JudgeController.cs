@@ -28,4 +28,25 @@ public class JudgeController : ControllerBase
         var response = await mediator.Send(request);
         return Ok(response);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetSubmissionsByQuestionId([FromQuery] GetSubmissionsByQuestionIdQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetSubmissionById([FromQuery] GetSubmissionByIdQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllSubmissions()
+    {
+        var response = await mediator.Send(new GetAllSubmissionsQueryRequest());
+        return Ok(response);
+    }
 }
