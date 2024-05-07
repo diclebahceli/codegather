@@ -5,5 +5,7 @@ namespace codegather.Application;
 
 public class UpdateTestCaseCommandRequest : IRequest<UpdateTestCaseCommandResponse>
 {
-    public TestCaseDto TestCase { get; set; }
+    public Guid Id { get; set; }
+    public string Input { get; set; }
+    public string Output { get; set; }
 }
