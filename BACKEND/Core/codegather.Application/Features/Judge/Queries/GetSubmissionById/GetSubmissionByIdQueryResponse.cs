@@ -1,6 +1,8 @@
-﻿namespace codegather.Application;
+﻿using codegather.Domain;
+using MediatR;
 
-public class GetSubmissionByIdQueryResponse
-{
+namespace codegather.Application;
 
+public class GetSubmissionByIdQueryResponse {
+    public Submission Submission { get; set; }
 }
