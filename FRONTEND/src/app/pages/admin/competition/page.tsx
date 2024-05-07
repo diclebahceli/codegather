@@ -1,5 +1,5 @@
 "use client";
-import DeleteModal from "@/app/components/delete_modal/DeleteModal";
+import MyModal from "@/app/components/delete_modal/DeleteModal";
 import {Competition} from "@/app/models/Competition";
 import {
   DeleteCompetition,
@@ -100,7 +100,7 @@ const CompetitionPage = () => {
           </tbody>
         </table>
 
-        <DeleteModal handleOnDelete={handleDeleteCompetition} isOpen={show} message="Are you sure you want to delete this competition" handleToggle={handleModal} />
+        <MyModal handleOnClick={handleDeleteCompetition} isOpen={show} message="Are you sure you want to delete this competition" handleToggle={handleModal} />
 
 
       </div>

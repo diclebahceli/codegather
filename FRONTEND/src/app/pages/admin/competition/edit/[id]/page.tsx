@@ -1,27 +1,23 @@
 "use client";
-import DeleteModal from "@/app/components/delete_modal/DeleteModal";
+import MyModal from "@/app/components/delete_modal/DeleteModal";
 import {Competition} from "@/app/models/Competition";
-import {Question} from "@/app/models/Question";
 import {
   GetCompetitionById,
   UpdateCompetition,
 } from "@/app/services/CompetitionService";
-import {DeleteQuestion} from "@/app/services/QuestionService";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import {FormGroup, Input, Label} from "reactstrap";
+import QuestionList from "../components/question_list/QuestionList";
 
-//TODO: ADD QUESTION LIST OF COMPETITION IN THIS PAGE WITH EDIT AND DELETE OPTIONS
 const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const router = useRouter();
   const [competitionData, setCompetitionData] =
     useState<Competition>({description: "", endDate: "", id: "", startDate: "", title: "", isPublic: false});
 
-  const [pickedId, setPickedId] = useState("");
   const [show, setShow] = useState(false);
 
-  const [questions, setQuestions] = useState<Question[]>([]);
 
 
   const handleInputChange = (e: any) => {
@@ -48,9 +44,8 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
           router.replace("/pages/admin/competition");
           return;
         }
-        setQuestions(result.data.questions || []);
         setCompetitionData(result.data as Competition);
-        
+
       } catch (error: Error | any) {
         toast.error("Error fetching competition");
         router.replace("/pages/admin/competition");
@@ -70,26 +65,16 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
     toast.success("Updated successfully");
   };
 
-  const handleModal = (e: any) => {
-    setPickedId(e as string);
+  const handleModalCancel = () => {
+    togglePublic();
     setShow(!show);
-  };
+  }
 
-  const handleDeleteCompetition = async () => {
-    const response = await DeleteQuestion(pickedId);
-    if (response.error || !response.success) {
-      toast.error(response.error);
-      return;
+  const handleChangeVisibility = () => {
+    if (!competitionData.isPublic) {
+      setShow(!show);
     }
-    toast.success("Question deleted successfully");
-    setQuestions(questions.filter((question) => question.id !== pickedId));
-    setShow(!show);
   }
-
-  function handleEditQuestion(id: string): void {
-    router.push(`/pages/admin/question/edit/${id}`);
-  }
-
   return (
     <div className="h-100 bg-dark p-5">
       <div className="d-flex justify-content-center align-items-center h-100 w-100">
@@ -131,7 +116,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                     type="datetime-local"
                     name="startDate"
                     value={competitionData.startDate}
-                    disabled={new Date(competitionData.startDate) < new Date()}
+                    disabled={new Date(competitionData.startDate) < new Date() && competitionData.isPublic}
                     required={true}
                     onChange={handleInputChange}
                   />
@@ -142,7 +127,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                   <input
                     className="form-control border border-2"
                     type="datetime-local"
-                    disabled={new Date(competitionData.endDate) < new Date()}
+                    disabled={new Date(competitionData.endDate) < new Date() && competitionData.isPublic}
                     name="endDate"
                     required={true}
                     value={competitionData.endDate}
@@ -156,6 +141,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                     checked={competitionData.isPublic}
                     onClick={() => {
                       togglePublic();
+                      handleChangeVisibility();
                     }}
                   />
                   <Label className="text-white" check>Public</Label>
@@ -168,41 +154,15 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
               </div>
             </form>
             <div className="col-4">
-              <table className="table table-dark table-borderless">
-                <thead>
-                  <tr>
-                    <th className="col-2">Question</th>
-                    <th className="col-2">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {questions.map((question) => (
-                    <tr key={question.id}>
-                      <td>{question.name}</td>
-                      <td>
-                        <button
-                          className="btn btn-primary me-2 text-white"
-                          onClick={() => handleEditQuestion(question.id)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-danger text-white"
-                          onClick={() => handleModal(question.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <QuestionList initialQuestions={competitionData.questions || []} />
             </div>
 
           </div>
         }
-        <DeleteModal handleOnDelete={handleDeleteCompetition} isOpen={show}
-          message="Are you sure you want to delete this question" handleToggle={handleModal} />
+
+        <MyModal handleOnClick={() => setShow(!setShow)} isOpen={show}
+          message={`You are going to make this competition public, once made public it cannot
+          be private during the competition.`} handleCancel={handleModalCancel} />
 
       </div>
     </div>
