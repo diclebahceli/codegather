@@ -21,8 +21,9 @@ export async function CreateTestCase(testCase: TestCase): Promise<{data: TestCas
 }
 
 export async function UpdateTestCase(testCase: TestCase): Promise<{data: TestCase | null, error: string | null}> {
+  const {input, output, id} = testCase;
   try {
-    const response = await axios.put(`${testcaseEndPoint}/UpdateTestCase`, {testCase});
+    const response = await axios.put(`${testcaseEndPoint}/UpdateTestCase`, {id, input, output});
     if (response.status === 200) {
       return {data: response.data.testCase as TestCase, error: null};
     } else {
