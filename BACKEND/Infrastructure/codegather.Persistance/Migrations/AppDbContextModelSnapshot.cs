@@ -184,6 +184,10 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("StarterCode")
                         .IsRequired()
                         .HasColumnType("TEXT");

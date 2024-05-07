@@ -10,4 +10,15 @@ public class CompetitionRules : BaseRules
         return Task.CompletedTask;
     }
 
+    public Task CantChangeCompetitionStartDateIfCompetitionStarted(Competition competition, Competition newCompetition)
+    {
+        if (competition.StartDate < DateTime.Now && competition.StartDate != newCompetition.StartDate)
+            throw new Exception("Can't change start date, competition already started");
+        if (competition.EndDate < DateTime.Now && competition.EndDate != newCompetition.EndDate)
+            throw new Exception("Can't change end date, competition already ended");
+
+        return Task.CompletedTask;
+    }
+
 }
+

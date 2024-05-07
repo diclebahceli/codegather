@@ -25,7 +25,8 @@ namespace codegather.Application
         {
             User user = await unitOfWork.GetReadRepository<User>()
                 .GetAsync(predicate: u => u.UserName == request.UserName
-                    , include: u => u.Include(u => u.Submissions).Include(u => u.Competitions))
+                    , include: u => u.Include(u => u.Submissions.Where(s => !s.IsDeleted))
+                    .Include(u => u.Competitions.Where(c => !c.IsDeleted)))
                 ?? throw new NotFoundException("Couldn't find user with that username");
 
             return new GetUserByUsernameResponse

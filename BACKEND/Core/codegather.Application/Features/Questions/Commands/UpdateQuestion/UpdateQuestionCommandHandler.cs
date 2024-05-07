@@ -20,8 +20,10 @@ public class UpdateQuestionCommandHandler: BaseHandler, IRequestHandler<UpdateQu
 
         question.Description = request.Description;
         question.StarterCode = request.StarterCode ;
+        question.Name = request.Name;
 
         await unitOfWork.GetWriteRepository<Question>().UpdateAsync(question);
+        await unitOfWork.SaveAsync();
 
         return new UpdateQuestionCommandResponse
         {

@@ -40,7 +40,7 @@ export default function RootLayout({
                   position="bottom-right"
                   toastOptions={{
                     success: {
-                      duration: 800,
+                      duration: 900,
                     },
                   }}
                 />

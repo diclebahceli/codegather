@@ -25,10 +25,12 @@ export async function GetCompetitionById(competitionId: string):
     const response = await axios.get(`${competitionEndPoint}/GetById?Id=${competitionId}`);
 
     if (response.status != 200) {
-      const errors = response.data.Errors;
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data.competition as Competition, error: null};
+    const competition = response.data.competition as Competition;
+    competition.questions = response.data.questions;
+    competition.joinedUsers = response.data.joinedUsers;
+    return {data: competition, error: null};
   }
   catch (error: Error | any) {
     return {data: null, error: ExtractErrorMessage(error)};
@@ -52,10 +54,10 @@ export async function CreateCompetition(competition: Competition): Promise<{succ
 
 
 export async function UpdateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
-  const {id, title, description, startDate, endDate} = competition;
+  const {id, title, description, startDate, endDate, isPublic} = competition;
 
   try {
-    const response: AxiosResponse<Competition> = await axios.put(`${competitionEndPoint}/updateCompetition`, {id, title, description, startDate, endDate});
+    const response: AxiosResponse<Competition> = await axios.put(`${competitionEndPoint}/updateCompetition`, {id, title, description, startDate, endDate, isPublic});
 
     if (response.status === 200) {
       return {success: true, error: null};

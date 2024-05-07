@@ -28,11 +28,6 @@ public class TokenService : ITokenService
             new Claim("email", user.Email),
         };
 
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim("role", role));
-        }
-
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));
         var token = new JwtSecurityToken(
             issuer: _tokenSettings.Issuer,

@@ -17,7 +17,7 @@ public class GetUserRoleQueryHandler : BaseHandler, IRequestHandler<GetUserRoleQ
     public async Task<GetUserRoleQueryResponse> Handle(GetUserRoleQueryRequest request, CancellationToken cancellationToken)
     {
 
-        var user = userManager.FindByIdAsync(request.UserId).Result;
+        var user = userManager.FindByIdAsync(request.UserId.ToString()).Result;
         var roles = userManager.GetRolesAsync(user).Result;
         var asign = new GetUserRoleQueryResponse
         {
