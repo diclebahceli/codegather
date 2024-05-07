@@ -69,11 +69,14 @@ export default function CompetitionCard({
             {competition.description}
           </div>
           {joinedCompetitions.find((c) => c.id === competition.id) ? (
-            <button className="btn btn-primary" onClick={handleDetailsClick}>
+            <button
+              className="btn btn-green w-50 ms-auto"
+              onClick={handleDetailsClick}
+            >
               Details
             </button>
           ) : (
-            <button className="btn btn-primary" onClick={handle}>
+            <button className="btn btn-green" onClick={handle}>
               Join
             </button>
           )}

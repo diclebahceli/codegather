@@ -151,3 +151,18 @@ export async function JoinCompetition(userId: string, competitionId: string): Pr
   }
 }
 
+
+export async function GetUserByUserName(userName: string): Promise<{data: UserDto | null; error: string | null}> {
+  try {
+    const response = await axios.get(`${userEndPoint}/getByUserName?userName=${userName}`);
+    if (response.status != 200) {
+      const error = response.data.Errors;
+      return {data: null, error: error[0].message};
+    }
+    const user = response.data.user as UserDto;
+    user.competitions = response.data.competitions;
+    return {data: response.data.user as UserDto, error: null};
+  } catch (error: Error | any) {
+    return {data: null, error: error.message};
+  }
+}
