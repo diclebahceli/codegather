@@ -2,5 +2,5 @@
 
 public class GetResultByTokenQueryResponse
 {
-    public JudgeResultDto Submission { get; set; }
+    public RunResultDto Submission { get; set; }
 }

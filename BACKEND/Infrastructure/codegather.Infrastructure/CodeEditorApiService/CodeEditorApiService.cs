@@ -17,7 +17,7 @@ public class CodeEditorApiService : ICodeEditorService
     }
 
 
-    public async Task<JudgeResultDto> CreateSubmission(JudgeSubmissionDto judgeSubmissionDto)
+    public async Task<RunResultDto> CreateSubmission(JudgeSubmissionDto judgeSubmissionDto)
     {
 
         using var request = new HttpRequestMessage()
@@ -46,7 +46,7 @@ public class CodeEditorApiService : ICodeEditorService
 
             // Extract the token
             string token = (string)jsonObject["token"];
-            JudgeResultDto res = await GetResult(token);
+            RunResultDto res = await GetResult(token);
             Console.WriteLine(token);
             return res;
         }
@@ -54,7 +54,7 @@ public class CodeEditorApiService : ICodeEditorService
 
 
 
-    public async Task<JudgeResultDto> GetResult(string token)
+    public async Task<RunResultDto> GetResult(string token)
     {
         using var request = new HttpRequestMessage()
         {
@@ -86,7 +86,7 @@ public class CodeEditorApiService : ICodeEditorService
 
             Console.WriteLine(body);
 
-            return new JudgeResultDto()
+            return new RunResultDto()
             {
                 time = time,
                 memory = Convert.ToInt32(memory),

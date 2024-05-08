@@ -6,17 +6,17 @@ namespace codegather.Api;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class JudgeController : ControllerBase
+public class SubmissionController : ControllerBase
 {
     private IMediator mediator;
 
-    public JudgeController(IMediator mediator)
+    public SubmissionController(IMediator mediator)
     {
         this.mediator = mediator;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Submit(JudgeSubmitCommandRequest request)
+    public async Task<IActionResult> Submit(SubmitCommandRequest request)
     {
         var response = await mediator.Send(request);
         return Ok(response);

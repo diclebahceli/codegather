@@ -2,7 +2,7 @@
 
 namespace codegather.Application;
 
-public class JudgeSubmitCommandRequest : IRequest<JudgeSubmitCommandResponse>
+public class SubmitCommandRequest : IRequest<SubmitCommandResponse>
 {
     public JudgeSubmissionDto JudgeSubmission { get; set; }
 }
