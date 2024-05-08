@@ -14,9 +14,11 @@ public class DeleteCompetitionCommandHandler : IRequestHandler<DeleteCompetition
 
     public async Task<Unit> Handle(DeleteCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true);
-        product.IsDeleted = true;
-        await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(product);
+        var competition = await _unitOfWork.GetReadRepository<Competition>().GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true);
+
+
+        competition.IsDeleted = true;
+        await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(competition);
         await _unitOfWork.SaveAsync();
 
         return Unit.Value;

@@ -9,10 +9,20 @@ export interface TestCaseProps {
   output: string;
 }
 
-const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
+const TestCaseForm = ({qId, initial, isPublic}: {qId: string, initial: TestCase[], isPublic: boolean}) => {
 
-  const [testCases, setTestCases] = useState<TestCase[]>([{id: "", questionId: qId, input: "", output: ''}]);
+  const [testCases, setTestCases] = useState<TestCase[]>(initial);
   const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    if (!isPublic) {
+      setTestCases(addEmptyTestCase(initial));
+    }
+    else {
+      setTestCases(initial);
+    }
+
+  }, [initial, isPublic]);
 
   const handleAddTestCase = async (index: number, testCase: TestCase) => {
     setError('');
@@ -22,20 +32,19 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
     }
     const result = await CreateTestCase(testCase);
     if (result.error || !result.data) {
-      toast.error(result.error);
-      return;
+      toast.error(result.error); return;
     }
 
     toast.success('Test case added successfully');
-    updateItemFromState(index, result.data);
+    setTestCases(addEmptyTestCase(updateItemFromState(index, result.data)));
 
-    setTestCases([...testCases, {id: "", questionId: qId, input: "", output: ''}]);
   };
 
-  useEffect(() => {
-    initial.push({id: "", questionId: qId, input: "", output: ''})
-    setTestCases(initial);
-  }, [initial]);
+
+  const addEmptyTestCase = (testCases: TestCase[]) => {
+    testCases.push({id: "", questionId: qId, input: "", output: ''});
+    return testCases;
+  }
 
   const handleDeleteTestCase = async (id: string) => {
     try {
@@ -56,13 +65,13 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
   const handleUpdateTestCase = async (index: number) => {
     const testCase = testCases[index];
     try {
-      const reuslt = await UpdateTestCase(testCase);
-      if (reuslt.error || !reuslt.data) {
-        toast.error(reuslt.error);
+      const result = await UpdateTestCase(testCase);
+      if (result.error || !result.data) {
+        toast.error(result.error);
         return;
       }
       toast.success('Test case updated successfully');
-      updateItemFromState(index, reuslt.data);
+      setTestCases(updateItemFromState(index, result.data));
     } catch (e: Error | any) {
       toast.error(e);
     }
@@ -71,7 +80,7 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
 
   const updateItemFromState = (index: number, testCase: TestCase) => {
     const updatedTestCases = testCases.map((tc, i) => i === index ? testCase : tc);
-    setTestCases(updatedTestCases);
+    return updatedTestCases;
   }
 
   const handleValueChanged = (index: number, key: string, value: string) => {
@@ -90,6 +99,8 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
   return (
     <div className="container">
       <div className='text-white fs-3'>Test Cases</div>
+      <label className='col-4 text-white ms-1'>Input</label>
+      <label className='col-4 text-white ms-1'>Expected Output</label>
       {testCases.map((testCase, index) => (
         <div key={index}>
           <div className='col-8'>
@@ -101,6 +112,7 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
                 required={true}
                 name='input'
                 value={testCase.input}
+                disabled={isPublic}
                 onChange={(e) => handleValueChanged(index, 'input', e.target.value)}
               />
               <input
@@ -108,20 +120,21 @@ const TestCaseForm = ({qId, initial}: {qId: string, initial: TestCase[]}) => {
                 type="text"
                 placeholder="Expected Output"
                 name='output'
+                disabled={isPublic}
                 required={true}
                 value={testCase.output}
                 onChange={(e) => handleValueChanged(index, 'output', e.target.value)}
               />
-              {testCases.length > 1 && testCase.input !== "" && (
+              {testCases.length > 1 && testCase.id !== "" && !isPublic && (
                 <button className='btn btn-danger mx-1 me-auto' onClick={() => handleDeleteTestCase(testCase.id)}>Delete</button>
               )}
 
-              {testCases.length > 1 && testCase.input !== "" && (
+              {testCases.length > 1 && testCase.id !== "" && !isPublic && (
                 <button className='btn btn-orange mx-1 me-auto' onClick={() => handleUpdateTestCase(index)}>Update</button>
               )}
             </div>
 
-            {index === testCases.length - 1 && (
+            {index === testCases.length - 1 && !isPublic && (
 
               <button type='submit' className='btn btn-primary ms-auto' onClick={() => handleAddTestCase(index, testCase)}>Add</button>)
             }

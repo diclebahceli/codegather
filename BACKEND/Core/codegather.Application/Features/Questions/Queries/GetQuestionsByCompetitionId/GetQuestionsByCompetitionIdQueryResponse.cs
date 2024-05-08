@@ -2,5 +2,5 @@
 
 public class GetQuestionsByCompetitionIdQueryResponse
 {
-    public ICollection<QuestionDto> Questions { get; set; } = new List<QuestionDto>();
+    public ICollection<DetailedQuestionDto> Questions { get; set; } = new List<DetailedQuestionDto>();
 }

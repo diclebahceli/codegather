@@ -1,6 +1,7 @@
 ﻿using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
 
@@ -18,7 +19,9 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
     public async Task<Unit> Handle(UpdateCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
         var competition = await _unitOfWork.GetReadRepository<Competition>()
-            .GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true)
+            .GetAsync(x => x.Id == request.Id && !x.IsDeleted, enableTracking: true
+                    , include: c => c.Include(c => c.Questions.Where(q => !q.IsDeleted))
+                                     .ThenInclude(q => q.TestCases))
             ?? throw new Exception("No such competition found");
 
 
@@ -27,14 +30,16 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         var otherComps = competitions.Where(c => c.Id != competition.Id).ToList();
         await competitionRules.CompetitionNameMustBeUnique(otherComps, request.Title);
 
-        var newObject = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
-        await competitionRules.CantChangeCompetitionStartDateIfCompetitionStarted(competition, newObject);
+        var newComp = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
+        await competitionRules.CantMakePrivateAfterMadePublic(competition, newComp);
+        await competitionRules.CantChangeCompetitionStartDateIfMadePublic(competition, newComp);
+        await competitionRules.NeedsQuestionAndTestCaseToBePublic(competition, competition.Questions.ToList());
 
-        competition.Title = newObject.Title;
-        competition.Description = newObject.Description;
-        competition.StartDate = newObject.StartDate;
-        competition.EndDate = newObject.EndDate;
-        competition.IsPublic = newObject.IsPublic;
+        competition.Title = newComp.Title;
+        competition.Description = newComp.Description;
+        competition.StartDate = newComp.StartDate;
+        competition.EndDate = newComp.EndDate;
+        competition.IsPublic = newComp.IsPublic;
 
         await _unitOfWork.GetWriteRepository<Competition>().UpdateAsync(competition);
         await _unitOfWork.SaveAsync();

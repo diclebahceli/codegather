@@ -6,11 +6,17 @@ import {Question} from "@/app/models/Question";
 import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import {GetQuestionById, UpdateQuestion} from "@/app/services/QuestionService";
+import {Competition} from "@/app/models/Competition";
+import {GetCompetitionById} from "@/app/services/CompetitionService";
 
 export default function Page({params}: {params: {id: string}}) {
 
   const [question, setQuestion] = useState<Question>({competitionId: "", description: "", id: "", name: "", starterCode: ""});
   const router = useRouter();
+  const [competition, setCompetition] = useState<Competition>(
+    {description: "", endDate: "", id: "", startDate: "", title: "", isPublic: false}
+  );
+
 
   const handleInputChange = (e: any) => {
     const {name, value} = e.target;
@@ -32,12 +38,31 @@ export default function Page({params}: {params: {id: string}}) {
         }
         setQuestion(result.data);
       } catch (error: Error | any) {
-        toast.error("Error fetching competition");
-        router.replace("/pages/admin/competition");
+        toast.error("Invalid Question");
+        return;
       }
     };
+
+    const fetchCompetition = async (competitionId: string) => {
+      if (competitionId === "") return;
+      try {
+        const result = await GetCompetitionById(competitionId);
+        if (result.error || !result.data) {
+          toast.error(result.error);
+          router.replace("/pages/admin/competition");
+          return;
+        }
+        setCompetition(result.data);
+
+      } catch (error: Error | any) {
+        toast.error("Error fetching competition");
+        router.replace("/pages/admin/competition");
+        return;
+      }
+    }
     fetchQuestion(params.id);
-  }, []);
+    fetchCompetition(question.competitionId);
+  }, [question.competitionId]);
 
   const handleSubmit = async () => {
     question.competitionId = params.id;
@@ -105,7 +130,7 @@ export default function Page({params}: {params: {id: string}}) {
 
           </div>
           <div className="col-8 mt-3">
-            <TestCaseForm qId={params.id} initial={question.testCases || []}/>
+            <TestCaseForm qId={params.id} initial={question.testCases || []} isPublic={competition.isPublic} />
           </div>
         </div>
       </div>

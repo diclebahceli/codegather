@@ -21,6 +21,9 @@ public class SetUserRoleCommandHandler : BaseHandler, IRequestHandler<SetUserRol
         if (user == null)
             throw new Exception("User not found");
 
+        if(request.Roles == null || request.Roles.Count == 0)
+            throw new Exception("User should have at least one role");
+
         var roles = userManager.GetRolesAsync(user).Result;
         foreach (var role in request.Roles)
         {

@@ -2,6 +2,7 @@
 using codegather.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
 
@@ -13,16 +14,17 @@ public class GetQuestionsByCompetitionIdQueryHandler : BaseHandler, IRequestHand
 
     public async Task<GetQuestionsByCompetitionIdQueryResponse> Handle(GetQuestionsByCompetitionIdQueryRequest request, CancellationToken cancellationToken)
     {
+        mapper.AddConfig<SubmissionDto, Submission>();
+        mapper.AddConfig<TestCaseDto, TestCase>();
         var competition = await unitOfWork.GetReadRepository<Competition>()
-            .GetAsync(predicate: c => c.Id == request.CompetitionId && !c.IsDeleted, enableTracking: false)
+            .GetAsync(predicate: c => c.Id == request.CompetitionId && !c.IsDeleted, enableTracking: false
+                    , include: c => c.Include(c => c.Questions.Where(q => !q.IsDeleted)))
             ?? throw new Exception("Competition not found");
 
-        var questions = await unitOfWork.GetReadRepository<Question>()
-            .GetAllAsync(predicate: q => q.CompetitionId == request.CompetitionId && !q.IsDeleted, enableTracking: false);
 
         return new GetQuestionsByCompetitionIdQueryResponse()
         {
-            Questions = questions.Select(x => mapper.Map<QuestionDto, Question>(x)).ToList(),
+            Questions = competition.Questions.Select(x => mapper.Map<DetailedQuestionDto, Question>(x)).ToList(),
         };
     }
 }
