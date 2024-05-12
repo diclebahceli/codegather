@@ -22,6 +22,13 @@ public class SubmissionController : ControllerBase
         return Ok(response);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Run(RunCommandRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetResultByToken([FromQuery] GetResultByTokenQueryRequest request)
     {

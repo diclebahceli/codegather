@@ -2,5 +2,5 @@
 
 public class SubmitCommandResponse
 {
-    public RunResultDto JudgeResult { get; set; }
+    public int CorrectCount { get; set; }
 }

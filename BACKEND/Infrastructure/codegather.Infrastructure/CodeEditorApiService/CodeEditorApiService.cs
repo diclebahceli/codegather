@@ -16,44 +16,6 @@ public class CodeEditorApiService : ICodeEditorService
         _httpClient = httpClient;
     }
 
-
-    public async Task<RunResultDto> CreateSubmission(JudgeSubmissionDto judgeSubmissionDto)
-    {
-
-        using var request = new HttpRequestMessage()
-        {
-            Method = HttpMethod.Post,
-            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&fields=*"),
-            Headers =
-    {
-        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
-        { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
-    },
-            Content = new StringContent(JsonConvert.SerializeObject(judgeSubmissionDto))
-            {
-                Headers =
-        {
-            ContentType = new MediaTypeHeaderValue("application/json")
-        }
-            }
-        };
-
-        using (var response = await _httpClient.SendAsync(request))
-        {
-            response.EnsureSuccessStatusCode();
-            var body = await response.Content.ReadAsStringAsync();
-            JObject jsonObject = JObject.Parse(body);
-
-            // Extract the token
-            string token = (string)jsonObject["token"];
-            RunResultDto res = await GetResult(token);
-            Console.WriteLine(token);
-            return res;
-        }
-    }
-
-
-
     public async Task<RunResultDto> GetResult(string token)
     {
         using var request = new HttpRequestMessage()
@@ -96,6 +58,42 @@ public class CodeEditorApiService : ICodeEditorService
             };
 
 
+        }
+    }
+
+
+
+    public async Task<RunResultDto> RunCode(RunSubmissionDto runSubmissionDto)
+    {
+        using var request = new HttpRequestMessage()
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false"),
+            Headers =
+    {
+        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
+    },
+            Content = new StringContent(JsonConvert.SerializeObject(runSubmissionDto))
+            {
+                Headers =
+        {
+            ContentType = new MediaTypeHeaderValue("application/json")
+        }
+            }
+        };
+
+        using (var response = await _httpClient.SendAsync(request))
+        {
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject jsonObject = JObject.Parse(body);
+
+            // Extract the token
+            string token = (string)jsonObject["token"];
+            RunResultDto res = await GetResult(token);
+            Console.WriteLine(token);
+            return res;
         }
     }
 }

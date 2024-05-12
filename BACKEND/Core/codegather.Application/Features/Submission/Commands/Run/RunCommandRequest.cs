@@ -1,8 +1,8 @@
-﻿using MediatR;
+using MediatR;
 
 namespace codegather.Application;
 
-public class SubmitCommandRequest : IRequest<SubmitCommandResponse>
+public class RunCommandRequest: IRequest<RunCommandResponse>
 {
     public Guid QuestionId { get; set; }
     public string Code { get; set; }
