@@ -18,6 +18,7 @@ public class CodeEditorApiService : ICodeEditorService
 
     public async Task<RunResultDto> GetResult(string token)
     {
+
         using var request = new HttpRequestMessage()
         {
             Method = HttpMethod.Get,
@@ -32,6 +33,7 @@ public class CodeEditorApiService : ICodeEditorService
 
         using (var response = await _httpClient.SendAsync(request))
         {
+            Console.WriteLine(response);
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             JObject jsonObject = JObject.Parse(body);
@@ -41,7 +43,7 @@ public class CodeEditorApiService : ICodeEditorService
             string memory = (string)jsonObject["memory"];
 
             string stderr = (string)jsonObject["stderr"];
-            string stdout = (string)jsonObject["stdout"];
+            string stdout = ((string)jsonObject["stdout"])?.Trim();
 
 
             string tokenn = (string)jsonObject["token"];
@@ -68,7 +70,7 @@ public class CodeEditorApiService : ICodeEditorService
         using var request = new HttpRequestMessage()
         {
             Method = HttpMethod.Post,
-            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false"),
+            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&fields=*"),
             Headers =
     {
         { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
@@ -91,8 +93,8 @@ public class CodeEditorApiService : ICodeEditorService
 
             // Extract the token
             string token = (string)jsonObject["token"];
+            await Task.Delay(500);
             RunResultDto res = await GetResult(token);
-            Console.WriteLine(token);
             return res;
         }
     }
