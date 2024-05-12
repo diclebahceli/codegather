@@ -25,7 +25,6 @@ export default function Navbar() {
     const getUserName = async () => {
       if (!id) return;
       const user = await getUserById(id);
-      console.log(user);
       if (user.error || !user.data) {
         toast.error(user.error);
         return;

@@ -42,6 +42,7 @@ const TestCaseForm = ({qId, initial, isPublic}: {qId: string, initial: TestCase[
 
 
   const addEmptyTestCase = (testCases: TestCase[]) => {
+    if (isPublic) return testCases;
     testCases.push({id: "", questionId: qId, input: "", output: ''});
     return testCases;
   }
