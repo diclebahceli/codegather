@@ -33,7 +33,7 @@ public class UpdateCompetitionCommandHandler : IRequestHandler<UpdateCompetition
         var newComp = _mapper.Map<Competition, UpdateCompetitionCommandRequest>(request);
         await competitionRules.CantMakePrivateAfterMadePublic(competition, newComp);
         await competitionRules.CantChangeCompetitionStartDateIfMadePublic(competition, newComp);
-        await competitionRules.NeedsQuestionAndTestCaseToBePublic(competition, competition.Questions.ToList());
+        await competitionRules.NeedsQuestionAndTestCaseToBePublic(newComp, competition.Questions.ToList());
 
         competition.Title = newComp.Title;
         competition.Description = newComp.Description;
