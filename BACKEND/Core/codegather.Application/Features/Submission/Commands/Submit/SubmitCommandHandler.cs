@@ -28,7 +28,9 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             throw new Exception("No test cases found");
         }
 
-        int successCount = 0;
+        float successCount = 0;
+        float avgCompileTime = 0;
+        float avgMemory = 0;
 
         foreach (var test in testCase)
         {
@@ -40,16 +42,31 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             };
 
             RunResultDto result = await codeEditorService.RunCode(runSubmissionDto);
-            if(result.stdout == test.Output)
-            {
-                successCount++;
-            }
 
+            avgCompileTime += float.Parse(result.time) / testCase.Length;
+            avgMemory += result.memory/ testCase.Length;
+
+            if(result.stdout.Trim() == test.Output.Trim())
+            {
+                successCount += 1/testCase.Length;
+            }
         }
 
+        var submission = new Submission{
+            QuestionId = request.QuestionId,
+            Code = request.Code,
+            SuccessRate = successCount,
+            CompileTime = avgCompileTime,
+            MemoryUsage = avgMemory,
+            UserId = request.UserId,
+        };
+
+        await unitOfWork.GetWriteRepository<Submission>().AddAsync(submission);
+        await unitOfWork.SaveAsync();
 
         return new SubmitCommandResponse
         {
+            Submission =  mapper.Map<SubmissionDto, Submission>(submission)
         };
 
     }

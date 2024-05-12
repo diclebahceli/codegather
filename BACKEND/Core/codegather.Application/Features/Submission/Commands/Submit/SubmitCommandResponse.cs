@@ -2,5 +2,5 @@
 
 public class SubmitCommandResponse
 {
-    public int CorrectCount { get; set; }
+    public SubmissionDto Submission { get; set; }
 }
