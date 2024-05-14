@@ -23,17 +23,23 @@ namespace codegather.Application
 
         public async Task<GetUserByUsernameResponse> Handle(GetUserByUserNameRequest request, CancellationToken cancellationToken)
         {
-            User user = await unitOfWork.GetReadRepository<User>()
-                .GetAsync(predicate: u => u.UserName == request.UserName
-                    , include: u => u.Include(u => u.Submissions.Where(s => !s.IsDeleted))
-                    .Include(u => u.Competitions.Where(c => !c.IsDeleted)))
-                ?? throw new NotFoundException("Couldn't find user with that username");
+            User user = await _userManager.FindByNameAsync(request.UserName)
+                ?? throw new Exception("User not found");
+
+            var competitions = await unitOfWork.GetReadRepository<Competition>().GetAllAsync(
+                predicate: c => c.JoinedUsers.Any(u => u.Id == user.Id),
+                enableTracking: false);
+
+            var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync(
+                predicate: s => s.UserId == user.Id,
+                enableTracking: false);
+
 
             return new GetUserByUsernameResponse
             {
                 User = mapper.Map<UserDto, User>(user),
-                Submissions = user.Submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList(),
-                Competitions = user.Competitions.Select(c => mapper.Map<CompetitionDto, Competition>(c)).ToList()
+                Submissions = submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList(),
+                Competitions = competitions.Select(c => mapper.Map<CompetitionDto, Competition>(c)).ToList()
             };
 
         }
