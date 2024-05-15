@@ -1,12 +1,15 @@
-import MyModal from "@/app/components/delete_modal/DeleteModal";
-import {Question} from "@/app/models/Question";
-import {DeleteQuestion} from "@/app/services/QuestionService";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import MyModal from "@/app/components/delete_modal/MyModal";
+import { Question } from "@/app/models/Question";
+import { DeleteQuestion } from "@/app/services/QuestionService";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function QuestionList({initialQuestions}: {initialQuestions: Question[]}) {
-
+export default function QuestionList({
+  initialQuestions,
+}: {
+  initialQuestions: Question[];
+}) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [pickedId, setPickedId] = useState("");
   const [show, setShow] = useState(false);
@@ -15,7 +18,7 @@ export default function QuestionList({initialQuestions}: {initialQuestions: Ques
 
   useEffect(() => {
     setQuestions(initialQuestions);
-  }, [initialQuestions])
+  }, [initialQuestions]);
 
   function handleEditQuestion(id: string): void {
     router.push(`/pages/admin/question/edit/${id}`);
@@ -30,7 +33,7 @@ export default function QuestionList({initialQuestions}: {initialQuestions: Ques
     toast.success("Question deleted successfully");
     setQuestions(questions.filter((question) => question.id !== pickedId));
     setShow(!show);
-  }
+  };
 
   const handleModalDelete = (e: any) => {
     setPickedId(e as string);
@@ -67,9 +70,12 @@ export default function QuestionList({initialQuestions}: {initialQuestions: Ques
         ))}
       </tbody>
 
-      <MyModal handleOnClick={handleDeleteCompetition} isOpen={show}
-        message="Are you sure you want to delete this question" handleCancel={handleModalDelete} />
+      <MyModal
+        handleOnClick={handleDeleteCompetition}
+        isOpen={show}
+        message="Are you sure you want to delete this question"
+        handleCancel={handleModalDelete}
+      />
     </table>
-
   );
 }

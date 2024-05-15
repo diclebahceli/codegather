@@ -1,11 +1,11 @@
 "use client";
-import {Competition} from "@/app/models/Competition";
+import { Competition } from "@/app/models/Competition";
 import Card from "../card/Card";
-import {useRouter} from "next/navigation";
-import {use, useEffect, useState} from "react";
-import {GetAllCompetitions} from "@/app/services/CompetitionService";
-import {JoinCompetition, getUserById} from "@/app/services/UserService";
-import {getWithExpiry} from "@/app/utils/StorageGetter";
+import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
+import { GetAllCompetitions } from "@/app/services/CompetitionService";
+import { JoinCompetition, getUserById } from "@/app/services/UserService";
+import { getWithExpiry } from "@/app/utils/StorageGetter";
 import toast from "react-hot-toast";
 
 export default function CompetitionCard({
@@ -59,8 +59,8 @@ export default function CompetitionCard({
       if (user.data?.competitions) {
         setJoinedCompetitions(user.data?.competitions);
       }
-    };
-  }
+    }
+  };
 
   return (
     <div className=" col-md-4 col-sm-6 m-3">
@@ -69,18 +69,29 @@ export default function CompetitionCard({
           <div className="card-title fw-bold fs-4 text-white">
             {competition.title}
           </div>
-          <div className="card-text mb-3 fs-5 text-wrap text-white">
+          <div
+            className="card-text mb-3 fs-5 text-wrap text-white overflow-hidden"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: "2",
+              lineClamp: "2",
+              WebkitBoxOrient: "vertical",
+            }}
+          >
             {competition.description}
           </div>
           {joinedCompetitions.find((c) => c.id === competition.id) ? (
             <button
-              className="btn btn-green w-50 ms-auto"
+              className="btn btn-green w-50 ms-auto mt-auto"
               onClick={handleDetailsClick}
             >
               Details
             </button>
           ) : (
-            <button className="btn btn-green" onClick={handle}>
+            <button
+              className="btn btn-green w-50 ms-auto mt-auto"
+              onClick={handle}
+            >
               Join
             </button>
           )}
@@ -88,6 +99,4 @@ export default function CompetitionCard({
       </Card>
     </div>
   );
-
 }
-

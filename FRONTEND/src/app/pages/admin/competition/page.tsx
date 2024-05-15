@@ -1,13 +1,13 @@
 "use client";
-import MyModal from "@/app/components/delete_modal/DeleteModal";
-import {Competition} from "@/app/models/Competition";
+import MyModal from "@/app/components/delete_modal/MyModal";
+import { Competition } from "@/app/models/Competition";
 import {
   DeleteCompetition,
   GetAllCompetitions,
 } from "@/app/services/CompetitionService";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const CompetitionPage = () => {
@@ -39,6 +39,10 @@ const CompetitionPage = () => {
 
   const handleModal = (e: any) => {
     setPickedId(e as string);
+    handleShow();
+  };
+
+  const handleShow = () => {
     setShow(!show);
   };
 
@@ -49,9 +53,11 @@ const CompetitionPage = () => {
       return;
     }
     toast.success("Competition deleted successfully");
-    setCompetitions(competitions.filter((competition) => competition.id !== pickedId));
+    setCompetitions(
+      competitions.filter((competition) => competition.id !== pickedId)
+    );
     setShow(!show);
-  }
+  };
 
   const handleEditCompetition = (competitionId: string) => {
     router.push(`/pages/admin/competition/edit/${competitionId}`);
@@ -60,15 +66,20 @@ const CompetitionPage = () => {
   return (
     <div className="d-flex justify-content-center bg-dark h-100">
       <div className="container mt-5">
-
         <h1 className="text-white">Competition Page</h1>
-        <Link className="btn btn-primary text-white m-3" href="/pages/admin/competition/create"> Create Competition</Link>
-        <table className="table table-dark table-borderless">
+        <Link
+          className="btn btn-primary text-white m-3"
+          href="/pages/admin/competition/create"
+        >
+          {" "}
+          Create Competition
+        </Link>
+        <table className="table table-dark table-striped">
           <thead>
             <tr>
               <th className="col-2">Competition Date</th>
               <th className="col-2">Competition Title</th>
-              <th className="col-5">Competition Description</th>
+              <th className="col-5 ">Competition Description</th>
               <th className="col-2">Actions</th>
             </tr>
           </thead>
@@ -79,7 +90,12 @@ const CompetitionPage = () => {
                   {competition.startDate} / {competition.endDate}
                 </td>
                 <td>{competition.title}</td>
-                <td>{competition.description}</td>
+                <td
+                  className="d-inline-block text-truncate"
+                  style={{ maxWidth: "500px" }}
+                >
+                  {competition.description}
+                </td>
 
                 <td>
                   <button
@@ -100,13 +116,15 @@ const CompetitionPage = () => {
           </tbody>
         </table>
 
-        <MyModal handleOnClick={handleDeleteCompetition} isOpen={show} message="Are you sure you want to delete this competition" handleToggle={handleModal} />
-
-
+        <MyModal
+          handleOnClick={handleDeleteCompetition}
+          isOpen={show}
+          message="Are you sure you want to delete this competition"
+          handleCancel={handleShow}
+        />
       </div>
     </div>
   );
-
 };
 
 export default CompetitionPage;

@@ -5,6 +5,7 @@ import { Competition } from "@/app/models/Competition";
 import { GetAllCompetitions } from "@/app/services/CompetitionService";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import image from "./../../assets/5.png";
 
 export default function OngoingCompetitions() {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
@@ -25,7 +26,7 @@ export default function OngoingCompetitions() {
   }, []);
 
   return (
-    <div className="h-100 bg-dark">
+    <div className="h-100 bg-black bg-gradient">
       <h1 className="pt-5 container text-white fs-m mb-3">
         ONGOING COMPETITIONS
       </h1>
@@ -36,7 +37,7 @@ export default function OngoingCompetitions() {
             <div className="text-white fs-3"> No Competitions Yet 👻</div>
           </div>
         ) : (
-          <div className="mt-5 ms-5 d-flex flex-wrap col-7">
+          <div className="mt-5 ms-5 d-flex flex-wrap col-7 h-50">
             {competitions.map((competition, index) => (
               <CompetitionCard
                 key={competition.id || index}

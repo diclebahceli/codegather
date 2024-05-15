@@ -51,7 +51,7 @@ export default function MyCompetitions() {
   }, []);
 
   return (
-    <div className="h-100 bg-dark">
+    <div className="h-100 bg-black bg-gradient">
       <h1 className="pt-5 container text-white fs-m mb-3">MY COMPETITIONS</h1>
       {currentCompetitions.length == 0 && passedCompetitions.length == 0 ? (
         <div className="d-flex justify-content-center align-items-center col-7">

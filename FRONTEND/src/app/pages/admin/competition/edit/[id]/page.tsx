@@ -1,27 +1,31 @@
 "use client";
-import MyModal from "@/app/components/delete_modal/DeleteModal";
-import {Competition} from "@/app/models/Competition";
+import MyModal from "@/app/components/delete_modal/MyModal";
+import { Competition } from "@/app/models/Competition";
 import {
   GetCompetitionById,
   UpdateCompetition,
 } from "@/app/services/CompetitionService";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import {FormGroup, Input, Label} from "reactstrap";
+import { FormGroup, Input, Label } from "reactstrap";
 import QuestionList from "../components/question_list/QuestionList";
 
-const EditCompetitionPage = ({params}: {params: {id: string}}) => {
+const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const [competitionData, setCompetitionData] =
-    useState<Competition>({description: "", endDate: "", id: "", startDate: "", title: "", isPublic: false});
+  const [competitionData, setCompetitionData] = useState<Competition>({
+    description: "",
+    endDate: "",
+    id: "",
+    startDate: "",
+    title: "",
+    isPublic: false,
+  });
 
   const [show, setShow] = useState(false);
 
-
-
   const handleInputChange = (e: any) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setCompetitionData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -31,7 +35,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const togglePublic = () => {
     setCompetitionData((prevState) => ({
       ...prevState,
-      isPublic: !competitionData.isPublic
+      isPublic: !competitionData.isPublic,
     }));
   };
 
@@ -45,7 +49,6 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
           return;
         }
         setCompetitionData(result.data as Competition);
-
       } catch (error: Error | any) {
         toast.error("Error fetching competition");
         router.replace("/pages/admin/competition");
@@ -68,17 +71,17 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const handleModalCancel = () => {
     togglePublic();
     setShow(!show);
-  }
+  };
 
   const handleChangeVisibility = () => {
     if (!competitionData.isPublic) {
       setShow(!show);
     }
-  }
+  };
   return (
     <div className="h-100 bg-dark p-5">
       <div className="d-flex justify-content-center align-items-center h-100 w-100">
-        {competitionData.id === "" ? null :
+        {competitionData.id === "" ? null : (
           <div className="d-flex flex-row justify-content-around w-100">
             <form action={handleSubmit} className="col-4">
               <div className="container">
@@ -116,7 +119,10 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                     type="datetime-local"
                     name="startDate"
                     value={competitionData.startDate}
-                    disabled={new Date(competitionData.startDate) < new Date() && competitionData.isPublic}
+                    disabled={
+                      new Date(competitionData.startDate) < new Date() &&
+                      competitionData.isPublic
+                    }
                     required={true}
                     onChange={handleInputChange}
                   />
@@ -127,7 +133,10 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                   <input
                     className="form-control border border-2"
                     type="datetime-local"
-                    disabled={new Date(competitionData.endDate) < new Date() && competitionData.isPublic}
+                    disabled={
+                      new Date(competitionData.endDate) < new Date() &&
+                      competitionData.isPublic
+                    }
                     name="endDate"
                     required={true}
                     value={competitionData.endDate}
@@ -144,26 +153,47 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                       handleChangeVisibility();
                     }}
                   />
-                  <Label className="text-white" check>Public</Label>
+                  <Label className="text-white" check>
+                    Public
+                  </Label>
                 </FormGroup>
                 <div className="d-flex flex-row w-100">
-                  <button type="submit" className="btn btn-primary mt-3 text-white">Save</button>
-                  <button type="button" onClick={() => {router.push(`/pages/admin/question/create/${competitionData.id}`, {scroll: false})}}
-                    className="btn btn-green mt-3 text-white ms-auto">Add Question</button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary mt-3 text-white"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      router.push(
+                        `/pages/admin/question/create/${competitionData.id}`,
+                        { scroll: false }
+                      );
+                    }}
+                    className="btn btn-green mt-3 text-white ms-auto"
+                  >
+                    Add Question
+                  </button>
                 </div>
               </div>
             </form>
             <div className="col-4">
-              <QuestionList initialQuestions={competitionData.questions || []} />
+              <QuestionList
+                initialQuestions={competitionData.questions || []}
+              />
             </div>
-
           </div>
-        }
+        )}
 
-        <MyModal handleOnClick={() => setShow(!setShow)} isOpen={show}
+        <MyModal
+          handleOnClick={() => setShow(!setShow)}
+          isOpen={show}
           message={`You are going to make this competition public, once made public it cannot
-          be private during the competition.`} handleCancel={handleModalCancel} />
-
+          be private during the competition.`}
+          handleCancel={handleModalCancel}
+        />
       </div>
     </div>
   );
