@@ -1,16 +1,18 @@
 "use client";
-import {Competition} from "@/app/models/Competition";
-import {CreateCompetition} from "@/app/services/CompetitionService";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
+import { Competition } from "@/app/models/Competition";
+import { CreateCompetition } from "@/app/services/CompetitionService";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Page() {
-  const [competitionData, setCompetitionData] = useState<Competition>({} as Competition);
+  const [competitionData, setCompetitionData] = useState<Competition>(
+    {} as Competition
+  );
   const router = useRouter();
 
   const handleInputChange = (e: any) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setCompetitionData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -20,27 +22,25 @@ export default function Page() {
   const handleSubmit = async () => {
     try {
       console.log(competitionData);
-      const result = await CreateCompetition(competitionData)
+      const result = await CreateCompetition(competitionData);
       if (result.error) {
-        toast.error(result.error)
+        toast.error(result.error);
         return;
       }
-      toast.success("Competition created successfully")
+      toast.success("Competition created successfully");
 
       setTimeout(() => {
         router.replace("/pages/admin/competition");
       }, 1000);
+    } catch (error: Error | any) {
+      toast.error("Error creating competition");
     }
-    catch (error: Error | any) {
-      toast.error("Error creating competition")
-
-    }
-  }
+  };
   return (
-    <div className="d-flex justify-content-center align-items-center h-100">
+    <div className="d-flex justify-content-center align-items-center h-100 bg-dark">
       <form action={handleSubmit} className="col-6">
         <div className="container">
-          <h1>Create Competition</h1>
+          <h1 className="text-white">Create Competition</h1>
 
           <div className="form-floating rounded my-3">
             <input
@@ -66,8 +66,8 @@ export default function Page() {
 
           <div className="form-floating rounded my-3">
             <input
-            className="form-control border border-2"
-            type="datetime-local"
+              className="form-control border border-2"
+              type="datetime-local"
               name="startDate"
               required={true}
               onChange={handleInputChange}
@@ -77,8 +77,8 @@ export default function Page() {
 
           <div className="form-floating rounded my-3">
             <input
-            className="form-control border border-2"
-            type="datetime-local"
+              className="form-control border border-2"
+              type="datetime-local"
               name="endDate"
               required={true}
               onChange={handleInputChange}
@@ -89,6 +89,5 @@ export default function Page() {
         </div>
       </form>
     </div>
-
   );
 }
