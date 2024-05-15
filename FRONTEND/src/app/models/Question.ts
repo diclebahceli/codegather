@@ -7,6 +7,6 @@ export interface Question {
     competitionId: string;
     description: string;
     starterCode: string;
-    testCases?: TestCase[];
-    submissions?: Submission[];
+    testCases: TestCase[];
+    submissions: Submission[];
 }

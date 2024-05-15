@@ -13,7 +13,7 @@ export async function RunCode(requestData: RunRequest): Promise<{data: RunResult
     if (response.status != 200) {
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data as RunResult, error: null};
+    return {data: response.data.runResult as RunResult, error: null};
   } catch (e: Error | any) {
     return {data: null, error: ExtractErrorMessage(e)};
   }

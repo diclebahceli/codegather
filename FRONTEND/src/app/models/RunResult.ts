@@ -1,8 +1,8 @@
 
 export interface RunResult{
   stdout: string;
+  stderr: string;
   time: string;
   memory: string;
-  stderr: string;
   token: string;
 }

@@ -29,7 +29,11 @@ export default function CompetitionCard({
       const userId = getWithExpiry("userId");
       if (userId) {
         const result = await getUserById(userId);
-        const userComp = result.data?.competitions;
+        if(result.error || !result.data){
+          toast.error(result.error);
+          return;
+        }
+        const userComp = result.data.competitions;
         if (userComp) {
           setJoinedCompetitions(userComp);
         }
