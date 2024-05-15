@@ -34,16 +34,6 @@ export default function LoginForm() {
       return;
     } else {
       toast.success("Logged in successfully");
-      if (authContext) {
-        const { loginn } = authContext;
-        const token = getWithExpiry("accessToken");
-        if (token != null) {
-          const decodedToken = jwtDecode(token) as Claims;
-          loginn(decodedToken.role);
-        }
-      } else {
-        console.error("Auth context is not available");
-      }
 
       setTimeout(() => {
         router.replace("/pages/ongoingCompetitions");
@@ -53,10 +43,16 @@ export default function LoginForm() {
 
   return (
     <form ref={ref} action={handleSubmit}>
-      <div style={{ margin: "0.5rem", padding: "0rem 2.5rem" }}>
+      <div
+        className="text-grey "
+        style={{ margin: "0.5rem", padding: "0rem 2.5rem" }}
+      >
         <InputField type="text" name="email" label="email" required={true} />
       </div>
-      <div style={{ margin: "0.5rem", padding: "0rem 2.5rem" }}>
+      <div
+        className="text-grey"
+        style={{ margin: "0.5rem", padding: "0rem 2.5rem" }}
+      >
         <InputField
           type="password"
           name="password"
@@ -69,9 +65,12 @@ export default function LoginForm() {
           <span className="fs-5 p-2">Login</span>
         </button>
       </div>
-      loginform
       <div className="mb-3">
-        <Link href="/pages/register" scroll={false} className="mb-3 fs-6 text-decoration-none">
+        <Link
+          href="/pages/register"
+          scroll={false}
+          className="mb-3 fs-6 text-decoration-none"
+        >
           Create an account
         </Link>
       </div>
