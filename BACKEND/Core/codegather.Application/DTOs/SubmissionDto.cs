@@ -6,5 +6,5 @@ public class SubmissionDto
     public Guid UserId {get; set;}
     public DateTime SubmissionTime {get; set;} = DateTime.Now;
     public string? Code {get; set;}
-    public bool IsCorrect {get; set;}
+    public float SuccessRate {get; set;}
 }

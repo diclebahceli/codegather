@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/ace";
@@ -13,11 +13,18 @@ import {Ace} from "ace-builds";
 
 function AceEditorComponent({onValueChange, defaultValue}
   : {onValueChange: (value: string) => void, defaultValue: string}) {
+
   const [value, setValue] = useState<string>(defaultValue);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue])
+
   function onChange(newValue: string) {
     onValueChange(newValue);
     setValue(newValue);
   }
+
   function onLoad(editor: Ace.Editor) {
     console.log("i've loaded");
   }
@@ -29,14 +36,13 @@ function AceEditorComponent({onValueChange, defaultValue}
       name="blah2"
       onLoad={onLoad}
       onChange={onChange}
-      fontSize={15}
+      fontSize={18}
       showPrintMargin={true}
       showGutter={true}
       highlightActiveLine={true}
       style={{borderRadius: "5px", height: "100%"}}
       width="100%"
-      value={defaultValue}
-      defaultValue=""
+      value={value}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: false,

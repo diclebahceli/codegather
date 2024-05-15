@@ -85,7 +85,7 @@ export function RegisterForm() {
           <span className="fs-5 p-2">Register</span>
         </button>
       </div>
-      <div className="mb-3">
+      <div className="mb-3 text-center">
         <Link
           href="/pages/login"
           className="m-2 text-decoration-none text-center"

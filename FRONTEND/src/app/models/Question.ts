@@ -1,3 +1,4 @@
+import {Submission} from "./Submission";
 import {TestCase} from "./TestCase";
 
 export interface Question {
@@ -6,6 +7,6 @@ export interface Question {
     competitionId: string;
     description: string;
     starterCode: string;
-    testCases?: TestCase[];
-    submissions?: any[];
+    testCases: TestCase[];
+    submissions: Submission[];
 }

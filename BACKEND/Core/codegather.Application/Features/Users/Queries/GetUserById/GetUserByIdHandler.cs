@@ -20,16 +20,23 @@ public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdReques
 
     public async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
-        User user = await unitOfWork.GetReadRepository<User>().GetAsync(predicate: u => u.Id == request.Id
-                , include: u => u.Include(u => u.Submissions.Where(s => !s.IsDeleted))
-                .Include(u => u.Competitions.Where(c => !c.IsDeleted)))
+        User user = await userManager.FindByIdAsync(request.Id.ToString())
             ?? throw new Exception("User not found");
+
+        var competitions = await unitOfWork.GetReadRepository<Competition>().GetAllAsync(
+            predicate: c => c.JoinedUsers.Any(u => u.Id == user.Id),
+            enableTracking: false);
+
+        var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync(
+            predicate: s => s.UserId == user.Id,
+            enableTracking: false);
+
 
         return new GetUserByIdResponse
         {
             User = mapper.Map<UserDto, User>(user),
-            Competitions = user.Competitions.Select(c => mapper.Map<CompetitionDto, Competition>(c)).ToList(),
-            Submissions = user.Submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList()
+            Competitions = competitions.Select(c => mapper.Map<CompetitionDto, Competition>(c)).ToList(),
+            Submissions = submissions.Select(s => mapper.Map<SubmissionDto, Submission>(s)).ToList()
         };
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace codegather.Application;
 
-public class JudgeResultDto
+public class RunResultDto
 {
     public string stdout { get; set; } = "";
     public string time { get; set; } = "";

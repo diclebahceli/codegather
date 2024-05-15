@@ -45,7 +45,7 @@ public class CompetitionRules : BaseRules
                 if (q.TestCases.Count == 0)
                 {
 
-                    throw new Exception("All questions should have at least one test case for public " + q.Name);
+                    throw new Exception("The question \"" + q.Name + "\" must have at least one test case for public");
                 }
             });
         }

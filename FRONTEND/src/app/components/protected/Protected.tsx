@@ -14,7 +14,7 @@ export default function Protected({children, protectedRoutes}:
   useEffect(() => {
     const token = getWithExpiry("userId");
     if (token === null) {
-      if (protectedRoutes.includes(pathName)){
+      if (protectedRoutes.some((route) => pathName.includes(route))){
         router.replace("/pages/login", {scroll: false})
         return;
 
@@ -31,7 +31,7 @@ export default function Protected({children, protectedRoutes}:
 
   }, [pathName])
 
-  if (tokn === undefined && protectedRoutes.includes(pathName)) {
+  if (tokn === undefined && protectedRoutes.some((route) => pathName.includes(route))) {
     return (
       <div className="h-100">
         <FullPageLoader />

@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240502085632_InitialCreate")]
+    [Migration("20240512131052_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -245,9 +245,6 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
@@ -259,6 +256,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("SuccessRate")
+                        .HasColumnType("REAL");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
@@ -471,11 +471,13 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.TestCase", b =>
                 {
-                    b.HasOne("codegather.Domain.Question", null)
+                    b.HasOne("codegather.Domain.Question", "Question")
                         .WithMany("TestCases")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("codegather.Domain.Competition", b =>
