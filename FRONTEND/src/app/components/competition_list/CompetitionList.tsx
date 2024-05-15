@@ -3,12 +3,14 @@ import Card from "../card/Card";
 
 export default function CompetitionList({
   competitions,
+  title,
 }: {
   competitions: Competition[];
+  title: string;
 }) {
   return (
     <div className="d-flex flex-column justify-content-center bg-dark">
-      <h3 className="text-white ">My Competitions</h3>
+      <h3 className="text-white ">{title}</h3>
       <hr className="mb-4 border border-1 border-green opacity-100" />
 
       {competitions.map((competition, index) => (
