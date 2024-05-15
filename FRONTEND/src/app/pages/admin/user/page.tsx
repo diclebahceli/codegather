@@ -52,53 +52,55 @@ const UserPage = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Users</h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.userName}</td>
-              <td>{user.email}</td>
-              <td>
-                <button
-                  className="btn btn-primary m-2 text-white"
-                  onClick={() => handleEditUser(user.id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger text-white"
-                  onClick={() => handleModal(user.id)}
-                >
-                  Delete
-                </button>
-              </td>
+    <div className="d-flex flex-column  align-items-center bg-dark h-100">
+      <div className="container mt-5">
+        <h1 className="text-white mb-5">Users</h1>
+        <table className="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th className="col-2">Id</th>
+              <th className="col-2">Full Name</th>
+              <th className="col-2">Email</th>
+              <th className="col-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Modal isOpen={show}>
-        <ModalHeader>Delete User</ModalHeader>
-        <ModalBody>Are you sure you want to delete this user?</ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={handleDeleteUser}>
-            Delete
-          </Button>
-          <Button color="secondary" onClick={handleModal}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.userName}</td>
+                <td>{user.email}</td>
+                <td>
+                  <button
+                    className="btn btn-primary m-2 text-white"
+                    onClick={() => handleEditUser(user.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger text-white"
+                    onClick={() => handleModal(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Modal isOpen={show}>
+          <ModalHeader>Delete User</ModalHeader>
+          <ModalBody>Are you sure you want to delete this user?</ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleDeleteUser}>
+              Delete
+            </Button>
+            <Button color="secondary" onClick={handleModal}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     </div>
   );
 };
