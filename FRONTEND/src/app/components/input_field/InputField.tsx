@@ -21,7 +21,7 @@ export default function InputField(props: InputFieldProps) {
         name={name}
         placeholder={label}
         value={value}
-        className="form-control border border-2"
+        className="form-control border border-3 border-green"
       />
       <label htmlFor={name}>{label}</label>
     </div>

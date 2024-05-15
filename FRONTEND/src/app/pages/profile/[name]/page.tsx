@@ -51,7 +51,7 @@ export default function Profile({ params }: { params: { name: string } }) {
   }, []);
 
   return (
-    <div className="h-100 bg-dark">
+    <div className="h-100 bg-black bg-gradient">
       <div className="d-flex flex-column">
         <div className="d-flex flex-row align-items-center mt-5">
           <div className="col-1"></div>
@@ -63,7 +63,10 @@ export default function Profile({ params }: { params: { name: string } }) {
           <div className="d-flex flex-column col-4">
             <div className="text-center ">
               <div>
-                <CompetitionList competitions={competitions} />
+                <CompetitionList
+                  competitions={competitions}
+                  title="Joined Competitions"
+                />
               </div>
             </div>
           </div>
