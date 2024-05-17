@@ -3,11 +3,9 @@ import React, {useEffect, useState} from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/ace";
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/ext-language_tools";
-import 'ace-builds/src-noconflict/theme-twilight';
-import "ace-builds/src-noconflict/theme-monokai"
+import 'ace-builds/src-noconflict/theme-github_dark';
 import {Ace} from "ace-builds";
 
 
@@ -31,8 +29,8 @@ function AceEditorComponent({onValueChange, defaultValue}
   return (
     <AceEditor
       placeholder="Placeholder Text"
-      mode="javascript"
-      theme="monokai"
+      mode="python"
+      theme="github_dark"
       name="blah2"
       onLoad={onLoad}
       onChange={onChange}
@@ -45,7 +43,7 @@ function AceEditorComponent({onValueChange, defaultValue}
       value={value}
       setOptions={{
         enableBasicAutocompletion: true,
-        enableLiveAutocompletion: false,
+        enableLiveAutocompletion: true,
         enableSnippets: false,
         showLineNumbers: true,
         tabSize: 2,
