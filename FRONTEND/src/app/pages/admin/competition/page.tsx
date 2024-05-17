@@ -74,7 +74,7 @@ const CompetitionPage = () => {
           {" "}
           Create Competition
         </Link>
-        <table className="table table-dark table-striped">
+        <table className="table table-dark table-borderless">
           <thead>
             <tr>
               <th className="col-2">Competition Date</th>

@@ -94,10 +94,10 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center h-100">
+    <div className="d-flex justify-content-center align-items-center h-100 bg-dark">
       <form action={handleSubmit} className="col-6">
         <div className="container">
-          <h1>Edit User</h1>
+          <h1 className="text-white">Edit User</h1>
 
           <div className="form-group my-3">
             <input
@@ -122,7 +122,7 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
             />
           </div>
           <div>
-            <h5>Checkbox Buttons</h5>
+            <h5 className="text-white">User Roles</h5>
             <ButtonGroup>
               <Button
                 color="primary"
@@ -149,7 +149,7 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
                 User
               </Button>
             </ButtonGroup>
-            <p>Selected: {JSON.stringify(cSelected)}</p>
+            <p className="text-white">Selected: {JSON.stringify(cSelected)}</p>
           </div>
           <button className="btn btn-primary mt-3 text-white">Save</button>
         </div>

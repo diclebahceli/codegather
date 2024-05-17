@@ -9,7 +9,7 @@ export default function CompetitionList({
   title: string;
 }) {
   return (
-    <div className="d-flex flex-column justify-content-center bg-dark">
+    <div className="d-flex flex-column justify-content-center">
       <h3 className="text-white ">{title}</h3>
       <hr className="mb-4 border border-1 border-green opacity-100" />
 
