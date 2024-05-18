@@ -3,6 +3,7 @@ import {RunRequest} from "../models/RunRequest";
 import {BACKEND_URL} from "../utils/config";
 import {ExtractErrorMessage} from "./AuthService";
 import {RunResult} from "../models/RunResult";
+import {Submission} from "../models/Submission";
 
 const submissionEndPoint = BACKEND_URL + "/submission";
 
@@ -19,14 +20,14 @@ export async function RunCode(requestData: RunRequest): Promise<{data: RunResult
   }
 }
 
-export async function SubmitCode(requestData: RunRequest): Promise<{data: RunResult | null; error: string | null}> {
+export async function SubmitCode(requestData: RunRequest): Promise<{data: Submission | null; error: string | null}> {
   const {userId, questionId, code, languageId} = requestData;
   try {
     const response = await axios.post(`${submissionEndPoint}/Submit`, {userId, questionId, code, languageId});
     if (response.status != 200) {
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data as RunResult, error: null};
+    return {data: response.data.submission as Submission, error: null};
   } catch (e: Error | any) {
     return {data: null, error: ExtractErrorMessage(e)};
   }

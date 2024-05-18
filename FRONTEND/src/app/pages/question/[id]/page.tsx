@@ -5,10 +5,11 @@ import {GetQuestionById} from "@/app/services/QuestionService";
 import Card from "@/app/components/card/Card";
 import toast from "react-hot-toast";
 import {Question} from "@/app/models/Question";
-import {RunCode} from "@/app/services/SubmissionService";
+import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {RunRequest} from "@/app/models/RunRequest";
 import {RunResult} from "@/app/models/RunResult";
+import {Submission} from "@/app/models/Submission";
 
 export default function EditorPage({params}: {params: {id: string}}) {
   const [question, setQuestion] = useState<Question>(
@@ -18,6 +19,9 @@ export default function EditorPage({params}: {params: {id: string}}) {
   const [code, setCode] = useState<string>(question.starterCode);
 
   const [result, setResult] = useState<RunResult>({stdout: "", stderr: "", time: "", memory: "", token: ""});
+  const [submission, setSubmission] = useState<Submission>(
+    {id: "", questionId: "", userId: "", submissionTime: "", code: "", successRate: 0, compileTime: 0, memoryUsage: 0}
+  );
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -39,6 +43,10 @@ export default function EditorPage({params}: {params: {id: string}}) {
   }, [])
 
   const handleRun = async () => {
+    setResult({stdout: "", stderr: "", time: "", memory: "", token: ""});
+    setSubmission(
+      {id: "", questionId: "", userId: "", submissionTime: "", code: "", successRate: 0, compileTime: 0, memoryUsage: 0}
+    );
     try {
       const userId = getWithExpiry("userId");
       if (!userId) {
@@ -62,7 +70,32 @@ export default function EditorPage({params}: {params: {id: string}}) {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setResult({stdout: "", stderr: "", time: "", memory: "", token: ""});
+    setSubmission(
+      {id: "", questionId: "", userId: "", submissionTime: "", code: "", successRate: 0, compileTime: 0, memoryUsage: 0}
+    );
+    try {
+      const userId = getWithExpiry("userId");
+      if (!userId) {
+        toast.error("Invalid User");
+        return;
+      }
+      const runReq: RunRequest =
+      {
+        userId: userId, questionId: question.id
+        , code: code, languageId: 71
+      };
+
+      const res = await SubmitCode(runReq)
+      if (res.error || !res.data) {
+        toast.error(res.error)
+        return;
+      }
+      setSubmission(res.data);
+    } catch (e: Error | any) {
+      toast.error(e.message);
+    }
   }
 
   const onValueChange = (newCode: string) => {
@@ -95,7 +128,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
                   <div className="text-white fs-4 align-self-start ">Results</div>
                   <div className="flex-grow-1"></div>
                   <button onClick={handleRun} className="btn btn-dark fs-5 me-3">Run</button>
-                  <button className="btn btn-green fs-5">Submit</button>
+                  <button onClick={handleSubmit} className="btn btn-green fs-5">Submit</button>
                 </div>
                 <div className="my-2">
                   {result.stderr && <div className="text-white fw-bold ">Compile Error:
@@ -127,9 +160,10 @@ export default function EditorPage({params}: {params: {id: string}}) {
                       </div>
                     </div>
                   }
-
                 </div>
-
+                {submission.id != "" && <div className="text-white fw-bold">
+                  Success Rate: <span className="text-white m-2">{submission.successRate * 100}%</span>
+                </div>}
               </div>
             </Card>
           </div>
