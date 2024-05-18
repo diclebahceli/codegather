@@ -6,7 +6,8 @@ import { UserDto } from "../models/UserDto";
 export interface AuthContextType {
   user: UserDto;
   roles: string[];
-  loginn: (user: UserDto, roles: string[]) => void;
+  setTheUser: (user: UserDto) => void;
+  setTheRoles: (roles: string[]) => void;
   logout: () => void;
 }
 
@@ -22,9 +23,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     userName: "",
   });
 
-  const loginn = (user: UserDto, roles: string[]) => {
-    setRoles(roles);
+  const setTheUser = (user: UserDto) => {
     setUser(user);
+  };
+
+  const setTheRoles = (roles: string[]) => {
+    setRoles(roles);
   };
 
   const logout = () => {
@@ -33,7 +37,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user: user, roles: roles, loginn, logout }}>
+    <AuthContext.Provider
+      value={{ user: user, roles: roles, setTheUser, setTheRoles, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
