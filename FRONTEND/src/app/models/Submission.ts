@@ -5,5 +5,7 @@ export interface Submission {
     submissionTime: string;
     code: string;
     successRate: number;
+    compileTime: number;
+    memoryUsage: number;
 }
 
