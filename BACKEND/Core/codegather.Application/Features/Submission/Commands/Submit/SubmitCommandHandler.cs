@@ -32,6 +32,8 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         float avgCompileTime = 0;
         float avgMemory = 0;
 
+        List<RunSubmissionDto> runSubmissionDtos = new List<RunSubmissionDto>();
+
         foreach (var test in testCase)
         {
             RunSubmissionDto runSubmissionDto = new RunSubmissionDto
@@ -41,18 +43,27 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
                 stdin = test.Input
             };
 
-            RunResultDto result = await codeEditorService.RunCode(runSubmissionDto);
+            runSubmissionDtos.Add(runSubmissionDto);
 
-            avgCompileTime += float.Parse(result.time) / testCase.Length;
-            avgMemory += result.memory/ testCase.Length;
-
-            if(result.stdout.Trim() == test.Output.Trim())
-            {
-                successCount += 1/testCase.Length;
-            }
         }
 
-        var submission = new Submission{
+        List<RunResultDto> result = await codeEditorService.RunCode(runSubmissionDtos);
+
+        int i = 0;
+        foreach (var res in result)
+        {
+            if (res.stdout.Trim() == testCase[i].Output.Trim())
+            {
+                successCount += 1 / (float)testCase.Length;
+            }
+
+            avgCompileTime += float.Parse(res.time) / testCase.Length;
+            avgMemory += float.Parse(res.memory) / testCase.Length;
+            i++;
+        }
+
+        var submission = new Submission
+        {
             QuestionId = request.QuestionId,
             Code = request.Code,
             SuccessRate = successCount,
@@ -66,7 +77,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
         return new SubmitCommandResponse
         {
-            Submission =  mapper.Map<SubmissionDto, Submission>(submission)
+            Submission = mapper.Map<SubmissionDto, Submission>(submission)
         };
 
     }
