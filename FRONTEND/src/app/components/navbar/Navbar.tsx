@@ -23,23 +23,32 @@ export default function Navbar() {
 
     const getUserName = async () => {
       if (!id) return;
+
+      if (context.user.userName) {
+        setUserName(context.user.userName);
+        return;
+      }
       const user = await getUserById(id);
+      console.log(user);
       if (user.error || !user.data) {
         toast.error(user.error);
         return;
       }
+      context.setTheUser(user.data);
       setUserName(user.data.userName);
     };
 
     const fetchRoles = async () => {
       if (!id) return;
+      if (context.roles !== undefined && context.roles.length > 0) return;
       try {
         const result = await GetUserRoles(id);
         if (result.error || !result.data) {
           toast.error(result.error);
           return;
         }
-        context.loginn(result.data);
+
+        context.setTheRoles(result.data);
       } catch (e: Error | any) {
         toast.error(e);
       }
