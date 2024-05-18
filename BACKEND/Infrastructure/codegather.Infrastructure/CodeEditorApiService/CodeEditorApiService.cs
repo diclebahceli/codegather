@@ -53,7 +53,7 @@ public class CodeEditorApiService : ICodeEditorService
             return new RunResultDto()
             {
                 time = time,
-                memory = Convert.ToInt32(memory),
+                memory = memory,
                 stderr = stderr,
                 stdout = stdout,
                 token = tokenn
@@ -98,7 +98,59 @@ public class CodeEditorApiService : ICodeEditorService
             return res;
         }
     }
+
+    public async Task<List<RunResultDto>> RunCode(List<RunSubmissionDto> runSubmissionDtos)
+    {
+        var requestBody = new
+        {
+            submissions = runSubmissionDtos
+        };
+        using var request = new HttpRequestMessage()
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions/batch?base64_encoded=false&fields=*"),
+            Headers =
+    {
+        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
+    },
+            Content = new StringContent(JsonConvert.SerializeObject(requestBody))
+            {
+                Headers =
+        {
+            ContentType = new MediaTypeHeaderValue("application/json")
+        }
+            }
+        };
+
+
+        using (var response = await _httpClient.SendAsync(request))
+        {
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JArray jsonArray = JArray.Parse(body);
+            var formattedList = new List<object>();
+
+            foreach (var item in jsonArray)
+            {
+                var token = (string)item["token"];
+                var formattedItem = new
+                {
+                    token
+                };
+                formattedList.Add(formattedItem);
+            }
+
+            await Task.Delay(500);
+
+            List<RunResultDto> results = new();
+            foreach (var item in formattedList)
+            {
+                var token = (string)item.GetType().GetProperty("token").GetValue(item, null);
+                RunResultDto res = await GetResult(token);
+                results.Add(res);
+            }
+            return results;
+        }
+    }
 }
-
-
-
