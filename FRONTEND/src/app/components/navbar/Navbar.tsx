@@ -58,7 +58,7 @@ export default function Navbar() {
       fetchRoles();
     }
     getUserName();
-  }, [path]);
+  }, [path, context.user.userName]);
 
   const handleLogout = async () => {
     const user = await getUserById(userId);
