@@ -50,16 +50,20 @@ export default function Profile({ params }: { params: { name: string } }) {
     fetchJoinedCompetitions();
   }, []);
 
+  function handleEdit(){
+    router.push(`/pages/editProfile`);
+  }
+
   return (
     <div className="h-100 bg-black bg-gradient">
       <div className="d-flex flex-column">
         <div className="d-flex flex-row align-items-center mt-5">
           <div className="col-1"></div>
           <h1 className="container mx-0 text-white fs-m ">Profile</h1>
-          {isMe && <button className="btn btn-green  fs-3">Edit</button>}
+          {isMe && <button onClick={handleEdit} className="btn btn-green  fs-3">Edit</button>}
           <div className="col-2"></div>
         </div>
-        <div className="d-flex flex-row justify-content-center w-100  mt-5">
+        <div className="d-flex flex-row justify-content-around w-100 mt-5 pt-5">
           <div className="d-flex flex-column col-4">
             <div className="text-center ">
               <div>
@@ -75,7 +79,7 @@ export default function Profile({ params }: { params: { name: string } }) {
             {userInfo ? (
               <>
                 <div className="d-flex flex-row">
-                  <h1 className="text-white me-5 mt-3 fs-l">
+                  <h1 className="text-white me-5 mt-3 fs-m text-wrap text-break">
                     {userInfo.userName}
                   </h1>
                   <Image
