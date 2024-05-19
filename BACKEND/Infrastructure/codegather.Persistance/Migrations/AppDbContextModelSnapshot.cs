@@ -251,6 +251,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("TEXT");
 
+                    b.Property<float>("Score")
+                        .HasColumnType("REAL");
+
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
 
