@@ -29,7 +29,6 @@ export default function Navbar() {
         return;
       }
       const user = await getUserById(id);
-      console.log(user);
       if (user.error || !user.data) {
         toast.error(user.error);
         return;
@@ -61,16 +60,12 @@ export default function Navbar() {
   }, [path, context.user.userName]);
 
   const handleLogout = async () => {
-    const user = await getUserById(userId);
-    if (user.error || !user.data) {
-      toast.error(user.error);
-      return;
-    }
-    const result = await Logout(user.data.email);
+    const result = await Logout(context.user.email);
     if (result.error) {
       toast.error(result.error);
       return;
     }
+    context.logout();
     router.replace("/pages/login", { scroll: false });
   };
 
