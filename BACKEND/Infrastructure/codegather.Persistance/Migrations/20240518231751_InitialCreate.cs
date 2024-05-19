@@ -235,6 +235,7 @@ namespace codegather.Persistance.Migrations
                     SuccessRate = table.Column<float>(type: "REAL", nullable: false),
                     CompileTime = table.Column<float>(type: "REAL", nullable: false),
                     MemoryUsage = table.Column<float>(type: "REAL", nullable: false),
+                    Score = table.Column<float>(type: "REAL", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },

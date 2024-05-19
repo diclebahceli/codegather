@@ -23,7 +23,10 @@ public class RunCommandHandler : BaseHandler, IRequestHandler<RunCommandRequest,
                 , include: x => x.Include(x => x.TestCases))
            ?? throw new Exception("Question not found");
 
-        TestCase testCase = question.TestCases.ToArray()[0] ?? throw new Exception("No test cases found");
+        if (question.TestCases.Count == 0)
+            throw new Exception("No test cases found");
+
+        TestCase testCase = question.TestCases.ToArray()[0];
 
         RunSubmissionDto runSubmissionDto = new RunSubmissionDto
         {

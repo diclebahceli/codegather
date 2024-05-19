@@ -25,7 +25,7 @@ public class CodeEditorApiService : ICodeEditorService
             RequestUri = new Uri($"https://judge0-ce.p.rapidapi.com/submissions/{token}?base64_encoded=false&fields=*"),
             Headers =
     {
-        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Key", "94738b5d94msh9b79d7aabe81986p1a8ed5jsn69188f7a57ee" },
         { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
     },
 
@@ -73,7 +73,7 @@ public class CodeEditorApiService : ICodeEditorService
             RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&fields=*"),
             Headers =
     {
-        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Key", "94738b5d94msh9b79d7aabe81986p1a8ed5jsn69188f7a57ee" },
         { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
     },
             Content = new StringContent(JsonConvert.SerializeObject(runSubmissionDto))
@@ -111,7 +111,7 @@ public class CodeEditorApiService : ICodeEditorService
             RequestUri = new Uri("https://judge0-ce.p.rapidapi.com/submissions/batch?base64_encoded=false&fields=*"),
             Headers =
     {
-        { "X-RapidAPI-Key", "d610722e0amsh546a2f247001efcp1a8792jsn42efcc04d934" },
+        { "X-RapidAPI-Key", "94738b5d94msh9b79d7aabe81986p1a8ed5jsn69188f7a57ee" },
         { "X-RapidAPI-Host", "judge0-ce.p.rapidapi.com" },
     },
             Content = new StringContent(JsonConvert.SerializeObject(requestBody))
