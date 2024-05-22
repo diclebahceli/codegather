@@ -2,33 +2,37 @@
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
 import {hasPermission} from "@/app/utils/RoleChecker";
 import {usePathname, useRouter} from "next/navigation";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import FullPageLoader from "../full_page_loader/FullPageLoader";
 
 
+export interface RoleRouteConstraint {
+  protectedRoutes: string[];
+  requiredRoles: string[];
+}
 
-export default function RoleProtection({children, protectedRoutes, requiredRoles}:
-  {children: React.ReactNode, protectedRoutes: string[], requiredRoles: string[]}
+export default function RoleProtection({children, constraints}:
+  {children: React.ReactNode, constraints: RoleRouteConstraint[]}
 ) {
   const pathName = usePathname();
+  const router = useRouter();
 
   const context = useContext(AuthContext) as AuthContextType;
 
   const hasAccess = () => {
-    if (protectedRoutes.some((route) => pathName.includes(route))) {
-      return hasPermission(context.roles, requiredRoles);
+    const constraint =
+      constraints.find((constraint) => constraint.protectedRoutes.some((route) => pathName.includes(route)));
+    if (constraint != undefined) {
+      return hasPermission(context.roles, constraint.requiredRoles)
     }
     return true;
   }
-
-
   useEffect(() => {
-    if (!hasAccess()) {
+    if (!hasAccess() && context.user.id !== "") {
       router.replace("/unauthorized");
     }
 
-  }, [pathName])
-  const router = useRouter();
+  }, [pathName, context])
 
 
   if (!hasAccess()) {

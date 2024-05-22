@@ -1,13 +1,14 @@
 "use client";
 
-import { AuthContext, AuthContextType } from "@/app/contexts/AuthContext";
-import { Logout } from "@/app/services/AuthService";
-import { GetUserRoles, getUserById } from "@/app/services/UserService";
-import { getWithExpiry } from "@/app/utils/StorageGetter";
+import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
+import {UserDto} from "@/app/models/UserDto";
+import {Logout} from "@/app/services/AuthService";
+import {GetUserRoles, getUserById} from "@/app/services/UserService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import {usePathname, useRouter} from "next/navigation";
+import {useContext, useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
@@ -20,44 +21,10 @@ export default function Navbar() {
   useEffect(() => {
     const id = getWithExpiry("userId");
     setUserId(id as string);
+    setUserName(context.user.userName)
 
-    const getUserName = async () => {
-      if (!id) return;
-
-      if (context.user.userName) {
-        setUserName(context.user.userName);
-        return;
-      }
-      const user = await getUserById(id);
-      if (user.error || !user.data) {
-        toast.error(user.error);
-        return;
-      }
-      context.setTheUser(user.data);
-      setUserName(user.data.userName);
-    };
-
-    const fetchRoles = async () => {
-      if (!id) return;
-      if (context.roles !== undefined && context.roles.length > 0) return;
-      try {
-        const result = await GetUserRoles(id);
-        if (result.error || !result.data) {
-          toast.error(result.error);
-          return;
-        }
-
-        context.setTheRoles(result.data);
-      } catch (e: Error | any) {
-        toast.error(e);
-      }
-    };
-
-    if (context.roles === undefined || context.roles.length === 0) {
-      fetchRoles();
-    }
-    getUserName();
   }, [path, context.user.userName]);
+  //for editing the user and renaming
 
   const handleLogout = async () => {
     const result = await Logout(context.user.email);
@@ -66,16 +33,16 @@ export default function Navbar() {
       return;
     }
     context.logout();
-    router.replace("/pages/login", { scroll: false });
+    router.replace("/pages/login", {scroll: false});
   };
 
   return (
     <div>
       {userId ? (
         <div className="d-flex flex-row align-items-center">
-          {context.roles !== undefined && context.roles.includes("Admin") ? (
+          {context.roles !== undefined && context.roles.includes("Admin") || context.roles.includes("Manager") ? (
             <Link
-              href={"/pages/admin/"}
+              href={"/pages/admin/dashboard"}
               scroll={false}
               className="text-white text-decoration-none mx-2 fs-5"
             >
