@@ -3,6 +3,7 @@ import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {usePathname, useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import FullPageLoader from "../full_page_loader/FullPageLoader";
+import RoleProtection from "../role_protection/RoleProtection";
 
 export default function Protected({children, protectedRoutes}:
   Readonly<{children: React.ReactNode, protectedRoutes: string[]}>) {
@@ -14,14 +15,14 @@ export default function Protected({children, protectedRoutes}:
   useEffect(() => {
     const token = getWithExpiry("userId");
     if (token === null) {
-      if (protectedRoutes.some((route) => pathName.includes(route))){
+      if (protectedRoutes.some((route) => pathName.includes(route))) {
         router.replace("/pages/login", {scroll: false})
         return;
 
       }
     }
     else {
-      if(pathName === "/pages/login" || pathName === "/pages/register"){
+      if (pathName === "/pages/login" || pathName === "/pages/register") {
         router.replace("/", {scroll: false})
         return;
       }
@@ -38,7 +39,14 @@ export default function Protected({children, protectedRoutes}:
       </div>
     )
   }
+  
+  else {
   return <>
-    {children}
+    <RoleProtection protectedRoutes={["/admin/user"]} requiredRoles={["Admin"]} >
+      {children}
+
+    </RoleProtection>
   </>;
+
+  }
 }
