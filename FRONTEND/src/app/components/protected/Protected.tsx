@@ -1,9 +1,13 @@
 'use client';
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {usePathname, useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import FullPageLoader from "../full_page_loader/FullPageLoader";
-import RoleProtection from "../role_protection/RoleProtection";
+import RoleProtection, {RoleRouteConstraint} from "../role_protection/RoleProtection";
+import {UserDto} from "@/app/models/UserDto";
+import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
+import toast from "react-hot-toast";
+import {GetUserRoles, getUserById} from "@/app/services/UserService";
 
 export default function Protected({children, protectedRoutes}:
   Readonly<{children: React.ReactNode, protectedRoutes: string[]}>) {
@@ -11,6 +15,8 @@ export default function Protected({children, protectedRoutes}:
   const [tokn, setToken] = useState<string>();
   const router = useRouter();
   const pathName = usePathname();
+  const context = useContext(AuthContext) as AuthContextType;
+  const id = getWithExpiry("userId");
 
   useEffect(() => {
     const token = getWithExpiry("userId");
@@ -18,7 +24,6 @@ export default function Protected({children, protectedRoutes}:
       if (protectedRoutes.some((route) => pathName.includes(route))) {
         router.replace("/pages/login", {scroll: false})
         return;
-
       }
     }
     else {
@@ -29,8 +34,63 @@ export default function Protected({children, protectedRoutes}:
       setToken(token);
     }
 
+    if (context.roles === undefined || context.roles.length === 0) {
+      fetchRoles();
+    }
+    fetchUser();
 
-  }, [pathName])
+
+  }, [pathName, context])
+
+  const fetchUser = async () => {
+    if (!id) return;
+
+    // if user is already set, no need to fetch again
+    if (context.user.userName !== "") {
+      return;
+    }
+    // fetch user
+    try {
+      const user = await getUserById(id);
+      if (user.error || !user.data) {
+        toast.error(user.error);
+        return;
+      }
+      context.setTheUser(user.data);
+    } catch (e: Error | any) {
+      toast.error(e);
+    }
+  };
+
+  const fetchRoles = async () => {
+    if (!id) return;
+    if (context.roles !== undefined && context.roles.length > 0) return;
+    try {
+      const result = await GetUserRoles(id);
+      if (result.error || !result.data) {
+        toast.error(result.error);
+        return;
+      }
+
+      context.setTheRoles(result.data);
+    } catch (e: Error | any) {
+      toast.error(e);
+    }
+  };
+
+
+  const constraints: RoleRouteConstraint[] = [
+    {
+      protectedRoutes: ["/admin/user"],
+      requiredRoles: ["Admin"]
+    },
+    {
+      protectedRoutes: ["/admin/dashboard"],
+      requiredRoles: ["Admin", "Manager"]
+    }
+
+
+  ];
 
   if (tokn === undefined && protectedRoutes.some((route) => pathName.includes(route))) {
     return (
@@ -39,14 +99,15 @@ export default function Protected({children, protectedRoutes}:
       </div>
     )
   }
-  
-  else {
-  return <>
-    <RoleProtection protectedRoutes={["/admin/user"]} requiredRoles={["Admin"]} >
-      {children}
 
-    </RoleProtection>
-  </>;
+
+  else {
+    return <>
+      <RoleProtection constraints={constraints}>
+        {children}
+
+      </RoleProtection>
+    </>;
 
   }
 }
