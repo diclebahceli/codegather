@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import AceEditorComponent from "@/app/components/ace_editor/AceEditor";
-import { GetQuestionById } from "@/app/services/QuestionService";
+import {GetQuestionById} from "@/app/services/QuestionService";
 import Card from "@/app/components/card/Card";
 import toast from "react-hot-toast";
-import {Question} from "@/app/models/Question";
-import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
+import {Question} from "@/app/models/Question"; import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import {RunRequest} from "@/app/models/RunRequest";
 import {RunResult} from "@/app/models/RunResult";
@@ -59,7 +58,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
   }, []);
 
   const handleRun = async () => {
-    setResult({ stdout: "", stderr: "", time: "", memory: "", token: "" });
+    setResult({stdout: "", stderr: "", time: "", memory: "", token: ""});
     setSubmission({
       id: "",
       questionId: "",
@@ -96,7 +95,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
   };
 
   const handleSubmit = async () => {
-    setResult({ stdout: "", stderr: "", time: "", memory: "", token: "" });
+    setResult({stdout: "", stderr: "", time: "", memory: "", token: ""});
     setSubmission({
       id: "",
       questionId: "",
@@ -137,7 +136,8 @@ export default function EditorPage({params}: {params: {id: string}}) {
   };
 
   return (
-  <div className="bg-dark p-3" style={{ height: "92vh" }}>
+    <CompetitionProtected compId={question.competitionId} >
+    <div className="bg-dark p-3" style={{height: "92vh"}}>
       <div className="d-flex flex-row h-100 justify-content-evenly">
         <div id="explanation" className="col-6 p-3">
           <Card>
@@ -150,7 +150,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
           </Card>
         </div>
         <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
-          <div style={{ height: "30em" }}>
+          <div style={{height: "30em"}}>
             <AceEditorComponent
               onValueChange={onValueChange}
               defaultValue={question.starterCode}
@@ -211,7 +211,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
 
                       <div className="py-3">
                         {question.testCases[0].output != result.stdout &&
-                        !result.stderr ? (
+                          !result.stderr ? (
                           <div className="text-danger fw-bold">
                             {" "}
                             Your Output: {result.stdout}{" "}
@@ -247,6 +247,6 @@ export default function EditorPage({params}: {params: {id: string}}) {
       </div>
     </div>
 
-    </CompetitionProtected>
+    </CompetitionProtected >
   );
 }
