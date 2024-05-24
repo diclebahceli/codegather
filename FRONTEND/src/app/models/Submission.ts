@@ -7,5 +7,6 @@ export interface Submission {
     successRate: number;
     compileTime: number;
     memoryUsage: number;
+    score: number;
 }
 

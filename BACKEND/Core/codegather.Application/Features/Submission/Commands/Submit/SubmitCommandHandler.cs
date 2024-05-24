@@ -1,4 +1,5 @@
-﻿using codegather.Application.Interfaces.AutoMapper;
+﻿using System.Security.Cryptography.X509Certificates;
+using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,18 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
     public async Task<SubmitCommandResponse> Handle(SubmitCommandRequest request, CancellationToken cancellationToken)
     {
+        float calculateScore(float time, float memory)
+        {
+            float timeValue = 1 / time;
+            float memoryValue = 1 / memory;
+
+            float finalScore = 2 * (timeValue + memoryValue);
+
+            return finalScore;
+
+
+        };
+
         Question question = await unitOfWork.GetReadRepository<Question>()
            .GetAsync(predicate: x => x.Id == request.QuestionId && !x.IsDeleted
                 , include: x => x.Include(x => x.TestCases))
@@ -31,6 +44,9 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         float successCount = 0;
         float avgCompileTime = 0;
         float avgMemory = 0;
+        float maxCompileTime = 0;
+        float maxMemory = 0;
+
 
         List<RunSubmissionDto> runSubmissionDtos = new List<RunSubmissionDto>();
 
@@ -56,11 +72,24 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             {
                 successCount += 1 / (float)testCase.Length;
             }
-
+            if (float.Parse(res.time) > maxCompileTime)
+            {
+                maxCompileTime = float.Parse(res.time);
+            }
+            if (float.Parse(res.memory) > maxMemory)
+            {
+                maxMemory = float.Parse(res.memory);
+            }
             avgCompileTime += float.Parse(res.time) / testCase.Length;
             avgMemory += float.Parse(res.memory) / testCase.Length;
             i++;
         }
+
+        float score = calculateScore(avgCompileTime, avgMemory);
+
+        if (successCount < 1)
+            score = 0;
+
 
         var submission = new Submission
         {
@@ -70,6 +99,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             CompileTime = avgCompileTime,
             MemoryUsage = avgMemory,
             UserId = request.UserId,
+            Score = score
         };
 
         await unitOfWork.GetWriteRepository<Submission>().AddAsync(submission);

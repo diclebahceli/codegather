@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240512131052_InitialCreate")]
+    [Migration("20240518231751_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -253,6 +253,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("Score")
+                        .HasColumnType("REAL");
 
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
