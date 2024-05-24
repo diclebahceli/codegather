@@ -11,7 +11,7 @@ export default function Header() {
     >
       <div className=" d-flex flex-row justify-content-center align-items-center">
         <Image alt="" src={image} width={100} height={100}></Image>
-        <Link href="/" className="text-white fs-2 text-decoration-none ">
+        <Link href="/" className="text-white fs-3 text-decoration-none ">
           Code Gather
         </Link>
       </div>

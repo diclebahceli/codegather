@@ -4,23 +4,19 @@ import AceEditorComponent from "@/app/components/ace_editor/AceEditor";
 import { GetQuestionById } from "@/app/services/QuestionService";
 import Card from "@/app/components/card/Card";
 import toast from "react-hot-toast";
-import { Question } from "@/app/models/Question";
-import { RunCode, SubmitCode } from "@/app/services/SubmissionService";
-import { getWithExpiry } from "@/app/utils/StorageGetter";
-import { RunRequest } from "@/app/models/RunRequest";
-import { RunResult } from "@/app/models/RunResult";
-import { Submission } from "@/app/models/Submission";
+import {Question} from "@/app/models/Question";
+import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
+import {RunRequest} from "@/app/models/RunRequest";
+import {RunResult} from "@/app/models/RunResult";
+import {Submission} from "@/app/models/Submission";
+import CompetitionProtected from "@/app/components/competition_protected/CompetitionProtected";
 
-export default function EditorPage({ params }: { params: { id: string } }) {
-  const [question, setQuestion] = useState<Question>({
-    name: "",
-    description: "",
-    starterCode: "",
-    id: "",
-    testCases: [],
-    submissions: [],
-    competitionId: "",
-  });
+export default function EditorPage({params}: {params: {id: string}}) {
+  const [question, setQuestion] = useState<Question>(
+    {name: "", description: "", starterCode: "", id: "", testCases: [], submissions: [], competitionId: ""}
+  );
+
 
   const [code, setCode] = useState<string>(question.starterCode);
 
@@ -141,7 +137,7 @@ export default function EditorPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="bg-dark p-3" style={{ height: "92vh" }}>
+  <div className="bg-dark p-3" style={{ height: "92vh" }}>
       <div className="d-flex flex-row h-100 justify-content-evenly">
         <div id="explanation" className="col-6 p-3">
           <Card>
@@ -250,5 +246,7 @@ export default function EditorPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+
+    </CompetitionProtected>
   );
 }
