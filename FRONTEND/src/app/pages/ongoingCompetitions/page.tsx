@@ -36,7 +36,7 @@ export default function OngoingCompetitions() {
             <div className="text-white fs-3"> No Competitions Yet 👻</div>
           </div>
         ) : (
-          <div className="mb-md-5 mt-md-5 d-flex flex-wrap col-md-7 col-sm-4 h-50">
+          <div className="my-md-5 d-flex flex-wrap col-md-7 col-sm-4 h-50 mw-100 p-5 p-md-0">
             {competitions.map((competition, index) => (
               <CompetitionCard
                 key={competition.id || index}

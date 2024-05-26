@@ -69,7 +69,7 @@ export default function CompetitionCard({
             {competition.title}
           </div>
           <div
-            className="card-text mb-3 fs-5 text-wrap text-white overflow-hidden"
+            className="card-text mb-3 fs-5 text-wrap text-truncate text-white overflow-hidden"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: "2",
