@@ -7,6 +7,7 @@ public class User : IdentityUser<Guid>, IEntityBase
     public ICollection<Competition> Competitions { get; set; } = new List<Competition>();
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiryTime { get; set; }
+    public byte[]? ProfileImage { get; set; }
 
     public User() { }
 
