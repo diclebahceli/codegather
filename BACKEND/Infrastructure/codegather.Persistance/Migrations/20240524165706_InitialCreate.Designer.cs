@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240518231751_InitialCreate")]
+    [Migration("20240524165706_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -347,6 +347,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("ProfileImage")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("TEXT");

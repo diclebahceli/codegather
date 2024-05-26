@@ -67,10 +67,9 @@ export async function GetUserByUsername(username: string): Promise<{data: UserDt
 
 
 export async function updateUser(userDto: UserDto): Promise<{success: boolean; error: string | null}> {
-  const {id, userName, email} = userDto;
-
+  const {id, userName, email, profileImage} = userDto;
   try {
-    const response = await axios.put(`${userEndPoint}/updateUser/`, {id, userName, email});
+    const response = await axios.put(`${userEndPoint}/updateUser/`, {id, userName, email, profileImage});
     if (response.status != 200) {
       const error = response.data.Errors;
       return {success: false, error: ExtractErrorMessage(response)};

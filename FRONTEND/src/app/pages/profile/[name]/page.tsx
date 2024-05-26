@@ -2,16 +2,16 @@
 import Card from "@/app/components/card/Card";
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import CompetitionList from "@/app/components/competition_list/CompetitionList";
-import { Competition } from "@/app/models/Competition";
-import { UserDto } from "@/app/models/UserDto";
-import { GetUserByUserName, getUserById } from "@/app/services/UserService";
-import { getWithExpiry } from "@/app/utils/StorageGetter";
+import {Competition} from "@/app/models/Competition";
+import {UserDto} from "@/app/models/UserDto";
+import {GetUserByUserName, getUserById} from "@/app/services/UserService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
-export default function Profile({ params }: { params: { name: string } }) {
+export default function Profile({params}: {params: {name: string}}) {
   const [userInfo, setUserInfo] = useState<UserDto>();
   const router = useRouter();
   const [competitions, setCompetitions] = useState<Competition[]>([]);
@@ -29,8 +29,6 @@ export default function Profile({ params }: { params: { name: string } }) {
         setIsMe(true);
       }
       let user = result.data;
-      console.log(user);
-
       setUserInfo(user);
     };
 
@@ -41,7 +39,6 @@ export default function Profile({ params }: { params: { name: string } }) {
         return;
       }
       let competition = result.data.competitions;
-      console.log(competition);
       if (competition === undefined) return;
       setCompetitions(competition);
     };
@@ -50,7 +47,7 @@ export default function Profile({ params }: { params: { name: string } }) {
     fetchJoinedCompetitions();
   }, []);
 
-  function handleEdit(){
+  function handleEdit() {
     router.push(`/pages/editProfile`);
   }
 
@@ -78,17 +75,20 @@ export default function Profile({ params }: { params: { name: string } }) {
           <div className="d-flex flex-column  align-items-center mb-4 col-5">
             {userInfo ? (
               <>
-                <div className="d-flex flex-row">
+                <div className="d-flex flex-row align-items-center">
                   <h1 className="text-white me-5 mt-3 fs-m text-wrap text-break">
                     {userInfo.userName}
                   </h1>
-                  <Image
-                    src="/images/user.png"
-                    alt="user"
-                    width={150}
-                    height={150}
-                    className="rounded-circle overflow-hidden bg-green"
-                  />
+                  <div className="position-relative">
+                    <Image
+                      src={`data:image/png;base64,${userInfo.profileImage}`}
+                      alt="user"
+                      width={250}
+                      height={250}
+                      className="rounded-circle overflow-hidden bg-green"
+                    />
+                  </div>
+
                 </div>
                 <h3 className="text-white mt-5 fs-1">Code Score: 0</h3>
               </>
