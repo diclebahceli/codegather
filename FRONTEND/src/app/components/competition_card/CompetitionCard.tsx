@@ -2,8 +2,7 @@
 import { Competition } from "@/app/models/Competition";
 import Card from "../card/Card";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
-import { GetAllCompetitions } from "@/app/services/CompetitionService";
+import {  useEffect, useState } from "react";
 import { JoinCompetition, getUserById } from "@/app/services/UserService";
 import { getWithExpiry } from "@/app/utils/StorageGetter";
 import toast from "react-hot-toast";
@@ -63,7 +62,7 @@ export default function CompetitionCard({
   };
 
   return (
-    <div className=" col-md-4 col-sm-6 m-3">
+    <div className="col-md-4 col-12 m-sm-3 my-3">
       <Card>
         <div className="card-body d-flex flex-column bg-grey rounded rounded-3">
           <div className="card-title fw-bold fs-4 text-white">
@@ -82,14 +81,14 @@ export default function CompetitionCard({
           </div>
           {joinedCompetitions.find((c) => c.id === competition.id) ? (
             <button
-              className="btn btn-green w-50 ms-auto mt-auto"
+              className="btn btn-green  ms-auto mt-auto"
               onClick={handleDetailsClick}
             >
               Details
             </button>
           ) : (
             <button
-              className="btn btn-green w-50 ms-auto mt-auto"
+              className="btn btn-green  ms-auto mt-auto"
               onClick={handle}
             >
               Join

@@ -27,17 +27,16 @@ export default function OngoingCompetitions() {
 
   return (
     <div className="h-100 bg-black bg-gradient">
-      <h1 className="pt-5 container text-white fs-m mb-3">
+      <h1 className="pt-5 container text-white fs-m p-5 mb-3">
         ONGOING COMPETITIONS
       </h1>
-      <div className="d-flex flex-row">
-        <div className="col-sm-0 col-md-1"></div>
+      <div className="d-flex flex-row justify-content-center flex-wrap">
         {competitions.length === 0 ? (
-          <div className="d-flex justify-content-center align-items-center col-7">
+          <div className="d-flex justify-content-center align-items-center col-md-7 col-sm-12">
             <div className="text-white fs-3"> No Competitions Yet 👻</div>
           </div>
         ) : (
-          <div className="mt-5 ms-5 d-flex flex-wrap col-7 h-50">
+          <div className="mb-md-5 mt-md-5 d-flex flex-wrap col-md-7 col-sm-4 h-50">
             {competitions.map((competition, index) => (
               <CompetitionCard
                 key={competition.id || index}
@@ -46,7 +45,7 @@ export default function OngoingCompetitions() {
             ))}
           </div>
         )}
-        <div className="col-3  mt-5 fs-2 text-white me-5">
+        <div className="col-md-3 col-sm-12 mt-5 fs-2 text-white mx-5">
           <div className="text-center">Disclaimer: </div>
           <div className=" fs-4">
             The information provided on this page is for general informational
