@@ -1,4 +1,5 @@
-﻿using codegather.Application.Interfaces.AutoMapper;
+﻿using System.Reflection;
+using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,9 @@ public class RegisterCommandHandler : BaseHandler, IRequestHandler<RegisterComma
         {
             Email = request.Email,
             UserName = request.UserName,
-            SecurityStamp = Guid.NewGuid().ToString()
+            SecurityStamp = Guid.NewGuid().ToString(),
+            ProfileImage = GetDefaultProfileImage()
+
         };
         IdentityResult result = await userManager.CreateAsync(user, request.Password);
         if (result.Succeeded)
@@ -46,5 +49,35 @@ public class RegisterCommandHandler : BaseHandler, IRequestHandler<RegisterComma
             await userManager.AddToRoleAsync(user, "User");
         }
         return Unit.Value;
+    }
+
+    //TODO
+    private byte[] GetDefaultProfileImage()
+    {
+        // Get the namespace of the current assembly
+        string nameSpace = typeof(RegisterCommandHandler).Namespace;
+
+        // Build the resource name
+        string resName = $"{nameSpace}.Resource.pp.png";
+
+        // Get the assembly that contains the embedded resource
+        var assembly = typeof(RegisterCommandHandler).Assembly;
+
+        // Get the embedded resource stream
+        var names = assembly.GetManifestResourceNames();
+        using (Stream stream = assembly.GetManifestResourceStream(resName))
+        {
+            if (stream == null)
+            {
+                // Handle the case where the resource is not found
+                throw new InvalidOperationException("Default profile picture resource not found");
+            }
+
+            // Read the stream into a byte array
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+
+            return bytes;
+        }
     }
 }

@@ -18,6 +18,13 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommandRequest
         var user = await userManager.FindByIdAsync(request.Id.ToString()) ?? throw new Exception("User not found");
         user.UserName = request.UserName;
         user.Email = request.Email;
+
+        if (!string.IsNullOrEmpty(request.ProfileImage))
+        {
+            byte[] imageData = Convert.FromBase64String(request.ProfileImage);
+            user.ProfileImage = imageData;
+        }
+
         await userManager.UpdateAsync(user);
         return Unit.Value;
     }
