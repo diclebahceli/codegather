@@ -2,23 +2,43 @@
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
 import {UserDto} from "@/app/models/UserDto";
 import {updateUser} from "@/app/services/UserService";
+import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {useContext, useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
 export default function Page() {
 
-  const [userInfo, setUserInfo] = useState<UserDto>({email: "", id: "", userName: ""});
+  const [userInfo, setUserInfo] = useState<UserDto>({email: "", id: "", userName: "", profileImage: ""});
+
 
   const context = useContext(AuthContext) as AuthContextType;
   const router = useRouter();
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result?.toString().split(',')[1]; // Extract the base64 string part
+
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          profileImage: base64String || '', // Assign the base64 string to profileImage
+        }));
+      }
+
+      reader.readAsDataURL(file);
+    };
+  }
 
   useEffect(() => {
     const user = context.user
     setUserInfo(user);
   }, [context.user]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSave = async (e: any) => {
     try {
       const res = await updateUser(userInfo)
       if (res.error) {
@@ -33,20 +53,22 @@ export default function Page() {
       toast.error(e.message);
     }
   }
-
   function handleInputChange(e: any) {
     const {name, value} = e.target;
-    console.log(name, value);
     setUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
 
+  const handeCancel = () => {
+    router.replace(`/pages/profile/${context.user.userName}`);
+  }
+
   return (
     <div className="d-flex justify-content-center align-items-center h-100 bg-dark">
-      <form action={handleSubmit} className="col-6">
-        <div className="container">
+      <div className="d-flex flex-column col-4">
+        <form>
           <h1 className="text-white">Edit User</h1>
 
           <div className="form-group my-3">
@@ -60,11 +82,35 @@ export default function Page() {
               value={userInfo.userName}
               onChange={handleInputChange}
             />
+            <div className="form-group my-3">
+              <label htmlFor="filePicker" className="text-white">Profile Picture</label>
+              <input type="file" name="filePicker" className="form-control" onChange={handleFileChange}></input>
+            </div>
           </div>
-          <button className="btn btn-green mt-3 text-dark">Save</button>
+        </form>
+        <div>
+          <button className="btn btn-green mt-3 text-white" onClick={handleSave}>Save</button>
+          <button className="btn btn-danger mt-3 text-white mx-3" onClick={handeCancel}>Cancel</button>
         </div>
-      </form>
+
+      </div>
+      <div className="col-1"> </div>
+      <div className="position-relative" style={{height: "15rem", width: "15rem"}}>
+        {userInfo.profileImage && (
+          <Image
+            src={`data:image/jpeg;base64,${userInfo.profileImage}`}
+            layout="fill"
+            objectFit="cover"
+            alt="Profile Image"
+            className="rounded-circle bg-green border border-2 border-green"
+          />
+
+        )}
+
+      </div>
     </div>
+
   )
 
 }
+

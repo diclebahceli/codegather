@@ -87,6 +87,10 @@ export default function Protected({children, protectedRoutes}:
     {
       protectedRoutes: ["/admin/dashboard"],
       requiredRoles: ["Admin", "Manager"]
+    },
+    {
+      protectedRoutes: ["/admin/competition"],
+      requiredRoles: ["Admin", "Manager"]
     }
 
 
