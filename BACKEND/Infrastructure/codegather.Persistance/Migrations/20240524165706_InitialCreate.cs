@@ -32,6 +32,7 @@ namespace codegather.Persistance.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     RefreshToken = table.Column<string>(type: "TEXT", nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ProfileImage = table.Column<byte[]>(type: "BLOB", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),

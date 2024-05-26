@@ -345,6 +345,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<byte[]>("ProfileImage")
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("RefreshToken")
                         .HasColumnType("TEXT");
 
