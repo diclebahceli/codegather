@@ -36,5 +36,4 @@ export async function SubmitCode(requestData: RunRequest): Promise<{data: Submis
     return {data: null, error: ExtractErrorMessage(e)};
   }
 }
-export {RunRequest};
 
