@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240524165706_InitialCreate")]
+    [Migration("20240527152814_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -244,6 +244,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("ErrorFree")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
