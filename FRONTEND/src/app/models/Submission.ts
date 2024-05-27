@@ -8,5 +8,7 @@ export interface Submission {
     compileTime: number;
     memoryUsage: number;
     score: number;
+    errorFree: boolean;
+    errorMessage?: string;
 }
 

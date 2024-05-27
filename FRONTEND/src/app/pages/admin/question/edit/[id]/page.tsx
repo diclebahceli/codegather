@@ -11,7 +11,9 @@ import {GetCompetitionById} from "@/app/services/CompetitionService";
 
 export default function Page({params}: {params: {id: string}}) {
 
-  const [question, setQuestion] = useState<Question>({competitionId: "", description: "", id: "", name: "", starterCode: ""});
+  const [question, setQuestion] = useState<Question>(
+    {competitionId: "", description: "", id: "", name: "", starterCode: "", testCases: [], submissions: []}
+  );
   const router = useRouter();
   const [competition, setCompetition] = useState<Competition>(
     {description: "", endDate: "", id: "", startDate: "", title: "", isPublic: false}
