@@ -10,4 +10,5 @@ public class SubmissionDto
     public float CompileTime { get; set; }
     public float MemoryUsage { get; set; }
     public float Score { get; set; }
+    public bool ErrorFree { get; set; }
 }
