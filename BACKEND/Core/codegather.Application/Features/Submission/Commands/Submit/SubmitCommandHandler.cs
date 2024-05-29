@@ -66,9 +66,15 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         List<RunResultDto> result = await codeEditorService.RunCode(runSubmissionDtos);
 
         int i = 0;
+        string errMessage = "";
         foreach (var res in result)
         {
-            if (res.stdout.Trim() == testCase[i].Output.Trim())
+            if(res.stderr != null && res.stderr.Trim() != "")
+            {
+                errMessage = res.stderr;
+                break;
+            }
+            if (res.stdout?.Trim() == testCase[i].Output.Trim())
             {
                 successCount += 1 / (float)testCase.Length;
             }
@@ -99,7 +105,8 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             CompileTime = avgCompileTime,
             MemoryUsage = avgMemory,
             UserId = request.UserId,
-            Score = score
+            Score = errMessage == "" ? score : 0,
+            ErrorFree = errMessage == "" ? true : false
         };
 
         await unitOfWork.GetWriteRepository<Submission>().AddAsync(submission);
@@ -107,7 +114,8 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
         return new SubmitCommandResponse
         {
-            Submission = mapper.Map<SubmissionDto, Submission>(submission)
+            Submission = mapper.Map<SubmissionDto, Submission>(submission),
+            Stderr = errMessage
         };
 
     }

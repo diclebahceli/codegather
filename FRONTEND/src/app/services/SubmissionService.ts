@@ -27,8 +27,13 @@ export async function SubmitCode(requestData: RunRequest): Promise<{data: Submis
     if (response.status != 200) {
       return {data: null, error: ExtractErrorMessage(response)};
     }
+    const submission = response.data.submission as Submission;
+    if(!submission.errorFree){
+      submission.errorMessage = response.data.stderr;
+    }
     return {data: response.data.submission as Submission, error: null};
   } catch (e: Error | any) {
     return {data: null, error: ExtractErrorMessage(e)};
   }
 }
+
