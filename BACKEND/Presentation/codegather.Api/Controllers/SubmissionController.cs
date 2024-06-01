@@ -56,4 +56,29 @@ public class SubmissionController : ControllerBase
         var response = await mediator.Send(new GetAllSubmissionsQueryRequest());
         return Ok(response);
     }
+
+    [HttpGet("{userId}/{questionId}")]
+    public async Task<IActionResult> GetByUserAndQuestionId(Guid userId, Guid questionId)
+    {
+        var request = new GetByUserAndQuestionIdQueryRequest
+        {
+            UserId = userId,
+            QuestionId = questionId
+        };
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
+    [HttpGet("{userId}/{questionId}")]
+    public async Task<IActionResult> GetLastSubmission(Guid userId, Guid questionId)
+    {
+        var request = new GetLastSubmissionQueryRequest
+        {
+            UserId = userId,
+            QuestionId = questionId
+        };
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
 }
