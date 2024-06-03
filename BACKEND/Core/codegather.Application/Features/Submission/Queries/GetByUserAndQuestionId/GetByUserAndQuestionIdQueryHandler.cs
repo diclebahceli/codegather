@@ -25,7 +25,9 @@ public class GetByUserAndQuestionIdQueryHandler
         var submissions = await unitOfWork.GetReadRepository<Submission>()
             .GetAllAsync(predicate: s => s.QuestionId == request.QuestionId
                     && s.UserId == request.UserId
-                    && !s.IsDeleted, enableTracking: false)
+                    && !s.IsDeleted,
+                    orderBy: s => s.OrderByDescending(s => s.CreatedTime),
+                    enableTracking: false)
             ?? new List<Submission>();
 
 

@@ -34,9 +34,9 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
                 , include: x => x.Include(x => x.TestCases))
            ?? throw new Exception("Question not found");
 
-        TestCase[] testCase = question.TestCases.ToArray();
+        TestCase[] testCases = question.TestCases.ToArray();
 
-        if (testCase.Length == 0)
+        if (testCases.Length == 0)
         {
             throw new Exception("No test cases found");
         }
@@ -50,7 +50,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
         List<RunSubmissionDto> runSubmissionDtos = new List<RunSubmissionDto>();
 
-        foreach (var test in testCase)
+        foreach (var test in testCases)
         {
             RunSubmissionDto runSubmissionDto = new RunSubmissionDto
             {
@@ -74,7 +74,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
                 errMessage = res.stderr;
                 break;
             }
-            if (res.stdout?.Trim() == testCase[i].Output.Trim())
+            if (res.stdout?.Trim() == testCases[i].Output.Trim())
             {
                 successCount += 1;
             }
@@ -86,14 +86,14 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             {
                 maxMemory = float.Parse(res.memory);
             }
-            avgCompileTime += float.Parse(res.time) / testCase.Length;
-            avgMemory += float.Parse(res.memory) / testCase.Length;
+            avgCompileTime += float.Parse(res.time) / testCases.Length;
+            avgMemory += float.Parse(res.memory) / testCases.Length;
             i++;
         }
 
         float score = calculateScore(avgCompileTime, avgMemory);
 
-        if (successCount < 1)
+        if (successCount < testCases.Length)
             score = 0;
 
 
@@ -101,7 +101,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         {
             QuestionId = request.QuestionId,
             Code = request.Code,
-            SuccessCount = successCount + "/" + testCase.Length,
+            SuccessCount = successCount + "/" + testCases.Length,
             CompileTime = avgCompileTime,
             MemoryUsage = avgMemory,
             UserId = request.UserId,
