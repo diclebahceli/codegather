@@ -7,8 +7,12 @@ import toast from "react-hot-toast";
 import {Question} from "@/app/models/Question";
 import CompetitionProtected from "@/app/components/competition_protected/CompetitionProtected";
 import ResultsSection from "../components/ResultSection";
-import {Spinner} from "reactstrap";
+import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Spinner} from "reactstrap";
 import useCodeExecution from "@/app/hooks/useCodeExecution";
+import {Submission} from "@/app/models/Submission";
+import {GetLastSubmissionForQuestion, GetUsersSubmissionsForQuestion} from "@/app/services/SubmissionService";
+import {getWithExpiry} from "@/app/utils/StorageGetter";
+import YourSubmissionOption from "../components/YourSubmissionOption";
 
 export default function EditorPage({params}: {params: {id: string}}) {
   const [question, setQuestion] = useState<Question>({
@@ -20,6 +24,9 @@ export default function EditorPage({params}: {params: {id: string}}) {
     submissions: [],
     competitionId: "",
   });
+
+
+  const [userSubmissions, setUserSubmissions] = useState<Submission[]>([]);
 
   const [code, setCode] = useState("");
 
@@ -42,14 +49,53 @@ export default function EditorPage({params}: {params: {id: string}}) {
       }
     };
 
+    const fetchSubmissions = async () => {
+      try {
+        const result = await GetUsersSubmissionsForQuestion(params.id, getWithExpiry("userId") as string);
+        if (result.error || !result.data) {
+          toast.error(result.error);
+          return;
+        }
+        setUserSubmissions(result.data);
+
+      } catch (e: Error | any) {
+        toast.error(e.message);
+        return;
+      }
+    }
+
+    const fetchLastSubmission = async () => {
+      try {
+        const result = await GetLastSubmissionForQuestion(params.id, getWithExpiry("userId") as string);
+        if (result.error || !result.data) {
+          toast.error(result.error);
+          return;
+        }
+        setCode(result.data.code);
+
+      } catch (e: Error | any) {
+        toast.error(e.message);
+        return;
+      }
+
+    }
     fetchData();
+    fetchSubmissions();
+    fetchLastSubmission();
   }, [params.id]);
 
+  const resetCode = () => {
+    setCode(question.starterCode);
+  }
   const onValueChange = (newCode: string) => {
     setCode(newCode);
   };
 
-  const {name, description, starterCode, testCases, competitionId} = question;
+  const {name, description, testCases, competitionId} = question;
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   return (
     <CompetitionProtected compId={competitionId}>
@@ -66,10 +112,26 @@ export default function EditorPage({params}: {params: {id: string}}) {
             </Card>
           </div>
           <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
+            <div className=" w-100 d-flex flex-row justify-content-between">
+              <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={"down"} className="mb-2">
+                <DropdownToggle className="text-white" caret color="grey">Your Submissions</DropdownToggle>
+                <DropdownMenu >
+                  {userSubmissions.length != 0 && userSubmissions.map((submission) => (
+                    <YourSubmissionOption
+                      key={submission.id}
+                      submission={submission}
+                      onClicked={() => onValueChange(submission.code)}
+                    />
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+
+              <Button color="green mb-2" onClick={resetCode}> Reset Code</Button>
+            </div>
             <div style={{height: "30em"}}>
               <AceEditorComponent
                 onValueChange={onValueChange}
-                defaultValue={starterCode}
+                defaultValue={code}
               />
             </div>
             <div className="flex-grow-1 mt-2">
