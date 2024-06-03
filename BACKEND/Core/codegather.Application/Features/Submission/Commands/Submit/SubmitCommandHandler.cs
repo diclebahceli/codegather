@@ -69,14 +69,14 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         string errMessage = "";
         foreach (var res in result)
         {
-            if(res.stderr != null && res.stderr.Trim() != "")
+            if (res.stderr != null && res.stderr.Trim() != "")
             {
                 errMessage = res.stderr;
                 break;
             }
             if (res.stdout?.Trim() == testCase[i].Output.Trim())
             {
-                successCount += 1 / (float)testCase.Length;
+                successCount += 1;
             }
             if (float.Parse(res.time) > maxCompileTime)
             {
@@ -101,7 +101,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         {
             QuestionId = request.QuestionId,
             Code = request.Code,
-            SuccessRate = successCount,
+            SuccessCount = successCount + "/" + testCase.Length,
             CompileTime = avgCompileTime,
             MemoryUsage = avgMemory,
             UserId = request.UserId,

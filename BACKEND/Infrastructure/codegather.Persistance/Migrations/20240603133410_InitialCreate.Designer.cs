@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240601153530_InitialCreate")]
+    [Migration("20240603133410_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -272,8 +272,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("SuccessRate")
-                        .HasColumnType("REAL");
+                    b.Property<string>("SuccessCount")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");

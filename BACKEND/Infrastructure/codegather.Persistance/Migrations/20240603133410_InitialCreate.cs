@@ -235,7 +235,7 @@ namespace codegather.Persistance.Migrations
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     SubmissionTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Code = table.Column<string>(type: "TEXT", nullable: false),
-                    SuccessRate = table.Column<float>(type: "REAL", nullable: false),
+                    SuccessCount = table.Column<string>(type: "TEXT", nullable: false),
                     CompileTime = table.Column<float>(type: "REAL", nullable: false),
                     MemoryUsage = table.Column<float>(type: "REAL", nullable: false),
                     Score = table.Column<float>(type: "REAL", nullable: false),

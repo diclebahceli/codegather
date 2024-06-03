@@ -269,8 +269,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("SuccessRate")
-                        .HasColumnType("REAL");
+                    b.Property<string>("SuccessCount")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");

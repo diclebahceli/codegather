@@ -7,7 +7,7 @@ public class Submission : EntityBase
     public Guid UserId { get; set; }
     public DateTime SubmissionTime { get; set; } = DateTime.Now;
     public string Code { get; set; }
-    public float SuccessRate { get; set; }
+    public string SuccessCount { get; set; }
     public float CompileTime { get; set; }
     public float MemoryUsage { get; set; }
     public float Score { get; set; }
