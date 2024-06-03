@@ -65,7 +65,9 @@ export async function GetLastSubmissionForQuestion(questionId: string, userId: s
       return {data: null, error: ExtractErrorMessage(response)};
     }
     const submission = response.data.submission as Submission;
-    submission.score =  Number(submission.score.toFixed(2));
+    if (submission !== null) {
+      submission.score = Number(submission.score.toFixed(2));
+    }
 
     return {data: submission, error: null};
   }

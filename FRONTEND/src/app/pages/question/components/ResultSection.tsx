@@ -11,13 +11,13 @@ interface ResultsSectionProps {
 
 const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, testCase }) => {
   const { stderr, stdout } = result;
-  const { successRate, score, errorFree } = submission;
+  const { successCount: successRate, score, errorFree } = submission;
   const { input, output } = testCase;
 
   const getOutputColor = () => {
     if (stderr) return 'text-danger';
     if (output !== stdout && !stderr) return 'text-danger';
-    return 'text-green';
+    return 'text-success';
   };
 
   const renderOutput = () => {
@@ -53,9 +53,9 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, tes
       )}
       {submission.id !== '' && errorFree && (
         <div className="text-white fw-bold">
-          Success Rate: <span className="text-white m-2">{(successRate * 100).toFixed(2)}%</span>
-          <div className="text-green me-3 fw-bold">
-            Your Score: <span>{score}</span>
+          Success Rate: <span className="text-white m-2">{successRate}</span>
+          <div className="text-success me-3 fw-bold">
+            Your Score: <span>{score.toFixed(2)}</span>
           </div>
         </div>
       )}

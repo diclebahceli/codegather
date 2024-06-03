@@ -21,7 +21,7 @@ const useCodeExecution = (questionId: string, code: string) => {
     userId: "",
     submissionTime: "",
     code: "",
-    successRate: 0,
+    successCount: "",
     compileTime: 0,
     memoryUsage: 0,
     score: 0,
@@ -38,7 +38,7 @@ const useCodeExecution = (questionId: string, code: string) => {
       userId: "",
       submissionTime: "",
       code: "",
-      successRate: 0,
+      successCount: "",
       compileTime: 0,
       memoryUsage: 0,
       score: 0,
@@ -98,7 +98,7 @@ const useCodeExecution = (questionId: string, code: string) => {
         return;
       }
       if (!res.data.errorFree) {
-        setResult({ stdout: "", stderr: res.data.errorMessage as string, time: "", memory: "", token: "" });
+        setResult({stdout: "", stderr: res.data.errorMessage as string, time: "", memory: "", token: ""});
       }
       setSubmission(res.data);
     } catch (e: Error | any) {

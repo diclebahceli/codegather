@@ -49,6 +49,32 @@ export default function EditorPage({params}: {params: {id: string}}) {
       }
     };
 
+
+    const fetchLastSubmission = async () => {
+      try {
+        const result = await GetLastSubmissionForQuestion(params.id, getWithExpiry("userId") as string);
+        if (result.error) {
+          toast.error(result.error);
+          return;
+        }
+        if (!result.data) {
+          return;
+        }
+
+        setCode(result.data.code);
+
+      } catch (e: Error | any) {
+        toast.error(e.message);
+        return;
+      }
+
+    }
+    fetchData();
+    fetchLastSubmission();
+  }, [params.id]);
+
+  useEffect(() => {
+
     const fetchSubmissions = async () => {
       try {
         const result = await GetUsersSubmissionsForQuestion(params.id, getWithExpiry("userId") as string);
@@ -64,25 +90,8 @@ export default function EditorPage({params}: {params: {id: string}}) {
       }
     }
 
-    const fetchLastSubmission = async () => {
-      try {
-        const result = await GetLastSubmissionForQuestion(params.id, getWithExpiry("userId") as string);
-        if (result.error || !result.data) {
-          toast.error(result.error);
-          return;
-        }
-        setCode(result.data.code);
-
-      } catch (e: Error | any) {
-        toast.error(e.message);
-        return;
-      }
-
-    }
-    fetchData();
     fetchSubmissions();
-    fetchLastSubmission();
-  }, [params.id]);
+  }, [params.id, result])
 
   const resetCode = () => {
     setCode(question.starterCode);
@@ -114,7 +123,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
           <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
             <div className=" w-100 d-flex flex-row justify-content-between">
               <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={"down"} className="mb-2">
-                <DropdownToggle className="text-white" caret color="grey">Your Submissions</DropdownToggle>
+                <DropdownToggle className="text-white" caret color="grey" disabled={userSubmissions.length == 0}>Your Submissions</DropdownToggle>
                 <DropdownMenu >
                   {userSubmissions.length != 0 && userSubmissions.map((submission) => (
                     <YourSubmissionOption
