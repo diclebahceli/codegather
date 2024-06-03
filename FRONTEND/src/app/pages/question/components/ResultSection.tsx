@@ -53,9 +53,9 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, tes
       )}
       {submission.id !== '' && errorFree && (
         <div className="text-white fw-bold">
-          Success Rate: <span className="text-white m-2">{successRate}</span>
+          Passed Test Cases: <span className="text-white m-2">{successRate}</span>
           <div className="text-success me-3 fw-bold">
-            Your Score: <span>{score.toFixed(2)}</span>
+            Your Score: <span>{score}</span>
           </div>
         </div>
       )}

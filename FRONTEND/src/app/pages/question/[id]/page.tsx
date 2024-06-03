@@ -60,7 +60,6 @@ export default function EditorPage({params}: {params: {id: string}}) {
         if (!result.data) {
           return;
         }
-
         setCode(result.data.code);
 
       } catch (e: Error | any) {
@@ -91,7 +90,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
     }
 
     fetchSubmissions();
-  }, [params.id, result])
+  }, [params.id, submission])
 
   const resetCode = () => {
     setCode(question.starterCode);

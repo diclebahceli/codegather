@@ -31,7 +31,7 @@ export async function SubmitCode(requestData: RunRequest): Promise<{data: Submis
     if (!submission.errorFree) {
       submission.errorMessage = response.data.stderr;
     }
-    submission.score = Number(submission.score.toFixed(2));
+    submission.score = Number(submission.score.toFixed(0));
     return {data: response.data.submission as Submission, error: null};
   } catch (e: Error | any) {
     return {data: null, error: ExtractErrorMessage(e)};
@@ -47,7 +47,7 @@ export async function GetUsersSubmissionsForQuestion(questionId: string, userId:
     }
     const submissions = response.data.submissions as Submission[];
     submissions.forEach(submission => {
-      submission.score = Number(submission.score.toFixed(2));
+      submission.score = Number(submission.score.toFixed(0));
     });
     return {data: response.data.submissions as Submission[], error: null};
   }
@@ -66,7 +66,7 @@ export async function GetLastSubmissionForQuestion(questionId: string, userId: s
     }
     const submission = response.data.submission as Submission;
     if (submission !== null) {
-      submission.score = Number(submission.score.toFixed(2));
+      submission.score = Number(submission.score.toFixed(0));
     }
 
     return {data: submission, error: null};

@@ -32,11 +32,10 @@ export default function CompetitionProtected({children, compId}: Readonly<{child
         return;
       }
       setAuthorized(true);
-
     }
 
 
-  }, [compId])
+  }, [compId, context])
 
   if (authrorized) {
     return <>{children}</>;
