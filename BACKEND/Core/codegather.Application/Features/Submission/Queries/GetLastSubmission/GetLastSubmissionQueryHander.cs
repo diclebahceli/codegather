@@ -27,6 +27,10 @@ public class GetLastSubmissionQueryHander : BaseHandler, IRequestHandler<GetLast
                     && !s.IsDeleted, enableTracking: false, orderBy: s => s.OrderByDescending(s => s.LastModified));
 
         var last = submissions.FirstOrDefault();
+        if (last != null && last.SuccessCount.Split('/').First() != last.SuccessCount.Split('/').Last())
+        {
+            last = null;
+        }
 
         return new GetLastSubmissionQueryResponse
         {
