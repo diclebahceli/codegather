@@ -4,7 +4,7 @@ export interface Submission {
     userId: string;
     submissionTime: string;
     code: string;
-    successRate: number;
+    successCount: string;
     compileTime: number;
     memoryUsage: number;
     score: number;

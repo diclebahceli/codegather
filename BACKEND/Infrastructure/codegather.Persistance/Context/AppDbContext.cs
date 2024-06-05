@@ -19,4 +19,22 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+    {
+        foreach (var entry in ChangeTracker.Entries<EntityBase>().Where(e => e.State == EntityState.Modified))
+        {
+            switch (entry.State)
+            {
+                case EntityState.Modified:
+                    entry.Entity.LastModified = DateTime.Now;
+                    break;
+                case EntityState.Added:
+                    entry.Entity.CreatedTime = DateTime.Now;
+                    entry.Entity.LastModified = DateTime.Now;
+                    break;
+            }
+        }
+        return base.SaveChangesAsync(cancellationToken);
+    }
 }

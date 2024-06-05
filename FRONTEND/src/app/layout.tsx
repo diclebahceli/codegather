@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en" className={encodeSans.className}>
       <body>
         <AuthProvider>
-          <div className="d-flex flex-column vh-100 vw-100">
+          <div className="d-flex flex-column vh-100 w-100">
             <Protected protectedRoutes={protectedRoutes}>
               <Header />
               <div className="flex-grow-1">

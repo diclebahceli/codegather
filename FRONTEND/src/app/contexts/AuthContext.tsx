@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     email: "",
     id: "",
     userName: "",
+    profileImage: "",
   });
 
   const setTheUser = (user: UserDto) => {
@@ -33,7 +34,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setRoles([]);
-    setUser({ email: "", id: "", userName: "" });
+    setUser({ email: "", id: "", userName: "", profileImage: ""});
   };
 
   return (

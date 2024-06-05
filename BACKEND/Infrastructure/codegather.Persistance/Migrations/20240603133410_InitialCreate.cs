@@ -64,6 +64,7 @@ namespace codegather.Persistance.Migrations
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsPublic = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -211,6 +212,7 @@ namespace codegather.Persistance.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     StarterCode = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -233,12 +235,13 @@ namespace codegather.Persistance.Migrations
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     SubmissionTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Code = table.Column<string>(type: "TEXT", nullable: false),
-                    SuccessRate = table.Column<float>(type: "REAL", nullable: false),
+                    SuccessCount = table.Column<string>(type: "TEXT", nullable: false),
                     CompileTime = table.Column<float>(type: "REAL", nullable: false),
                     MemoryUsage = table.Column<float>(type: "REAL", nullable: false),
                     Score = table.Column<float>(type: "REAL", nullable: false),
                     ErrorFree = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -267,6 +270,7 @@ namespace codegather.Persistance.Migrations
                     Input = table.Column<string>(type: "TEXT", nullable: false),
                     Output = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

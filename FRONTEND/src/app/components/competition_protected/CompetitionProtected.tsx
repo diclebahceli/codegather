@@ -26,19 +26,16 @@ export default function CompetitionProtected({children, compId}: Readonly<{child
     if (context.user.userName === "")
       fetchUser();
 
-    console.log(context.user);
-
-    if (compId != "") {
+    if (compId != "" && context.user.id !== "") {
       if (!context.user.competitions?.some((comp) => comp.id === compId)) {
         router.replace("/pages/ongoingCompetitions", {scroll: false});
         return;
       }
       setAuthorized(true);
-
     }
 
 
-  }, [compId])
+  }, [compId, context])
 
   if (authrorized) {
     return <>{children}</>;

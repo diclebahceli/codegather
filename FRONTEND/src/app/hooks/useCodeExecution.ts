@@ -1,9 +1,10 @@
 import {useState} from "react";
-import {RunCode, RunRequest, SubmitCode} from "@/app/services/SubmissionService";
+import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import toast from "react-hot-toast";
 import {RunResult} from "@/app/models/RunResult";
 import {Submission} from "../models/Submission";
+import {RunRequest} from "../models/RunRequest";
 
 const useCodeExecution = (questionId: string, code: string) => {
   const [result, setResult] = useState<RunResult>({
@@ -20,7 +21,7 @@ const useCodeExecution = (questionId: string, code: string) => {
     userId: "",
     submissionTime: "",
     code: "",
-    successRate: 0,
+    successCount: "",
     compileTime: 0,
     memoryUsage: 0,
     score: 0,
@@ -37,7 +38,7 @@ const useCodeExecution = (questionId: string, code: string) => {
       userId: "",
       submissionTime: "",
       code: "",
-      successRate: 0,
+      successCount: "",
       compileTime: 0,
       memoryUsage: 0,
       score: 0,
@@ -97,7 +98,7 @@ const useCodeExecution = (questionId: string, code: string) => {
         return;
       }
       if (!res.data.errorFree) {
-        setResult({ stdout: "", stderr: res.data.errorMessage as string, time: "", memory: "", token: "" });
+        setResult({stdout: "", stderr: res.data.errorMessage as string, time: "", memory: "", token: ""});
       }
       setSubmission(res.data);
     } catch (e: Error | any) {

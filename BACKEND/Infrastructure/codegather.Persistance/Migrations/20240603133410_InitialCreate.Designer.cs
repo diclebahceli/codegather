@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240527152814_InitialCreate")]
+    [Migration("20240603133410_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -156,6 +156,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
@@ -186,6 +189,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -251,6 +257,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
                     b.Property<float>("MemoryUsage")
                         .HasColumnType("REAL");
 
@@ -263,8 +272,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime>("SubmissionTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("SuccessRate")
-                        .HasColumnType("REAL");
+                    b.Property<string>("SuccessCount")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
@@ -293,6 +303,9 @@ namespace codegather.Persistance.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Output")
                         .IsRequired()
