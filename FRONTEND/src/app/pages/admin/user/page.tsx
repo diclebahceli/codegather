@@ -1,13 +1,13 @@
 "use client";
-import { UserDto } from "@/app/models/UserDto";
-import { deleteUser, getAllUsers } from "@/app/services/UserService";
+import { User } from "@/app/models/User";
+import { DeleteUser, GetAllUsers } from "@/app/services/UserService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const UserPage = () => {
-  const [users, setUsers] = useState<UserDto[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [pickedId, setPickedId] = useState("");
   const [show, setShow] = useState(false);
   const router = useRouter();
@@ -15,12 +15,12 @@ const UserPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await getAllUsers();
+        const response = await GetAllUsers();
         if (response.error || !response.data) {
           toast.error(response.error);
           return;
         }
-        const users = response.data as UserDto[];
+        const users = response.data as User[];
         setUsers(users);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -35,7 +35,7 @@ const UserPage = () => {
   };
 
   const handleDeleteUser = async () => {
-    const response = await deleteUser(pickedId);
+    const response = await DeleteUser(pickedId);
 
     if (response.error) {
       toast.error(response.error);

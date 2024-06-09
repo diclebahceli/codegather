@@ -1,10 +1,10 @@
 "use client";
-import { UserDto } from "@/app/models/UserDto";
+import { User } from "@/app/models/User";
 import {
   GetUserRoles,
   SetUserRole,
-  getUserById,
-  updateUser,
+  GetUserById,
+  UpdateUser,
 } from "@/app/services/UserService";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { Button, ButtonGroup } from "reactstrap";
 
 const EditUserPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const [userData, setUserData] = useState<UserDto>({} as UserDto);
+  const [userData, setUserData] = useState<User>({} as User);
   const [cSelected, setCSelected] = useState<string[]>([]);
 
   const onCheckboxBtnClick = (selected: string) => {
@@ -53,12 +53,12 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
 
     const fetchUser = async (userId: string) => {
       try {
-        const user = await getUserById(userId);
+        const user = await GetUserById(userId);
         if (user.error || !user.data) {
           toast.error(user.error);
           return;
         }
-        setUserData(user.data as UserDto);
+        setUserData(user.data as User);
       } catch (error: Error | any) {
         toast.error("Error fetching user");
       }
@@ -69,7 +69,7 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   const handleSubmit = async (formData: FormData) => {
-    const userInfo: UserDto = {
+    const userInfo: User = {
       id: userData.id,
       userName: formData.get("userName") as string,
       email: formData.get("email") as string,
@@ -80,7 +80,7 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
       return;
     }
     console.log(roles);
-    const response = await updateUser(userInfo);
+    const response = await UpdateUser(userInfo);
 
     if (response.error) {
       toast.error(response.error);

@@ -1,9 +1,9 @@
 "use client";
 
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
-import {UserDto} from "@/app/models/UserDto";
+import {User} from "@/app/models/User";
 import {Logout} from "@/app/services/AuthService";
-import {GetUserRoles, getUserById} from "@/app/services/UserService";
+import {GetUserRoles, GetUserById} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 
 import Link from "next/link";

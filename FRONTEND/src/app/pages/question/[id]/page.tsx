@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import {Question} from "@/app/models/Question";
 import CompetitionProtected from "@/app/components/competition_protected/CompetitionProtected";
 import ResultsSection from "../components/ResultSection";
-import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Spinner} from "reactstrap";
+import {Button, Dropdown, DropdownMenu, DropdownToggle, Spinner} from "reactstrap";
 import useCodeExecution from "@/app/hooks/useCodeExecution";
 import {Submission} from "@/app/models/Submission";
 import {GetLastSubmissionForQuestion, GetUsersSubmissionsForQuestion} from "@/app/services/SubmissionService";

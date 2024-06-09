@@ -3,8 +3,8 @@ import Card from "@/app/components/card/Card";
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import CompetitionList from "@/app/components/competition_list/CompetitionList";
 import {Competition} from "@/app/models/Competition";
-import {UserDto} from "@/app/models/UserDto";
-import {GetUserByUserName, getUserById} from "@/app/services/UserService";
+import {User} from "@/app/models/User";
+import {GetUserByUserName, GetUserById} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
 export default function Profile({params}: {params: {name: string}}) {
-  const [userInfo, setUserInfo] = useState<UserDto>();
+  const [userInfo, setUserInfo] = useState<User>();
   const router = useRouter();
   const [competitions, setCompetitions] = useState<Competition[]>([]);
   const [isMe, setIsMe] = useState<boolean>(false);

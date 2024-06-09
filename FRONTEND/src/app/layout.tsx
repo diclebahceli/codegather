@@ -25,6 +25,7 @@ export default function RootLayout({
   const protectedRoutes = [
     "/pages/ongoingCompetitions",
     "/pages/myCompetitions",
+    "/pages/question"
   ];
   SetInterceptors();
   return (

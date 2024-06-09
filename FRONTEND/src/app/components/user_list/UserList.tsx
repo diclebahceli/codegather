@@ -1,11 +1,10 @@
-import { Competition } from "@/app/models/Competition";
-import { UserDto } from "@/app/models/UserDto";
+import { User } from "@/app/models/User";
 
 export default function UserList({
   users,
   title,
 }: {
-  users: UserDto[];
+  users: User[];
   title: string;
 }) {
   return (

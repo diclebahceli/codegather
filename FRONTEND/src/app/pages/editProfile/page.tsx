@@ -1,7 +1,7 @@
 "use client";
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
-import {UserDto} from "@/app/models/UserDto";
-import {updateUser} from "@/app/services/UserService";
+import {User} from "@/app/models/User";
+import {UpdateUser} from "@/app/services/UserService";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {useContext, useEffect, useState} from "react";
@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 export default function Page() {
 
-  const [userInfo, setUserInfo] = useState<UserDto>({email: "", id: "", userName: "", profileImage: ""});
+  const [userInfo, setUserInfo] = useState<User>({email: "", id: "", userName: "", profileImage: ""});
 
 
   const context = useContext(AuthContext) as AuthContextType;
@@ -40,7 +40,7 @@ export default function Page() {
 
   const handleSave = async (e: any) => {
     try {
-      const res = await updateUser(userInfo)
+      const res = await UpdateUser(userInfo)
       if (res.error) {
         toast.error(res.error);
         return

@@ -1,6 +1,6 @@
 import {Competition} from "./Competition";
 
-export interface UserDto {
+export interface User {
     id: string;
     userName: string;
     email: string;
