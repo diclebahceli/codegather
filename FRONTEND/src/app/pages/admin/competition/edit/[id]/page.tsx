@@ -1,6 +1,6 @@
 "use client";
 import MyModal from "@/app/components/delete_modal/MyModal";
-import { Competition } from "@/app/models/Competition";
+import { Competition, DefaultCompetition } from "@/app/models/Competition";
 import {
   GetCompetitionById,
   UpdateCompetition,
@@ -13,14 +13,7 @@ import QuestionList from "../components/question_list/QuestionList";
 
 const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const [competitionData, setCompetitionData] = useState<Competition>({
-    description: "",
-    endDate: "",
-    id: "",
-    startDate: "",
-    title: "",
-    isPublic: false,
-  });
+  const [competitionData, setCompetitionData] = useState<Competition>(DefaultCompetition);
 
   const [show, setShow] = useState(false);
 
