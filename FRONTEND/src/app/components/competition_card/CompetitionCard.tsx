@@ -18,7 +18,7 @@ export default function CompetitionCard({
     <div className="col-md-6 col-12 m-sm-3 my-3" style={{height: "12rem"}}>
       <Card>
         <div className="card-body d-flex flex-column bg-grey rounded rounded-3">
-          <div className="card-title fw-bold fs-4 text-white">
+          <div className="card-title fw-bold fs-4 text-white text-truncate">
             {competition.title}
           </div>
           <div

@@ -13,10 +13,14 @@ import {Submission} from "@/app/models/Submission";
 import {GetLastSubmissionForQuestion, GetUsersSubmissionsForQuestion} from "@/app/services/SubmissionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import YourSubmissionOption from "../components/YourSubmissionOption";
+import {GetCompetitionById} from "@/app/services/CompetitionService";
+import {useRouter} from "next/navigation";
+import FullPageLoader from "@/app/components/full_page_loader/FullPageLoader";
 
 export default function EditorPage({params}: {params: {id: string}}) {
   const [question, setQuestion] = useState<Question>(DefaultQuestion);
 
+  const {name, description, testCases, competitionId} = question;
 
   const [userSubmissions, setUserSubmissions] = useState<Submission[]>([]);
 
@@ -24,9 +28,10 @@ export default function EditorPage({params}: {params: {id: string}}) {
 
   const {result, isLoading, handleSubmit, submission, handleRun} = useCodeExecution(question.id, code);
 
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestion = async () => {
       try {
         const result = await GetQuestionById(params.id);
         if (result.error || !result.data) {
@@ -34,12 +39,30 @@ export default function EditorPage({params}: {params: {id: string}}) {
           return;
         }
         setQuestion(result.data);
+        fetchCompetition(result.data.competitionId);
         setCode(result.data.starterCode);
       } catch (e: Error | any) {
         toast.error(e.message);
         return;
       }
     };
+
+    const fetchCompetition = async (id: string) => {
+      if (!id) return;
+      try {
+        const result = await GetCompetitionById(id);
+        if (result.error || !result.data) {
+          toast.error(result.error);
+          return;
+        }
+        if (new Date(result.data.startDate) > new Date()) {
+          router.replace("/pages/competitionDetail/" + id);
+        }
+      } catch (e: Error | any) {
+        toast.error(e.message);
+        return;
+      }
+    }
 
 
     const fetchLastSubmission = async () => {
@@ -60,7 +83,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
       }
 
     }
-    fetchData();
+    fetchQuestion();
     fetchLastSubmission();
   }, [params.id]);
 
@@ -91,11 +114,18 @@ export default function EditorPage({params}: {params: {id: string}}) {
     setCode(newCode);
   };
 
-  const {name, description, testCases, competitionId} = question;
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  if (userSubmissions.length == 0) {
+    return (
+      <div className="h-100">
+        <FullPageLoader></FullPageLoader>
+      </div>
+    )
+  }
 
   return (
     <CompetitionProtected compId={competitionId}>
