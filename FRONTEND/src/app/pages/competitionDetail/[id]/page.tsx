@@ -103,12 +103,8 @@ export default function Page({params}: {params: {id: string}}) {
           {userJoined ? (
             <div className="btn disabled btn-dark align-self-end text-white fs-3">Joined</div>
           ) : (
-            <div>
-              {new Date(competition.startDate) < new Date() && (
 
-                <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3">Join</button>
-              )}
-            </div>
+            <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3">Join</button>
           )}
         </div>
       </div>

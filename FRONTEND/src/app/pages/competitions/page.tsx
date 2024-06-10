@@ -32,7 +32,7 @@ export default function Page() {
         COMPETITIONS
       </h1>
       <div className="d-flex flex-column justify-content-center align-items-center flex-wrap">
-        <div className="d-flex flex-row justify-content-around w-100 flex-wrap vh-100">
+        <div className="d-flex flex-row justify-content-around w-100 flex-wrap min-vh-100">
           <div className="col-md-4 col-12">
             <div className="text-white fs-2 text-center">
               Ongoing Competitions
@@ -69,6 +69,7 @@ export default function Page() {
                     key={competition.id || index}
                     competition={competition}
                   />
+
                 ))}
               </div>
             )}
