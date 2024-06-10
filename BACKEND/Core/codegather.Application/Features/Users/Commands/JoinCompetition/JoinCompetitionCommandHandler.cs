@@ -3,6 +3,7 @@ using codegather.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
 
@@ -19,7 +20,11 @@ public class JoinCompetitionCommandHandler : BaseHandler, IRequestHandler<JoinCo
 
     public async Task<Unit> Handle(JoinCompetitionCommandRequest request, CancellationToken cancellationToken)
     {
-        var competition = await unitOfWork.GetReadRepository<Competition>().GetAsync(predicate: t => t.Id == request.CompetitionId && !t.IsDeleted, enableTracking: true);
+        var competition = await unitOfWork.GetReadRepository<Competition>()
+            .GetAsync(predicate: t => t.Id == request.CompetitionId && !t.IsDeleted,
+            include: x => x.Include(x => x.UserCompetitions)
+                .ThenInclude(uc => uc.User),
+            enableTracking: true);
 
         await userRules.CannotJoinEndedCompetition(competition);
 
@@ -27,8 +32,20 @@ public class JoinCompetitionCommandHandler : BaseHandler, IRequestHandler<JoinCo
             throw new Exception("Competition not found");
 
         var user = await userManager.FindByIdAsync(request.UserId.ToString()) ?? throw new Exception("User not found");
-        if (!user.Competitions.Contains(competition))
-            user.Competitions.Add(competition);
+
+
+
+        if (!competition.UserCompetitions.Any(uc => uc.UserId == user.Id))
+        {
+            competition.UserCompetitions.Add(new UserCompetition
+            {
+                Id = Guid.NewGuid(),
+                CompetitionId = competition.Id,
+                UserId = user.Id,
+                Score = 0
+            });
+        }
+
 
         await unitOfWork.SaveAsync();
         return Unit.Value;

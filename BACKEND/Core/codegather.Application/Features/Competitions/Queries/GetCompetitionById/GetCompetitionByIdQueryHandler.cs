@@ -14,15 +14,20 @@ public class GetCompetitionByIdQueryHandler : BaseHandler, IRequestHandler<GetCo
 
     public async Task<GetCompetitionByIdQueryResponse> Handle(GetCompetitionByIdQueryRequest request, CancellationToken cancellationToken)
     {
-        var competition = await unitOfWork.GetReadRepository<Competition>().GetAsync(predicate: t => t.Id == request.Id && !t.IsDeleted
-        , include: x => x.Include(x => x.JoinedUsers).Include(x => x.Questions.Where(q => !q.IsDeleted))
-        , enableTracking: false) ?? throw new Exception("Competition not found");
+        var competition = await unitOfWork.GetReadRepository<Competition>().GetAsync(
+               predicate: t => t.Id == request.Id && !t.IsDeleted,
+               include: x => x
+                   .Include(x => x.UserCompetitions)
+                       .ThenInclude(uc => uc.User)
+                   .Include(x => x.Questions.Where(q => !q.IsDeleted)),
+               enableTracking: false
+           ) ?? throw new Exception("Competition not found");
 
         return new GetCompetitionByIdQueryResponse()
         {
             Competition = mapper.Map<CompetitionDto, Competition>(competition),
             Questions = competition.Questions.Select(x => mapper.Map<QuestionDto, Question>(x)).ToList(),
-            JoinedUsers = competition.JoinedUsers.Select(x => mapper.Map<UserDto, User>(x)).ToList(),
+            JoinedUsers = competition.UserCompetitions.Select(uc => mapper.Map<UserDto, User>(uc.User)).ToList(),
         };
     }
 }

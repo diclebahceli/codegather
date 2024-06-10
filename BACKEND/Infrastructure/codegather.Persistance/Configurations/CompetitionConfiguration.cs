@@ -11,7 +11,5 @@ public class CompetitionConfiguration : IEntityTypeConfiguration<Competition>
         builder.HasMany(c => c.Questions)
         .WithOne(q => q.Competition)
         .HasForeignKey(q => q.CompetitionId);
-
-
     }
 }

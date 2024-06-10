@@ -17,21 +17,6 @@ namespace codegather.Persistance.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
-            modelBuilder.Entity("CompetitionUser", b =>
-                {
-                    b.Property<Guid>("CompetitionsId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("JoinedUsersId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CompetitionsId", "JoinedUsersId");
-
-                    b.HasIndex("JoinedUsersId");
-
-                    b.ToTable("CompetitionUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
@@ -392,19 +377,34 @@ namespace codegather.Persistance.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CompetitionUser", b =>
+            modelBuilder.Entity("codegather.Domain.UserCompetition", b =>
                 {
-                    b.HasOne("codegather.Domain.Competition", null)
-                        .WithMany()
-                        .HasForeignKey("CompetitionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
 
-                    b.HasOne("codegather.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("JoinedUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("CompetitionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("UserId", "CompetitionId");
+
+                    b.HasIndex("CompetitionId");
+
+                    b.ToTable("UserCompetition");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -499,9 +499,30 @@ namespace codegather.Persistance.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("codegather.Domain.UserCompetition", b =>
+                {
+                    b.HasOne("codegather.Domain.Competition", "Competition")
+                        .WithMany("UserCompetitions")
+                        .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("codegather.Domain.User", "User")
+                        .WithMany("UserCompetitions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Competition");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("codegather.Domain.Competition", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("UserCompetitions");
                 });
 
             modelBuilder.Entity("codegather.Domain.Question", b =>
@@ -514,6 +535,8 @@ namespace codegather.Persistance.Migrations
             modelBuilder.Entity("codegather.Domain.User", b =>
                 {
                     b.Navigation("Submissions");
+
+                    b.Navigation("UserCompetitions");
                 });
 #pragma warning restore 612, 618
         }

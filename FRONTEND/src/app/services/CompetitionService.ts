@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {Competition} from "../models/Competition";
 import {BACKEND_URL} from "../utils/config";
 import {ExtractErrorMessage} from "./AuthService";
+import {UserScore} from "../models/UserScore";
 
 const competitionEndPoint = BACKEND_URL + "/competition";
 
@@ -36,6 +37,26 @@ export async function GetCompetitionById(competitionId: string):
     return {data: null, error: ExtractErrorMessage(error)};
   }
 }
+
+export async function GetUserScores(competitionId: string):
+  Promise<{data: UserScore[] | null, error: string | null}> {
+  try {
+    const response = await axios.get(`${competitionEndPoint}/GetScores?CompetitionId=${competitionId}`);
+
+    if (response.status != 200) {
+      return {data: null, error: ExtractErrorMessage(response)};
+    }
+    const userScores = response.data.userScores as UserScore[];
+    userScores.forEach((userScore) => {
+      userScore.score = Number(userScore.score.toFixed(0));
+    })
+    return {data: userScores, error: null};
+  }
+  catch (error: Error | any) {
+    return {data: null, error: ExtractErrorMessage(error)};
+  }
+}
+
 export async function CreateCompetition(competition: Competition): Promise<{success: boolean; error: string | null}> {
   const {title, description, startDate, endDate} = competition;
   try {
