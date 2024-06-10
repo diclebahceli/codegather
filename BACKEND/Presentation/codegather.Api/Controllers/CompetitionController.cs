@@ -37,6 +37,13 @@ public class CompetitionController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetScores([FromQuery]GetUserScoresQueryRequest request)
+    {
+        var response = await mediator.Send(request);
+        return Ok(response);
+    }
+
 
     [HttpPost]
     //[Authorize(Roles = "Admin,Manager")]
