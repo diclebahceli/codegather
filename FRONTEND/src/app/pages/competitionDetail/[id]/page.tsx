@@ -9,6 +9,7 @@ import Leaderboard from "../components/Leaderboard";
 import {JoinCompetition, GetUserById} from "@/app/services/UserService";
 import toast from "react-hot-toast";
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
+import {format, parseISO} from "date-fns";
 
 export default function Page({params}: {params: {id: string}}) {
 
@@ -31,10 +32,15 @@ export default function Page({params}: {params: {id: string}}) {
     const fetchdata = async () => {
       var result = await GetCompetitionById(params.id);
       if (result.error) {
-        router.push("/pages/ongoingCompetitions")
+        router.push("/pages/competitions")
         return;
       } else {
         if (result.data) {
+          if (!result.data.isPublic) {
+            console.log("Competition has not started yet")
+            router.push("/pages/competitions")
+            return;
+          }
           setCompetition(result.data);
         }
       }
@@ -75,18 +81,34 @@ export default function Page({params}: {params: {id: string}}) {
   };
 
 
+  const getDate = (date: string) => {
+    if (!date) return;
+    return format(parseISO(date), 'PPpp')
+  }
+
   const userJoined = joinedCompetitions.some((comp) => comp.id === competition?.id);
 
   return (
     <div className="h-100 bg-dark">
       <div className="w-100 bg-green p-3">
         <div className="container d-flex flex-column">
-          <h1 className="fs-l text-white">{competition?.title}</h1>
-          <div className="fs-4 my-4 text-white w-75">{competition?.description}</div>
+          <div className=" d-flex flex-row justify-content-between">
+            <h1 className="fs-l text-white">{competition?.title}</h1>
+            <div className="d-flex flex-column justify-content-center align-items-center p-3 ">
+              <div className="text-white fs-5 fst-italic">Starts: {getDate(competition.startDate)}</div>
+              <div className="text-white fs-5 fst-italic">Ends: {getDate(competition.endDate)}</div>
+            </div>
+          </div>
+          <div className="fs-4 my-4 text-white w-75 text-break">{competition?.description}</div>
           {userJoined ? (
             <div className="btn disabled btn-dark align-self-end text-white fs-3">Joined</div>
           ) : (
-            <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3">Join</button>
+            <div>
+              {new Date(competition.startDate) < new Date() && (
+
+                <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3">Join</button>
+              )}
+            </div>
           )}
         </div>
       </div>
