@@ -17,17 +17,6 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
     public async Task<SubmitCommandResponse> Handle(SubmitCommandRequest request, CancellationToken cancellationToken)
     {
-        float calculateScore(float time, float memory)
-        {
-            float timeValue = 1 / time;
-            float memoryValue = 1 / memory;
-
-            float finalScore = 2 * (timeValue + memoryValue);
-
-            return finalScore;
-
-
-        };
 
         Question question = await unitOfWork.GetReadRepository<Question>()
            .GetAsync(predicate: x => x.Id == request.QuestionId && !x.IsDeleted
@@ -69,6 +58,11 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         string errMessage = "";
         foreach (var res in result)
         {
+            if(res.stderr == null && res.stdout == null)
+            {
+                errMessage = "Time or memory limit exceeded";
+                break;
+            }
             if (res.stderr != null && res.stderr.Trim() != "")
             {
                 errMessage = res.stderr;
@@ -89,6 +83,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
             avgCompileTime += float.Parse(res.time) / testCases.Length;
             avgMemory += float.Parse(res.memory) / testCases.Length;
             i++;
+
         }
 
         float score = calculateScore(avgCompileTime, avgMemory);
@@ -96,6 +91,14 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         if (successCount < testCases.Length)
             score = 0;
 
+        var userCompetition = await unitOfWork.GetReadRepository<UserCompetition>()
+            .GetAsync(predicate: x => x.UserId == request.UserId && x.CompetitionId == question.CompetitionId, enableTracking: true)
+            ?? throw new Exception("User not found");
+
+        if (userCompetition.Score < score)
+        {
+            userCompetition.Score = score;
+        }
 
         var submission = new Submission
         {
@@ -112,6 +115,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         await unitOfWork.GetWriteRepository<Submission>().AddAsync(submission);
         await unitOfWork.SaveAsync();
 
+
         return new SubmitCommandResponse
         {
             Submission = mapper.Map<SubmissionDto, Submission>(submission),
@@ -120,5 +124,14 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
 
     }
 
+    float calculateScore(float time, float memory)
+    {
+        float timeValue = 1 / time;
+        float memoryValue = 1 / memory;
 
+        float finalScore = 2 * (timeValue + memoryValue);
+
+        return finalScore;
+    }
 }
+
