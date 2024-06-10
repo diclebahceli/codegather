@@ -44,17 +44,17 @@ export default function Navbar() {
             <Link
               href={"/pages/admin/dashboard"}
               scroll={false}
-              className="text-white text-decoration-none mx-2 fs-5"
+              className="text-white text-decoration-none mx-4 fs-5"
             >
               Admin
             </Link>
           ) : null}
           <Link
-            href={`/pages/ongoingCompetitions`}
+            href={`/pages/competitions`}
             scroll={false}
             className="text-white text-decoration-none mx-4 fs-5"
           >
-            Ongoing Competitions
+            Competitions
           </Link>
           <Link
             href={`/pages/myCompetitions`}

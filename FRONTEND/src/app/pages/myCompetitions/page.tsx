@@ -40,9 +40,6 @@ export default function MyCompetitions() {
             }
           });
 
-          console.log("AAAAAAAAAAAAAAAA", currentCompetitions);
-
-          console.log("BBBBBBBBBBBBBBBBB", passedCompetitions);
         }
       }
     };

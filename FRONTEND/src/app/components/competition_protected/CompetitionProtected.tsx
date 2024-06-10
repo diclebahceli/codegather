@@ -14,7 +14,7 @@ export default function CompetitionProtected({children, compId}: Readonly<{child
   useEffect(() => {
     if (compId != "" && context.user.id !== "") {
       if (!context.user.competitions?.some((comp) => comp.id === compId)) {
-        router.replace("/pages/ongoingCompetitions", {scroll: false});
+        router.replace("/pages/competitions", {scroll: false});
         return;
       }
       setAuthorized(true);
