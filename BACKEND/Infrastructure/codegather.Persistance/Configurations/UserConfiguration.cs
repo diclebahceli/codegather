@@ -11,10 +11,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(u => u.Submissions)
             .WithOne(s => s.User)
             .HasForeignKey(s => s.UserId);
-
-
-        builder.HasMany(u => u.Competitions)
-            .WithMany(c => c.JoinedUsers); ;
     }
 
 }
