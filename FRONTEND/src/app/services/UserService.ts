@@ -1,13 +1,13 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {BACKEND_URL} from "../utils/config";
-import {UserDto} from "../models/UserDto";
+import {User} from "../models/User";
 import {ExtractErrorMessage} from "./AuthService";
 
 
 const userEndPoint = BACKEND_URL + "/user";
 
 
-export async function getAllUsers(): Promise<{data: UserDto[] | null; error: string | null}> {
+export async function GetAllUsers(): Promise<{data: User[] | null; error: string | null}> {
   try {
     const response = await axios.get(`${userEndPoint}/getAll`);
     if (response.status != 200) {
@@ -15,7 +15,7 @@ export async function getAllUsers(): Promise<{data: UserDto[] | null; error: str
       console.log(errors);
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    return {data: response.data.users as UserDto[], error: null};
+    return {data: response.data.users as User[], error: null};
 
   } catch (error: Error | any) {
     return {data: null, error: ExtractErrorMessage(error)};
@@ -23,7 +23,7 @@ export async function getAllUsers(): Promise<{data: UserDto[] | null; error: str
 }
 
 
-export async function getUserById(userId: string): Promise<{data: UserDto | null; error: string | null}> {
+export async function GetUserById(userId: string): Promise<{data: User | null; error: string | null}> {
   try {
 
     const response = await axios.get(`${userEndPoint}/getById?Id=${userId}`);
@@ -32,7 +32,7 @@ export async function getUserById(userId: string): Promise<{data: UserDto | null
       const error = response.data.Errors;
       return {data: null, error: ExtractErrorMessage(response)};
     }
-    const usr = response.data.user as UserDto;
+    const usr = response.data.user as User;
     usr.competitions = response.data.competitions;
     usr.submissions = response.data.submissions;
 
@@ -46,7 +46,7 @@ export async function getUserById(userId: string): Promise<{data: UserDto | null
 
 }
 
-export async function GetUserByUsername(username: string): Promise<{data: UserDto | null; error: string | null}> {
+export async function GetUserByUsername(username: string): Promise<{data: User | null; error: string | null}> {
 
   try {
     const response = await axios.get(`${userEndPoint}/getByUsername?UserName=${username}`);
@@ -55,7 +55,7 @@ export async function GetUserByUsername(username: string): Promise<{data: UserDt
       return {data: null, error: ExtractErrorMessage(response)};
     }
 
-    const usr = response.data.user as UserDto;
+    const usr = response.data.user as User;
     usr.competitions = response.data.competitions;
     usr.submissions = response.data.submissions;
     return {data: usr, error: null};
@@ -66,7 +66,7 @@ export async function GetUserByUsername(username: string): Promise<{data: UserDt
 
 
 
-export async function updateUser(userDto: UserDto): Promise<{success: boolean; error: string | null}> {
+export async function UpdateUser(userDto: User): Promise<{success: boolean; error: string | null}> {
   const {id, userName, email, profileImage} = userDto;
   try {
     const response = await axios.put(`${userEndPoint}/updateUser/`, {id, userName, email, profileImage});
@@ -81,7 +81,7 @@ export async function updateUser(userDto: UserDto): Promise<{success: boolean; e
 }
 
 
-export async function deleteUser(userId: string): Promise<{success: boolean; error: string | null}> {
+export async function DeleteUser(userId: string): Promise<{success: boolean; error: string | null}> {
   try {
     const response = await axios.delete(`${userEndPoint}/deleteUser?Id=${userId}`);
     if (response.status != 200) {
@@ -150,16 +150,16 @@ export async function JoinCompetition(userId: string, competitionId: string): Pr
 }
 
 
-export async function GetUserByUserName(userName: string): Promise<{data: UserDto | null; error: string | null}> {
+export async function GetUserByUserName(userName: string): Promise<{data: User | null; error: string | null}> {
   try {
     const response = await axios.get(`${userEndPoint}/getByUserName?userName=${userName}`);
     if (response.status != 200) {
       const error = response.data.Errors;
       return {data: null, error: error[0].message};
     }
-    const user = response.data.user as UserDto;
+    const user = response.data.user as User;
     user.competitions = response.data.competitions;
-    return {data: response.data.user as UserDto, error: null};
+    return {data: response.data.user as User, error: null};
   } catch (error: Error | any) {
     return {data: null, error: error.message};
   }

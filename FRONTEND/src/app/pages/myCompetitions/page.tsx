@@ -2,7 +2,7 @@
 import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import { Competition } from "@/app/models/Competition";
 import { GetAllCompetitions } from "@/app/services/CompetitionService";
-import { getUserById } from "@/app/services/UserService";
+import { GetUserById } from "@/app/services/UserService";
 import { getWithExpiry } from "@/app/utils/StorageGetter";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ export default function MyCompetitions() {
   useEffect(() => {
     const fetchJoinedCompetitions = async () => {
       // use client
-      const result = await getUserById(getWithExpiry("userId") || "");
+      const result = await GetUserById(getWithExpiry("userId") || "");
       const competitions = result.data?.competitions;
 
       if (result.error) {
@@ -40,9 +40,6 @@ export default function MyCompetitions() {
             }
           });
 
-          console.log("AAAAAAAAAAAAAAAA", currentCompetitions);
-
-          console.log("BBBBBBBBBBBBBBBBB", passedCompetitions);
         }
       }
     };

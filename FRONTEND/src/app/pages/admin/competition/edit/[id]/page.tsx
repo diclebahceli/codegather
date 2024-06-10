@@ -1,31 +1,24 @@
 "use client";
 import MyModal from "@/app/components/delete_modal/MyModal";
-import { Competition } from "@/app/models/Competition";
+import {Competition, DefaultCompetition} from "@/app/models/Competition";
 import {
   GetCompetitionById,
   UpdateCompetition,
 } from "@/app/services/CompetitionService";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import { FormGroup, Input, Label } from "reactstrap";
+import {FormGroup, Input, Label} from "reactstrap";
 import QuestionList from "../components/question_list/QuestionList";
 
-const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
+const EditCompetitionPage = ({params}: {params: {id: string}}) => {
   const router = useRouter();
-  const [competitionData, setCompetitionData] = useState<Competition>({
-    description: "",
-    endDate: "",
-    id: "",
-    startDate: "",
-    title: "",
-    isPublic: false,
-  });
+  const [competitionData, setCompetitionData] = useState<Competition>(DefaultCompetition);
 
   const [show, setShow] = useState(false);
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setCompetitionData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -148,9 +141,10 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
                   <Input
                     type="switch"
                     checked={competitionData.isPublic}
-                    onClick={() => {
+                    onChange={() => {
                       togglePublic();
                       handleChangeVisibility();
+
                     }}
                   />
                   <Label className="text-white" check>
@@ -169,7 +163,7 @@ const EditCompetitionPage = ({ params }: { params: { id: string } }) => {
                     onClick={() => {
                       router.push(
                         `/pages/admin/question/create/${competitionData.id}`,
-                        { scroll: false }
+                        {scroll: false}
                       );
                     }}
                     className="btn btn-green mt-3 text-white ms-auto"

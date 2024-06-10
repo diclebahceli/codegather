@@ -4,10 +4,10 @@ import AceEditorComponent from "@/app/components/ace_editor/AceEditor";
 import {GetQuestionById} from "@/app/services/QuestionService";
 import Card from "@/app/components/card/Card";
 import toast from "react-hot-toast";
-import {Question} from "@/app/models/Question";
+import {DefaultQuestion, Question} from "@/app/models/Question";
 import CompetitionProtected from "@/app/components/competition_protected/CompetitionProtected";
 import ResultsSection from "../components/ResultSection";
-import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Spinner} from "reactstrap";
+import {Button, Dropdown, DropdownMenu, DropdownToggle, Spinner} from "reactstrap";
 import useCodeExecution from "@/app/hooks/useCodeExecution";
 import {Submission} from "@/app/models/Submission";
 import {GetLastSubmissionForQuestion, GetUsersSubmissionsForQuestion} from "@/app/services/SubmissionService";
@@ -15,15 +15,7 @@ import {getWithExpiry} from "@/app/utils/StorageGetter";
 import YourSubmissionOption from "../components/YourSubmissionOption";
 
 export default function EditorPage({params}: {params: {id: string}}) {
-  const [question, setQuestion] = useState<Question>({
-    name: "",
-    description: "",
-    starterCode: "",
-    id: "",
-    testCases: [],
-    submissions: [],
-    competitionId: "",
-  });
+  const [question, setQuestion] = useState<Question>(DefaultQuestion);
 
 
   const [userSubmissions, setUserSubmissions] = useState<Submission[]>([]);

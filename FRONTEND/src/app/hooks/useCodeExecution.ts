@@ -2,48 +2,20 @@ import {useState} from "react";
 import {RunCode, SubmitCode} from "@/app/services/SubmissionService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import toast from "react-hot-toast";
-import {RunResult} from "@/app/models/RunResult";
-import {Submission} from "../models/Submission";
+import {DefaultRunResult, RunResult} from "@/app/models/RunResult";
+import {DefaultSubmission, Submission} from "../models/Submission";
 import {RunRequest} from "../models/RunRequest";
 
 const useCodeExecution = (questionId: string, code: string) => {
-  const [result, setResult] = useState<RunResult>({
-    stdout: "",
-    stderr: "",
-    time: "",
-    memory: "",
-    token: "",
-  });
+  const [result, setResult] = useState<RunResult>(DefaultRunResult);
 
-  const [submission, setSubmission] = useState<Submission>({
-    id: "",
-    questionId: "",
-    userId: "",
-    submissionTime: "",
-    code: "",
-    successCount: "",
-    compileTime: 0,
-    memoryUsage: 0,
-    score: 0,
-    errorFree: true,
-  });
+  const [submission, setSubmission] = useState<Submission>(DefaultSubmission);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const resetObjcets = () => {
-    setResult({stdout: "", stderr: "", time: "", memory: "", token: ""});
-    setSubmission({
-      id: "",
-      questionId: "",
-      userId: "",
-      submissionTime: "",
-      code: "",
-      successCount: "",
-      compileTime: 0,
-      memoryUsage: 0,
-      score: 0,
-      errorFree: true,
-    });
+    setResult(DefaultRunResult);
+    setSubmission(DefaultSubmission);
   }
 
   const handleRun = async () => {

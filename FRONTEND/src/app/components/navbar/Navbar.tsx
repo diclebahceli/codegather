@@ -1,9 +1,9 @@
 "use client";
 
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
-import {UserDto} from "@/app/models/UserDto";
+import {User} from "@/app/models/User";
 import {Logout} from "@/app/services/AuthService";
-import {GetUserRoles, getUserById} from "@/app/services/UserService";
+import {GetUserRoles, GetUserById} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 
 import Link from "next/link";
@@ -44,17 +44,17 @@ export default function Navbar() {
             <Link
               href={"/pages/admin/dashboard"}
               scroll={false}
-              className="text-white text-decoration-none mx-2 fs-5"
+              className="text-white text-decoration-none mx-4 fs-5"
             >
               Admin
             </Link>
           ) : null}
           <Link
-            href={`/pages/ongoingCompetitions`}
+            href={`/pages/competitions`}
             scroll={false}
             className="text-white text-decoration-none mx-4 fs-5"
           >
-            Ongoing Competitions
+            Competitions
           </Link>
           <Link
             href={`/pages/myCompetitions`}

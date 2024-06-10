@@ -10,3 +10,13 @@ export interface Question {
     testCases: TestCase[];
     submissions: Submission[];
 }
+
+export const DefaultQuestion: Question = {
+    id: "",
+    name: "",
+    competitionId: "",
+    description: "",
+    starterCode: "",
+    testCases: [],
+    submissions: [],
+}

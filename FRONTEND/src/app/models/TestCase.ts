@@ -4,3 +4,10 @@ export interface TestCase {
   output: string,
   questionId: string,
 }
+
+export const DefaultTestCase: TestCase = {
+  id: "",
+  input: "",
+  output: "",
+  questionId: "",
+}

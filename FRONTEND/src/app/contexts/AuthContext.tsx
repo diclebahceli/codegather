@@ -1,12 +1,12 @@
 // authContext.tsx
 "use client";
-import React, { createContext, useState } from "react";
-import { UserDto } from "../models/UserDto";
+import React, { createContext, useContext, useState } from "react";
+import { User } from "../models/User";
 
 export interface AuthContextType {
-  user: UserDto;
+  user: User;
   roles: string[];
-  setTheUser: (user: UserDto) => void;
+  setTheUser: (user: User) => void;
   setTheRoles: (roles: string[]) => void;
   logout: () => void;
 }
@@ -17,14 +17,14 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [roles, setRoles] = useState<string[]>([]);
-  const [user, setUser] = useState<UserDto>({
+  const [user, setUser] = useState<User>({
     email: "",
     id: "",
     userName: "",
     profileImage: "",
   });
 
-  const setTheUser = (user: UserDto) => {
+  const setTheUser = (user: User) => {
     setUser(user);
   };
 
@@ -45,3 +45,4 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     </AuthContext.Provider>
   );
 };
+

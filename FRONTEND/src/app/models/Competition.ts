@@ -1,6 +1,6 @@
 
 import {Question} from "./Question";
-import {UserDto} from "./UserDto";
+import {User} from "./User";
 
 export interface Competition {
   id: string;
@@ -9,6 +9,15 @@ export interface Competition {
   startDate: string;
   endDate: string;
   questions?: Question[];
-  joinedUsers?: UserDto[];
+  joinedUsers?: User[];
   isPublic: boolean;
 }
+
+export const DefaultCompetition: Competition = {
+  id: "",
+  title: "",
+  description: "",
+  startDate: "",
+  endDate: "",
+  isPublic: false
+};

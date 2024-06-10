@@ -2,22 +2,18 @@
 import AceEditorComponent from "@/app/components/ace_editor/AceEditor";
 import TestCaseForm from "../../components/test_case_form/TestCaseForm";
 import {useEffect, useState} from "react";
-import {Question} from "@/app/models/Question";
+import {DefaultQuestion, Question} from "@/app/models/Question";
 import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import {GetQuestionById, UpdateQuestion} from "@/app/services/QuestionService";
-import {Competition} from "@/app/models/Competition";
+import {Competition, DefaultCompetition} from "@/app/models/Competition";
 import {GetCompetitionById} from "@/app/services/CompetitionService";
 
 export default function Page({params}: {params: {id: string}}) {
 
-  const [question, setQuestion] = useState<Question>(
-    {competitionId: "", description: "", id: "", name: "", starterCode: "", testCases: [], submissions: []}
-  );
+  const [question, setQuestion] = useState<Question>(DefaultQuestion);
   const router = useRouter();
-  const [competition, setCompetition] = useState<Competition>(
-    {description: "", endDate: "", id: "", startDate: "", title: "", isPublic: false}
-  );
+  const [competition, setCompetition] = useState<Competition>(DefaultCompetition);
 
 
   const handleInputChange = (e: any) => {

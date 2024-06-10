@@ -6,3 +6,11 @@ export interface RunResult{
   memory: string;
   token: string;
 }
+
+export const DefaultRunResult: RunResult = {
+  stdout: "",
+  stderr: "",
+  time: "",
+  memory: "",
+  token: "",
+}

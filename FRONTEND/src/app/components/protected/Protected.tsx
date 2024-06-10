@@ -4,10 +4,9 @@ import {usePathname, useRouter} from "next/navigation";
 import {useContext, useEffect, useState} from "react";
 import FullPageLoader from "../full_page_loader/FullPageLoader";
 import RoleProtection, {RoleRouteConstraint} from "../role_protection/RoleProtection";
-import {UserDto} from "@/app/models/UserDto";
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
 import toast from "react-hot-toast";
-import {GetUserRoles, getUserById} from "@/app/services/UserService";
+import {GetUserRoles, GetUserById} from "@/app/services/UserService";
 
 export default function Protected({children, protectedRoutes}:
   Readonly<{children: React.ReactNode, protectedRoutes: string[]}>) {
@@ -51,7 +50,7 @@ export default function Protected({children, protectedRoutes}:
     }
     // fetch user
     try {
-      const user = await getUserById(id);
+      const user = await GetUserById(id);
       if (user.error || !user.data) {
         toast.error(user.error);
         return;

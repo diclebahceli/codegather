@@ -26,9 +26,10 @@ namespace codegather.Application
             User user = await _userManager.FindByNameAsync(request.UserName)
                 ?? throw new Exception("User not found");
 
+
             var competitions = await unitOfWork.GetReadRepository<Competition>().GetAllAsync(
-                predicate: c => c.JoinedUsers.Any(u => u.Id == user.Id),
-                enableTracking: false);
+               predicate: c => !c.IsDeleted && c.JoinedUsers.Any(u => u.Id == user.Id),
+               enableTracking: false);
 
             var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync(
                 predicate: s => s.UserId == user.Id,
