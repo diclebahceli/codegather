@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const protectedRoutes = [
-    "/pages/ongoingCompetitions",
+    "/pages/competitions",
     "/pages/myCompetitions",
     "/pages/question"
   ];
