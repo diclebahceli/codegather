@@ -109,14 +109,14 @@ export default function Page({params}: {params: {id: string}}) {
         </div>
       </div>
 
-      <div className="d-flex flex-row justify-content-around">
+      <div className="d-flex flex-row justify-content-around align-items-start">
         <div className="mt-5 d-flex flex-column col-3 align-self-center">
           <h1 className="text-white">Questions</h1>
           {competition?.questions?.map((question, index) => (
             <QuestionCard key={question.id || index} question={question} canSolve={userJoined} />
           ))}
         </div>
-        <Leaderboard users={competition?.joinedUsers || []} comp={competition}></Leaderboard>
+        <Leaderboard  comp={competition}></Leaderboard>
 
       </div>
     </div>
