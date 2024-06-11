@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import image7 from "./assets/12.jpg";
 import compile from "./assets/compile1.jpg";
@@ -6,6 +8,8 @@ import develop from "./assets/develop.jpg";
 import logo from "./assets/logop.png";
 
 import {Poppins} from "next/font/google";
+import {StyleSheet, css} from "aphrodite";
+import {slideInLeft, slideInRight} from "react-animations";
 
 const poppins = Poppins({
   weight: '400',
@@ -15,6 +19,19 @@ const poppins = Poppins({
 
 export default function Home() {
 
+  const styles = StyleSheet.create({
+    hover: {
+      transition: 'transform 0.4s ease-in-out',
+      ':hover': {
+        transform: 'rotate(5deg)'
+      }
+    },
+    slideIn: {
+      animationName: slideInRight,
+      animationDuration: '1s',
+      animationTimingFunction: "cubic-bezier(0.2, 0.82, 0.165, 1)",
+    }
+  })
 
   return (
     <div className="d-flex flex-column bg-white h-100 bg-darker">
@@ -29,9 +46,8 @@ export default function Home() {
 
         </Image>
       </div>
-
-      <div className="d-flex flex-row justify-content-start align-items-center mb-5" style={{height: "50em"}}>
-        <div className="d-flex flex-column col-6 ms-auto">
+      <div className="d-flex flex-row justify-content-start align-items-center mb-5 overflow-hidden" style={{height: "50em"}}>
+        <div className={`d-flex flex-column col-6 ms-auto ${css(styles.slideIn)}`}>
           <p className={`fs-m z-1 text-white fst-italic w-100 fw-bold text-center ${poppins.className}`}>
             Where code meets competition
           </p>
@@ -48,7 +64,7 @@ export default function Home() {
         </h1>
         <hr className="w-50 border border-1 border-white opacity-75 mb-5" />
         <div className="d-flex flex-row justify-content-around mb-5 flex-wrap w-100">
-          <div className="card col-10 col-md-3 my-3">
+          <div className={`card col-10 col-md-3 my-3 border border-2 border-white ${css(styles.hover)}`}>
             <div className=" position-relative overflow-hidden w-100" style={{height: "15em"}} >
               <Image
                 src={compile}
@@ -58,11 +74,11 @@ export default function Home() {
                 objectFit="cover"
               ></Image>
             </div>
-            <div className="card-body">
-              <h5 className="card-title text-center">Online Compilation</h5>
+            <div className="card-body bg-darker">
+              <h5 className={`card-title text-center text-white fw-bold ${poppins.className} `}>Online Compilation</h5>
             </div>
           </div>
-          <div className="card col-10 col-md-3 my-3">
+          <div className={`card col-10 col-md-3 my-3 border border-2 border-white ${css(styles.hover)}`}>
             <div className=" position-relative overflow-hidden w-100" style={{height: "15em"}} >
               <Image
                 src={competition}
@@ -72,12 +88,14 @@ export default function Home() {
                 objectFit="cover"
               ></Image>
             </div>
-            <div className="card-body">
-              <h5 className="card-title text-center">Friendly Competition</h5>
+            <div className="card-body bg-darker">
+              <h5 className={`text-white card-title text-center z-1 fw-bold ${poppins.className}`}>
+                Friendly Competition
+              </h5>
             </div>
           </div>
 
-          <div className="card col-10 col-md-3 my-3">
+          <div className={`card col-10 col-md-3 my-3 border border-2 border-white ${css(styles.hover)}`}>
             <div className=" position-relative overflow-hidden w-100" style={{height: "15em"}} >
               <Image
                 src={develop}
@@ -87,14 +105,16 @@ export default function Home() {
                 objectFit="cover"
               ></Image>
             </div>
-            <div className="card-body">
-              <h5 className="card-title text-center">Self Development</h5>
+            <div className="card-body bg-darker">
+              <h5 className={`text-white text-center card-title z-1 fw-bold ${poppins.className}`}>
+                Self Development
+              </h5>
             </div>
           </div>
         </div>
 
         <div className="" style={{height: "12em"}}></div>
-        <h1 className={`text-white ${poppins.className} z-1 my-5`}>
+        <h1 className={`text-white  ${poppins.className} z-1 my-2`}>
           About Us
         </h1>
         <hr className="w-50 border border-1 border-white opacity-75 mb-5" />
