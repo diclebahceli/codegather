@@ -10,6 +10,15 @@ import {JoinCompetition, GetUserById} from "@/app/services/UserService";
 import toast from "react-hot-toast";
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
 import {format, parseISO} from "date-fns";
+import {Poppins} from "next/font/google";
+import Image from "next/image";
+
+import image from "@/app/assets/11.jpg";
+
+const poppins = Poppins({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 export default function Page({params}: {params: {id: string}}) {
 
@@ -91,21 +100,29 @@ export default function Page({params}: {params: {id: string}}) {
 
   return (
     <div className="h-100 bg-dark">
-      <div className="w-100 bg-green p-3">
+      <div className="w-100 p-3 position-relative pt-5">
+        <Image
+          src={image}
+          fill
+          alt=""
+          objectFit="cover"
+        >
+        </Image>
         <div className="container d-flex flex-column">
-          <div className=" d-flex flex-row justify-content-between">
-            <h1 className="fs-l text-white">{competition?.title}</h1>
+          <div className=" d-flex flex-row justify-content-between z-1">
+
+            <h1 className={`fs-l text-white ${poppins.className}`}>{competition?.title}</h1>
             <div className="d-flex flex-column justify-content-center align-items-center p-3 ">
               <div className="text-white fs-5 fst-italic">Starts: {getDate(competition.startDate)}</div>
               <div className="text-white fs-5 fst-italic">Ends: {getDate(competition.endDate)}</div>
             </div>
           </div>
-          <div className="fs-4 my-4 text-white w-75 text-break">{competition?.description}</div>
+          <div className="fs-4 my-4 text-white w-75 text-break z-1">{competition?.description}</div>
           {userJoined ? (
-            <div className="btn disabled btn-dark align-self-end text-white fs-3">Joined</div>
+            <div className="btn disabled btn-dark align-self-end text-white fs-3 z-1">Joined</div>
           ) : (
 
-            <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3">Join</button>
+            <button onClick={() => handleJoin(competition.id)} className="btn btn-dark align-self-end text-white fs-3 z-1">Join</button>
           )}
         </div>
       </div>
