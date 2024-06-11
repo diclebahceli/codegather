@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "ace-builds": "^1.32.7",
+    "aphrodite": "^2.4.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.2",
     "date-fns": "^3.6.0",
@@ -18,6 +19,7 @@
     "node-sass": "^9.0.0",
     "react": "^18",
     "react-ace": "^10.1.0",
+    "react-animations": "^1.0.0",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "reactstrap": "^9.2.2"
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-animations": "^1.0.3",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
