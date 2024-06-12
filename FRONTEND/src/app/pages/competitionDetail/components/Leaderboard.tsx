@@ -42,7 +42,7 @@ export default function Leaderboard({comp}: {comp: Competition | undefined}) {
             <div className="card-body d-flex flex-column align-items-start">
               {orderedScores.map((user, index) => (
                 <div className=" d-flex flex-row w-100">
-                  <div key={index} className="card-title fs-4 text-white"> {index + 1}. {user.userName}</div>
+                  <div key={index} className="card-title fs-4 text-white text-break text-start"> {index + 1}. {user.userName}</div>
                   <div className="flex-grow-1"> </div>
                   <div className="fs-5 text-white"> {user.score}</div>
                 </div>
