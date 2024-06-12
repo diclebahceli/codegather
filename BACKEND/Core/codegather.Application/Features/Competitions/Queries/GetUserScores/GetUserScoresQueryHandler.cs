@@ -22,7 +22,9 @@ public class GetUserScoresQueryHandler : BaseHandler, IRequestHandler<GetUserSco
         var userScores = usercomps.Select(uc => new UserScoreDto
         {
             UserName = uc.User.UserName,
-            Score = uc.Score
+            Score = uc.Score,
+            ProfileImage = uc.User.ProfileImage
+
         });
 
         return new GetUserScoresQueryResponse

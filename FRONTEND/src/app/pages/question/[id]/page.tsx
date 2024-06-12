@@ -119,7 +119,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  if (userSubmissions.length == 0) {
+  if (code === "") {
     return (
       <div className="h-100">
         <FullPageLoader></FullPageLoader>
@@ -129,7 +129,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
 
   return (
     <CompetitionProtected compId={competitionId}>
-      <div className="bg-dark p-3" style={{height: "92vh"}}>
+      <div className="bg-dark p-3 h-100">
         <div className="d-flex flex-row h-100 justify-content-evenly">
           <div id="explanation" className="col-6 p-3">
             <Card>

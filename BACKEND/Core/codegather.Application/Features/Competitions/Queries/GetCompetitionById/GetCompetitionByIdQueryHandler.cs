@@ -27,7 +27,15 @@ public class GetCompetitionByIdQueryHandler : BaseHandler, IRequestHandler<GetCo
         {
             Competition = mapper.Map<CompetitionDto, Competition>(competition),
             Questions = competition.Questions.Select(x => mapper.Map<QuestionDto, Question>(x)).ToList(),
-            JoinedUsers = competition.UserCompetitions.Select(uc => mapper.Map<UserDto, User>(uc.User)).ToList(),
+            JoinedUsers = competition.UserCompetitions.Select(uc =>
+            {
+                return new UserScoreDto
+                {
+                    UserName = uc.User.UserName,
+                    Score = uc.Score,
+                    ProfileImage = uc.User.ProfileImage
+                };
+            }).ToList(),
         };
     }
 }

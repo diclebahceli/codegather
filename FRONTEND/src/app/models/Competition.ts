@@ -1,6 +1,6 @@
 
 import {Question} from "./Question";
-import {User} from "./User";
+import {UserScore} from "./UserScore";
 
 export interface Competition {
   id: string;
@@ -9,7 +9,7 @@ export interface Competition {
   startDate: string;
   endDate: string;
   questions?: Question[];
-  joinedUsers?: User[];
+  joinedUsers?: UserScore[];
   isPublic: boolean;
 }
 
