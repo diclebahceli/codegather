@@ -9,7 +9,7 @@ import logo from "./assets/logop.png";
 
 import {Poppins} from "next/font/google";
 import {StyleSheet, css} from "aphrodite";
-import {slideInLeft, slideInRight} from "react-animations";
+import {slideInRight} from "react-animations";
 
 const poppins = Poppins({
   weight: '400',
@@ -30,6 +30,12 @@ export default function Home() {
       animationName: slideInRight,
       animationDuration: '1s',
       animationTimingFunction: "cubic-bezier(0.2, 0.82, 0.165, 1)",
+    },
+    scale: {
+      transition: 'transform 0.4s ease-in-out',
+      ':hover': {
+        transform: 'scale(1.1)'
+      }
     }
   })
 
@@ -118,7 +124,7 @@ export default function Home() {
           About Us
         </h1>
         <hr className="w-50 border border-1 border-white opacity-75 mb-5" />
-        <div className="d-flex justify-content-center z-1">
+        <div className="d-flex justify-content-center flex-wrap z-1">
           <Image
             src={logo}
             width={300}
@@ -127,8 +133,8 @@ export default function Home() {
             objectFit="contain"
           >
           </Image>
-          <div className="col-1"></div>
-          <p className="text-white col-3 mt-5">
+          <div className="col-0 col-md-1 col-lg-1"></div>
+          <p className={ `text-white col-9 col-md-3 mt-5 m-3 ${css(styles.scale)}` }>
             We are a team of developers who are passionate about coding and want to share our passion with the world. We believe that coding is a skill that can be developed and improved with practice. Our platform is designed to help you improve your coding skills through friendly competition and self-development. We hope you enjoy using our platform and look forward to seeing you at our next competition!
           </p>
 

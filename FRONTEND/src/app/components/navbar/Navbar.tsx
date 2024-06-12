@@ -1,9 +1,7 @@
 "use client";
 
 import {AuthContext, AuthContextType} from "@/app/contexts/AuthContext";
-import {User} from "@/app/models/User";
 import {Logout} from "@/app/services/AuthService";
-import {GetUserRoles, GetUserById} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 
 import Link from "next/link";
@@ -27,13 +25,13 @@ export default function Navbar() {
   //for editing the user and renaming
 
   const handleLogout = async () => {
+    router.replace("/pages/login", {scroll: false});
     const result = await Logout(context.user.email);
     if (result.error) {
       toast.error(result.error);
       return;
     }
     context.logout();
-    router.replace("/pages/login", {scroll: false});
   };
 
   return (
