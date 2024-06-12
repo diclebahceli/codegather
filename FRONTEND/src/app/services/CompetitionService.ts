@@ -31,6 +31,9 @@ export async function GetCompetitionById(competitionId: string):
     const competition = response.data.competition as Competition;
     competition.questions = response.data.questions;
     competition.joinedUsers = response.data.joinedUsers;
+    competition.joinedUsers?.forEach((user) => {
+      user.score = Number(user.score.toFixed(0));
+    })
     return {data: competition, error: null};
   }
   catch (error: Error | any) {

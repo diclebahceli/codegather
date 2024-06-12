@@ -11,24 +11,10 @@ export default function Leaderboard({comp}: {comp: Competition | undefined}) {
 
   const [userScores, setUserScores] = useState<UserScore[]>([]);
   useEffect(() => {
-    const fetchScores = async (compId: string) => {
-      try {
-        var result = await GetUserScores(compId);
-        if (result.error || !result.data) {
-          toast.error(result.error);
-          return;
-        }
+    if (!comp?.joinedUsers) return;
+    setUserScores(comp?.joinedUsers);
 
-        setUserScores(result.data);
 
-      } catch (e: Error | any) {
-        toast.error(e);
-      }
-    }
-
-    if (comp != undefined && comp?.id) {
-      fetchScores(comp.id);
-    }
   }, [comp])
 
 
@@ -36,19 +22,25 @@ export default function Leaderboard({comp}: {comp: Competition | undefined}) {
   return (
     <div className="col-3 text-center mt-5 fs-2">
       <div className="d-flex flex-column align-items-center">
-        <div className="fw-bold fs-3 text-white">Leaderboard</div>
+        <div className="fw-bold fs-3 text-white mb-4">Leaderboard</div>
         <div className="w-75">
           <Card>
             <div className="card-body d-flex flex-column align-items-start">
-              {orderedScores.map((user, index) => (
-                <div className=" d-flex flex-row w-100">
-                  <div key={index} className="card-title fs-4 text-white text-break text-start"> {index + 1}. {user.userName}</div>
-                  <div className="flex-grow-1"> </div>
-                  <div className="fs-5 text-white"> {user.score}</div>
-                </div>
-              ))}
+              {Array.from({length: 10}, (value, index) => index).map((index) => {
+                const name = orderedScores.length > index ? orderedScores[index].userName : "";
+                const score = orderedScores.length > index ? orderedScores[index].score : "";
+                return (
+                  <div className=" d-flex flex-row w-100">
+                    <div key={index} className="card-title fs-4 text-white text-break text-start">
+                      {index + 1}. {name}
+                    </div>
+                    <div className="flex-grow-1"> </div>
+                    <div className="fs-5 text-white"> {score}</div>
+                  </div>)
+
+              })}
             </div>
-            <Link className="fs-5 text-decoration-none" href={`/pages/competitionDetail/${comp?.id}/users`}>All Users</Link>
+            <Link className="fs-5 btn btn-green m-2 text-decoration-none" href={`/pages/competitionDetail/${comp?.id}/users`}>All Users</Link>
           </Card>
         </div>
       </div>

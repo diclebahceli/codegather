@@ -1,13 +1,13 @@
 "use client";
 import Paginator from "@/app/components/paginator/Paginator";
 import {Competition, DefaultCompetition} from "@/app/models/Competition";
+import {UserScore} from "@/app/models/UserScore";
 import {GetCompetitionById} from "@/app/services/CompetitionService";
 import {Poppins} from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import {Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 
 const poppins = Poppins({
   weight: '400',
@@ -16,7 +16,7 @@ const poppins = Poppins({
 
 export default function Page({params}: {params: {id: string}}) {
   const [competition, setCompetition] = useState<Competition>(DefaultCompetition);
-  const [currentUsers, setCurrentUsers] = useState<any[]>([]);
+  const [currentUsers, setCurrentUsers] = useState<UserScore[]>([]);
 
 
   useEffect(() => {
@@ -49,10 +49,14 @@ export default function Page({params}: {params: {id: string}}) {
         <div className="d-flex flex-row flex-wrap justify-content-start">
           {currentUsers?.map((user, index) => {
             return (
-              <Link href={`/pages/profile/${user.userName}`} className="text-decoration-none col-3" key={index}>
+              <Link href={`/pages/profile/${user.userName}`} className="text-decoration-none col-12 col-md-6 col-lg-4" key={index}>
                 <div className="card m-3 bg-grey text-white" >
                   <div className="card-body d-flex flex-row align-items-center">
+                  <div className="d-flex flex-column">
                     <h5 className="card-title text-start text-break">{user.userName}</h5>
+                    <h5 className="card-title text-start text-break">Score: {user.score}</h5>
+
+                  </div>
                     <Image
                       src={`data:image/png;base64,${user.profileImage}`}
                       alt="profile picture"

@@ -128,8 +128,8 @@ export default function Page({params}: {params: {id: string}}) {
       </div>
 
       {isStarted ? (
-        <div className="d-flex flex-row justify-content-around align-items-start">
-          <div className="mt-5 d-flex flex-column col-3 align-self-center">
+        <div className="d-flex flex-row justify-content-around align-items-start mb-5">
+          <div className="mt-5 d-flex flex-column col-3">
             <h1 className="text-white">Questions</h1>
             {competition?.questions?.map((question, index) => (
               <QuestionCard key={question.id || index} question={question} canSolve={userJoined} />

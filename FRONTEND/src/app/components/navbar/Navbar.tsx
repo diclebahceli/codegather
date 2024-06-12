@@ -25,13 +25,15 @@ export default function Navbar() {
   //for editing the user and renaming
 
   const handleLogout = async () => {
-    router.replace("/pages/login", {scroll: false});
+    const toastId = toast.loading('Logging out...');
     const result = await Logout(context.user.email);
     if (result.error) {
       toast.error(result.error);
       return;
     }
+    toast.dismiss(toastId);
     context.logout();
+    router.replace("/pages/login", {scroll: false});
   };
 
   return (
