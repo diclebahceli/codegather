@@ -52,6 +52,7 @@ export default function Protected({children, protectedRoutes}:
     try {
       const user = await GetUserById(id);
       if (user.error || !user.data) {
+        localStorage.clear();
         toast.error(user.error);
         return;
       }

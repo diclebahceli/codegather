@@ -141,8 +141,11 @@ export default function Page({params}: {params: {id: string}}) {
 
       ) :
         (
-          <div className="d-flex flex-row justify-content-center align-items-center h-50">
-            <div className="text-white fs-3">Competition has not started yet ⏳</div>
+          <div className="flex-grow-1">
+
+            <div className="d-flex flex-row justify-content-center align-items-center  h-100" >
+              <div className="text-white fs-3">Competition has not started yet ⏳</div>
+            </div>
           </div>
         )
       }

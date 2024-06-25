@@ -137,7 +137,7 @@ const TestCaseForm = ({qId, initial, isPublic}: {qId: string, initial: TestCase[
 
             {index === testCases.length - 1 && !isPublic && (
 
-              <button type='submit' className='btn btn-primary ms-auto' onClick={() => handleAddTestCase(index, testCase)}>Add</button>)
+              <button type='submit' className='btn btn-primary ms-auto text-white' onClick={() => handleAddTestCase(index, testCase)}>Add</button>)
             }
 
           </div>

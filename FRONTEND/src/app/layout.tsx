@@ -2,13 +2,13 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "../../styles/_variables.scss";
 import "./globals.css";
-import Header from "./components/header/Header";
 import {Encode_Sans} from "next/font/google";
 import {Toaster} from "react-hot-toast";
 import {SetInterceptors} from "./services/AuthService";
 import {AuthProvider} from "./contexts/AuthContext";
 import Protected from "./components/protected/Protected";
 import {Montserrat, Roboto_Mono, Open_Sans, Poppins, Fira_Code} from 'next/font/google';
+import Example from "./components/header/Header";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -58,7 +58,7 @@ export default function RootLayout({
         <AuthProvider>
           <div className="d-flex flex-column vh-100 w-100">
             <Protected protectedRoutes={protectedRoutes}>
-              <Header />
+              <Example />
               <div className="flex-grow-1">
                 {children}
                 <Toaster

@@ -11,7 +11,7 @@ using codegather.Persistance;
 namespace codegather.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240610140516_InitialCreate")]
+    [Migration("20240613224514_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -117,6 +117,40 @@ namespace codegather.Persistance.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("codegather.Domain.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("codegather.Domain.Competition", b =>
@@ -358,6 +392,9 @@ namespace codegather.Persistance.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Score")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
@@ -407,7 +444,7 @@ namespace codegather.Persistance.Migrations
 
                     b.HasIndex("CompetitionId");
 
-                    b.ToTable("UserCompetition");
+                    b.ToTable("UserCompetitions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -459,6 +496,25 @@ namespace codegather.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("codegather.Domain.Comment", b =>
+                {
+                    b.HasOne("codegather.Domain.Question", "Question")
+                        .WithMany("Comments")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("codegather.Domain.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("codegather.Domain.Question", b =>
@@ -530,6 +586,8 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.Question", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Submissions");
 
                     b.Navigation("TestCases");
@@ -537,6 +595,8 @@ namespace codegather.Persistance.Migrations
 
             modelBuilder.Entity("codegather.Domain.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Submissions");
 
                     b.Navigation("UserCompetitions");

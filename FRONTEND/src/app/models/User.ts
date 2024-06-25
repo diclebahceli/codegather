@@ -7,4 +7,5 @@ export interface User {
     profileImage: string;
     competitions?: Competition[];
     submissions?: any[];
+    score: number
 };

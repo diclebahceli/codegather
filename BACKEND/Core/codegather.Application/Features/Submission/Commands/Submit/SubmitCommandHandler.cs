@@ -3,16 +3,19 @@ using codegather.Application.Interfaces.AutoMapper;
 using codegather.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace codegather.Application;
 
 public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRequest, SubmitCommandResponse>
 {
+    UserManager<User> userManager;
     private ICodeEditorService codeEditorService;
-    public SubmitCommandHandler(ICodeEditorService codeEditorService, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
+    public SubmitCommandHandler(ICodeEditorService codeEditorService, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(mapper, unitOfWork, httpContextAccessor)
     {
         this.codeEditorService = codeEditorService;
+        this.userManager = userManager;
     }
 
     public async Task<SubmitCommandResponse> Handle(SubmitCommandRequest request, CancellationToken cancellationToken)
@@ -21,7 +24,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         Question question = await unitOfWork.GetReadRepository<Question>()
            .GetAsync(predicate: x => x.Id == request.QuestionId && !x.IsDeleted
                 , include: x => x.Include(x => x.TestCases))
-           ?? throw new Exception("Question not found");
+           ?? throw new Exception("FeedbacksQuestion not found");
 
         TestCase[] testCases = question.TestCases.ToArray();
 
@@ -58,7 +61,7 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         string errMessage = "";
         foreach (var res in result)
         {
-            if(res.stderr == null && res.stdout == null)
+            if (res.stderr == null && res.stdout == null)
             {
                 errMessage = "Time or memory limit exceeded";
                 break;
@@ -91,9 +94,20 @@ public class SubmitCommandHandler : BaseHandler, IRequestHandler<SubmitCommandRe
         if (successCount < testCases.Length)
             score = 0;
 
-        var userCompetition = await unitOfWork.GetReadRepository<UserCompetition>()
-            .GetAsync(predicate: x => x.UserId == request.UserId && x.CompetitionId == question.CompetitionId, enableTracking: true)
+        var userCompetitions = await unitOfWork.GetReadRepository<UserCompetition>().GetAllAsync(
+            predicate: c => !c.IsDeleted && c.UserId == request.UserId,
+            include: c => c.Include(c => c.Competition),
+            enableTracking: true);
+
+        var userCompetition = userCompetitions
+            .Find(uc => uc.CompetitionId == question.CompetitionId) ?? throw new Exception("User not found");
+
+        User user = await userManager.FindByIdAsync(request.UserId.ToString())
             ?? throw new Exception("User not found");
+
+        user.Score += userCompetitions.Sum(uc => uc.Score) + score;
+
+        
 
         if (userCompetition.Score < score)
         {

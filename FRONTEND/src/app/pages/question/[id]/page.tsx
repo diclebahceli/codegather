@@ -16,6 +16,7 @@ import YourSubmissionOption from "../components/YourSubmissionOption";
 import {GetCompetitionById} from "@/app/services/CompetitionService";
 import {useRouter} from "next/navigation";
 import FullPageLoader from "@/app/components/full_page_loader/FullPageLoader";
+import Link from "next/link";
 
 export default function EditorPage({params}: {params: {id: string}}) {
   const [question, setQuestion] = useState<Question>(DefaultQuestion);
@@ -29,6 +30,7 @@ export default function EditorPage({params}: {params: {id: string}}) {
   const {result, isLoading, handleSubmit, submission, handleRun} = useCodeExecution(question.id, code);
 
   const router = useRouter();
+
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -131,19 +133,11 @@ export default function EditorPage({params}: {params: {id: string}}) {
     <CompetitionProtected compId={competitionId}>
       <div className="bg-dark p-3 h-100">
         <div className="d-flex flex-row h-100 justify-content-evenly">
-          <div id="explanation" className="col-6 p-3">
-            <Card>
-              <div className="h-100 m-3 d-flex flex-column">
-                <h1 className="fs-1 text-white mb-5">{name}</h1>
-                <div>
-                  <p className="text-white lh-lg">{description}</p>
-                </div>
-              </div>
-            </Card>
-          </div>
-          <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
-            <div className=" w-100 d-flex flex-row justify-content-between">
-              <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={"down"} className="mb-2">
+          <div className="d-flex flex-column col-6" >
+            <div className=" w-100 d-flex flex-row px-3">
+              <Link href={`/pages/question/${question.id}/comments/`} className="btn btn-green text-dark mb-2">Comments</Link>
+              <div className="flex-grow-1"></div>
+              <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={"down"} className="mb-2 mx-2">
                 <DropdownToggle className="text-white" caret color="grey" disabled={userSubmissions.length == 0}>Your Submissions</DropdownToggle>
                 <DropdownMenu >
                   {userSubmissions.length != 0 && userSubmissions.map((submission) => (
@@ -155,10 +149,22 @@ export default function EditorPage({params}: {params: {id: string}}) {
                   ))}
                 </DropdownMenu>
               </Dropdown>
-
               <Button color="green mb-2" onClick={resetCode}> Reset Code</Button>
             </div>
-            <div style={{height: "30em"}}>
+            <div id="explanation" className="col-12 px-3 py-1 flex-grow-1">
+              <Card>
+                <div className="h-100 m-3 d-flex flex-column">
+                  <h1 className="fs-1 text-white mb-5">{name}</h1>
+                  <div>
+                    <p className="text-white lh-lg">{description}</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+          </div>
+          <div className="p-3 pe-0 ps-0 col-6 d-flex flex-column">
+            <div style={{height: "26em"}}>
               <AceEditorComponent
                 onValueChange={onValueChange}
                 defaultValue={code}

@@ -28,6 +28,7 @@ public class GetUserByIdHandler : BaseHandler, IRequestHandler<GetUserByIdReques
            predicate: c => !c.IsDeleted && c.UserId == user.Id,
            include: c => c.Include(c => c.Competition),
            enableTracking: false);
+
         var competitions = userCompetitions.Select(uc => uc.Competition).ToList();
 
         var submissions = await unitOfWork.GetReadRepository<Submission>().GetAllAsync(

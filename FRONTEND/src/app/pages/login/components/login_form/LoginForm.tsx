@@ -36,7 +36,7 @@ export default function LoginForm() {
       toast.success("Logged in successfully");
 
       setTimeout(() => {
-        router.replace("/pages/competitions");
+        router.replace("/");
       }, 1000);
     }
   };

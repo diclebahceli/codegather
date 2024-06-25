@@ -20,13 +20,15 @@ public class RunCommandHandler : BaseHandler, IRequestHandler<RunCommandRequest,
     {
         Question question = await unitOfWork.GetReadRepository<Question>()
            .GetAsync(predicate: x => x.Id == request.QuestionId && !x.IsDeleted
-                , include: x => x.Include(x => x.TestCases))
+                , include: x => x.Include(x => x.TestCases)
+                )
            ?? throw new Exception("Question not found");
 
         if (question.TestCases.Count == 0)
             throw new Exception("No test cases found");
 
-        TestCase testCase = question.TestCases.ToArray()[0];
+        
+        TestCase testCase =question.TestCases.OrderBy(x => x.CreatedTime).ToList()[0];
 
         RunSubmissionDto runSubmissionDto = new RunSubmissionDto
         {

@@ -13,6 +13,8 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Question> Questions { get; set; }
 
     public DbSet<Submission> Submissions { get; set; }
+    public DbSet<UserCompetition> UserCompetitions { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

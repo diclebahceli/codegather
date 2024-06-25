@@ -74,7 +74,7 @@ const CompetitionPage = () => {
           {" "}
           Create Competition
         </Link>
-        <table className="table table-dark table-borderless">
+        <table className="table table-dark table-striped">
           <thead>
             <tr>
               <th className="col-2">Competition Date</th>
@@ -91,7 +91,7 @@ const CompetitionPage = () => {
                 </td>
                 <td>{competition.title}</td>
                 <td
-                  className="d-inline-block text-truncate"
+                  className="text-break"
                   style={{ maxWidth: "500px" }}
                 >
                   {competition.description}

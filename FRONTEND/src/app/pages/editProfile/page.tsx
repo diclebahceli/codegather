@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 export default function Page() {
 
-  const [userInfo, setUserInfo] = useState<User>({email: "", id: "", userName: "", profileImage: ""});
+  const [userInfo, setUserInfo] = useState<User>({email: "", id: "", userName: "", profileImage: "", score: 0});
 
 
   const context = useContext(AuthContext) as AuthContextType;
@@ -19,6 +19,15 @@ export default function Page() {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       const reader = new FileReader();
+
+      const maxSize = 1024 * 1024; // 1 MB in bytes
+
+      // Check if the file size exceeds the limit
+      if (file.size > maxSize) {
+        event.target.value = '';
+        toast.error('File size exceeds the limit of 1 MB');
+        return;
+      }
 
       reader.onload = () => {
         const base64String = reader.result?.toString().split(',')[1]; // Extract the base64 string part
@@ -85,11 +94,12 @@ export default function Page() {
             <div className="form-group my-3">
               <label htmlFor="filePicker" className="text-white">Profile Picture</label>
               <input type="file" name="filePicker" className="form-control" onChange={handleFileChange}></input>
+              <small className="text-white">At most 1MB</small>
             </div>
           </div>
         </form>
         <div>
-          <button className="btn btn-green mt-3 text-white" onClick={handleSave}>Save</button>
+          <button className="btn btn-primary mt-3 text-white" onClick={handleSave}>Save</button>
           <button className="btn btn-danger mt-3 text-white mx-3" onClick={handeCancel}>Cancel</button>
         </div>
 

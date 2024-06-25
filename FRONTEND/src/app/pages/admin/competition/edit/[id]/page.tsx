@@ -166,7 +166,7 @@ const EditCompetitionPage = ({params}: {params: {id: string}}) => {
                         {scroll: false}
                       );
                     }}
-                    className="btn btn-green mt-3 text-white ms-auto"
+                    className="btn btn-primary mt-3 text-white ms-auto"
                   >
                     Add Question
                   </button>

@@ -79,14 +79,9 @@ export default function Page() {
         </div>
         <div className="col-md-6 col-sm-12 mt-5 fs-2 text-white m-5">
           <div className="text-center">Disclaimer: </div>
-          <div className=" fs-4">
-            The information provided on this page is for general informational
-            purposes only. It is not intended to be a substitute for
-            professional advice. Always seek the advice of a qualified
-            professional for any specific concerns or questions you may have
-            regarding competitions, user profiles, or any other matters
-            referenced on this platform.
-          </div>
+          <p className="fs-5">
+Codegather is provided on an "as-is" and "as-available" basis. While we strive to maintain a fair and secure environment, we do not endorse or assume any responsibility for the content, code, or submissions provided by participants. All code and projects submitted remain the intellectual property of their respective authors, but by participating, you grant us a non-exclusive license to use and display your submissions for the purposes of conducting and promoting the competitions. Participants are solely responsible for the integrity and originality of their code, and any plagiarism or unauthorized copying may result in disqualification.
+          </p>
         </div>
       </div>
     </div>

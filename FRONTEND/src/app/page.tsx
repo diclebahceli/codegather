@@ -52,7 +52,7 @@ export default function Home() {
 
         </Image>
       </div>
-      <div className="d-flex flex-row justify-content-start align-items-center mb-5 overflow-hidden" style={{height: "50em"}}>
+      <div className="d-flex flex-row justify-content-start align-items-center mb-5 overflow-hidden " style={{height: "45em"}}>
         <div className={`d-flex flex-column col-6 ms-auto ${css(styles.slideIn)}`}>
           <p className={`fs-m z-1 text-white fst-italic w-100 fw-bold text-center ${poppins.className}`}>
             Where code meets competition
