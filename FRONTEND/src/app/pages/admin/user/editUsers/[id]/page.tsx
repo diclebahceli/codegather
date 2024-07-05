@@ -28,6 +28,33 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      const maxSize = 1024 * 1024; // 1 MB in bytes
+
+      // Check if the file size exceeds the limit
+      if (file.size > maxSize) {
+        event.target.value = '';
+        toast.error('File size exceeds the limit of 1 MB');
+        return;
+      }
+
+      reader.onload = () => {
+        const base64String = reader.result?.toString().split(',')[1]; // Extract the base64 string part
+
+        setUserData((prevUserInfo) => ({
+          ...prevUserInfo,
+          profileImage: base64String || '', // Assign the base64 string to profileImage
+        }));
+      }
+
+      reader.readAsDataURL(file);
+    };
+  }
+
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
    console.log(name, value);
@@ -73,6 +100,8 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
       id: userData.id,
       userName: formData.get("userName") as string,
       email: formData.get("email") as string,
+      profileImage: userData.profileImage,
+      score: userData.score,
     };
     const roles = await SetUserRole(userData.id, cSelected);
     if (roles.error) {
@@ -121,6 +150,11 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
               onChange={handleInputChange}
             />
           </div>
+            <div className="form-group my-3">
+              <label htmlFor="filePicker" className="text-white">Profile Picture</label>
+              <input type="file" name="filePicker" className="form-control" onChange={handleFileChange}></input>
+              <small className="text-white">At most 1MB</small>
+            </div>
           <div>
             <h5 className="text-white">User Roles</h5>
             <ButtonGroup>
@@ -149,6 +183,7 @@ const EditUserPage = ({ params }: { params: { id: string } }) => {
                 User
               </Button>
             </ButtonGroup>
+
             <p className="text-white">Selected: {JSON.stringify(cSelected)}</p>
           </div>
           <button className="btn btn-primary mt-3 text-white">Save</button>

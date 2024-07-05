@@ -14,6 +14,8 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, tes
   const { successCount: successRate, score, errorFree } = submission;
   const { input, output } = testCase;
 
+  console.log(result)
+
   const getOutputColor = () => {
     if (stderr) return 'text-danger';
     if (output !== stdout && !stderr) return 'text-danger';
@@ -21,7 +23,6 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, tes
   };
 
   const renderOutput = () => {
-    if (stderr) return <div className="text-white">Compile Error: {stderr}</div>;
     if (output !== stdout && !stderr)
       return <div className={getOutputColor()}>Your Output: {stdout}</div>;
     return (
@@ -38,7 +39,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, submission, tes
           Compile Error: <span className="text-danger opacity-75"> {stderr}</span>
         </div>
       )}
-      {stdout && (
+      {result.token && (
         <div className="d-flex flex-column h-100">
           <div className="d-flex flex-row">
             <div className="text-white me-3 fw-bold">

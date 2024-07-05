@@ -31,6 +31,7 @@ namespace codegather.Persistance.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     RefreshToken = table.Column<string>(type: "TEXT", nullable: true),
+                    Score = table.Column<double>(type: "REAL", nullable: false),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ProfileImage = table.Column<byte[]>(type: "BLOB", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -203,7 +204,7 @@ namespace codegather.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserCompetition",
+                name: "UserCompetitions",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -216,17 +217,46 @@ namespace codegather.Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserCompetition", x => new { x.UserId, x.CompetitionId });
+                    table.PrimaryKey("PK_UserCompetitions", x => new { x.UserId, x.CompetitionId });
                     table.ForeignKey(
-                        name: "FK_UserCompetition_AspNetUsers_UserId",
+                        name: "FK_UserCompetitions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserCompetition_Competitions_CompetitionId",
+                        name: "FK_UserCompetitions_Competitions_CompetitionId",
                         column: x => x.CompetitionId,
                         principalTable: "Competitions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -327,6 +357,16 @@ namespace codegather.Persistance.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_QuestionId",
+                table: "Comments",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_CompetitionId",
                 table: "Questions",
                 column: "CompetitionId");
@@ -347,8 +387,8 @@ namespace codegather.Persistance.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCompetition_CompetitionId",
-                table: "UserCompetition",
+                name: "IX_UserCompetitions_CompetitionId",
+                table: "UserCompetitions",
                 column: "CompetitionId");
         }
 
@@ -371,13 +411,16 @@ namespace codegather.Persistance.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Submissions");
 
             migrationBuilder.DropTable(
                 name: "TestCase");
 
             migrationBuilder.DropTable(
-                name: "UserCompetition");
+                name: "UserCompetitions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

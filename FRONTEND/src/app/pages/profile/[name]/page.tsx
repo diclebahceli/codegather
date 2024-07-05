@@ -1,10 +1,8 @@
 "use client";
-import Card from "@/app/components/card/Card";
-import CompetitionCard from "@/app/components/competition_card/CompetitionCard";
 import CompetitionList from "@/app/components/competition_list/CompetitionList";
 import {Competition} from "@/app/models/Competition";
 import {User} from "@/app/models/User";
-import {GetUserByUserName, GetUserById} from "@/app/services/UserService";
+import {GetUserByUserName} from "@/app/services/UserService";
 import {getWithExpiry} from "@/app/utils/StorageGetter";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
@@ -90,7 +88,7 @@ export default function Profile({params}: {params: {name: string}}) {
                   </div>
 
                 </div>
-                <h3 className="text-white mt-5 fs-1">Code Score: 0</h3>
+                <h3 className="text-white mt-5 fs-1">Code Score: {userInfo.score.toFixed(0)}</h3>
               </>
             ) : (
               <div className="spinner-border text-white"></div>
